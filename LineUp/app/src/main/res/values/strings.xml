@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">LineUp</string>
+    <string name="action_settings">Settings</string>
+    <string name="working_time">영업시간</string>
+    <string name="vacation_time">휴무일</string>
+    <string name="reservation">예약</string>
+    <string name="parking">주차</string>
+    <string name="packing">포장</string>
+    <string name="sort">업종</string>
+    <string name="homepage">홈페이지</string>
+    <string name="address">주소</string>
+    <string name="number">전화번호</string>
+    <string name="restaurant_info">매장 정보</string>
+    <string name="sample_work">일~목 11:30~22:30/금~토 11:30~23:00</string>
+    <string name="smample_vac">연중무휴</string>
+    <string name="sample_ok">가능</string>
+    <string name="sample_sort">패밀리 레스토랑</string>
+    <string name="sample_hp">http://www.outback.co.kr/</string>
+    <string name="sample_address">서울특별시 서대문구 연세로 12길 33</string>
+    <string name="sample_num">02-3147-1871</string>
+    <string name="link_map">지도에서 보기</string>
+</resources>
