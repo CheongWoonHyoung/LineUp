@@ -8,6 +8,7 @@ import android.widget.TabHost;
 /**
  * Created by owner on 2015-10-27.
  */
+
 public class MyPageActivity extends TabActivity {
 
     @Override
