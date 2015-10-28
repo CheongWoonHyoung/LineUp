@@ -19,4 +19,7 @@
     <string name="sample_address">서울특별시 서대문구 연세로 12길 33</string>
     <string name="sample_num">02-3147-1871</string>
     <string name="link_map">지도에서 보기</string>
+    <string name="add_star">별달기</string>
+    <string name="lineup">라인업</string>
+    <string name="n">명</string>
 </resources>

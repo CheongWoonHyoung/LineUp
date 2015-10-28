@@ -18,21 +18,31 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            android:layout_gravity="left"
+            android:layout_marginLeft="-72dp"
+            android:padding="0dp"
+            android:contentInsetRight="0dp"
+            android:contentInsetStart="0dp"
+            android:contentInsetLeft="0dp"
+            app:contentInsetRight="0dp"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:text="Search"/>
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/search"
+                android:layout_marginLeft="15dp"/>
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="map"/>
+                android:layout_marginLeft="10dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/map"/>
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="myPage"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/mypage"
                 android:layout_marginRight="15dp"
                 android:layout_gravity="right"/>
 
