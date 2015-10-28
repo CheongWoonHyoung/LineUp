@@ -121,10 +121,10 @@
             android:gravity="center_horizontal">
             <LinearLayout
                 android:layout_width="120dp"
-                android:background="@drawable/lineup"
                 android:layout_height="match_parent"
                 android:gravity="center">
-                <TextView
+                <Button
+                    android:background="@drawable/lineup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/lineup"

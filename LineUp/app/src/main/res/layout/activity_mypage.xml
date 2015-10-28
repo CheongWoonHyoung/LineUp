@@ -11,9 +11,9 @@
             android:layout_width="match_parent"
             android:layout_height="60dp">
             <Button
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:text="back"
+                android:background="@drawable/back"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginLeft="15dp"
                 android:layout_gravity="center_vertical"/>
             <View
@@ -22,9 +22,9 @@
                 android:layout_weight="1">
             </View>
             <Button
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:text="setting"
+                android:background="@drawable/setting"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginRight="15dp"
                 android:layout_gravity="center_vertical"/>
         </LinearLayout>
