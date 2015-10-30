@@ -1,4 +1,4 @@
-package com.example.owner.lineup;
+package com.unist.am.lineup.lineup;
 
 import org.junit.Test;
 

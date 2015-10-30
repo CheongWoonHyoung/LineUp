@@ -1,4 +1,4 @@
-package com.example.owner.lineup;
+package com.unist.am.lineup;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,13 +20,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        btn_mypage.setOnClickListener(new View.OnClickListener() {
+        /*btn_mypage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MyPageActivity.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
     @Override
