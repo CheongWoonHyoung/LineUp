@@ -101,6 +101,7 @@ public class LoginActivity extends AppCompatActivity {
                     countryISO = talkProfile.getCountryISO();
                     //new HttpPostRequest2().execute(manager_regid.returnRegid(), nickName);
                     // display
+                    redirectMainActivity();
 
                 }
             });
@@ -140,6 +141,10 @@ public class LoginActivity extends AppCompatActivity {
     private void redirectLoginActivity() {
         final Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        finish();
+    }
+    private void redirectMainActivity(){
+        startActivity(new Intent(this,MainActivity.class));
         finish();
     }
 
