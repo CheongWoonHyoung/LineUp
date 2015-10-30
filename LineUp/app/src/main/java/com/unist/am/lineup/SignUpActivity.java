@@ -111,6 +111,7 @@ public class SignUpActivity extends Activity {
             public void onSuccess(final UserProfile userProfile) {
                 Log.d("SUCCESS", "UserProfile : " + userProfile);
                 userProfile.saveUserToCache();
+                Log.e("regId",":"+regid);
                 redirectMainActivity();
             }
 
@@ -122,6 +123,8 @@ public class SignUpActivity extends Activity {
             @Override
             public void onSessionClosedFailure(final APIErrorResult errorResult) {
                 Log.d("SUCCESS", "onSessionClosedFailure");
+                Log.e("regId", ":" + regid);
+
                 redirectLoginActivity();
             }
 
@@ -129,7 +132,7 @@ public class SignUpActivity extends Activity {
             public void onFailure(final APIErrorResult errorResult) {
                 String message = "failed to get user info. msg=" + errorResult;
                 Log.d("FAIL", message);
-
+                Log.e("regId", ":" + regid);
                 if (errorResult.getErrorCodeInt() == -777) {
                     Toast.makeText(getApplicationContext(), "SERVICE_UNAVAILABLE", Toast.LENGTH_SHORT).show();
                     finish();

@@ -46,11 +46,12 @@ public class ResListAdapter extends ArrayAdapter<ResListItem> {
             LayoutInflater vi =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(layoutResId,parent,false);
             holder = new ResListHolder();
-            holder.res_image = (ImageView) v.findViewById(R.id.res_image);
-            //holder.res_name = (TextView) v.findViewById(R.id.res_name);
+            //holder.res_image = (ImageView) v.findViewById(R.id.res_image);
+            holder.res_name = (TextView) v.findViewById(R.id.res_name);
             //holder.res_cuisine = (TextView) v.findViewById(R.id.res_cuisine);
-            //holder.res_distance = (TextView) v.findViewById(R.id.res_distance);
-            //holder.res_waittime = (TextView) v.findViewById(R.id.res_waittime);
+            holder.res_distance = (TextView) v.findViewById(R.id.res_distance);
+            holder.res_waitpeople = (TextView) v.findViewById(R.id.res_waitpeople);
+            holder.res_location = (TextView) v.findViewById(R.id.res_location);
 
             v.setTag(holder);
 
@@ -66,15 +67,16 @@ public class ResListAdapter extends ArrayAdapter<ResListItem> {
         Log.e("SIZE", ":" + width_image + " " + height_image + " " + v.getWidth());
 
         if(res_item!=null){
-            holder.res_imgurl = res_item.res_imgurl;
+            //holder.res_imgurl = res_item.res_imgurl;
             holder.res_name.setText(res_item.res_name);
             //holder.res_name.setTypeface(mTypeface);
-            holder.res_cuisine.setText(res_item.res_cuisine);
+            //holder.res_cuisine.setText(res_item.res_cuisine);
             //holder.res_cuisine.setTypeface(mTypeface);
             holder.res_distance.setText(res_item.res_distance);
             //holder.res_distance.setTypeface(mTypeface);
-            holder.res_waittime.setText(res_item.res_waittime);
+            holder.res_waitpeople.setText(res_item.res_waitpeople);
             //holder.res_imgurl = res_item.res_imgurl;
+            holder.res_location.setText(res_item.res_location);
             //Picasso.with(this.context).load(res_item.res_imgurl).fit().centerCrop().into(holder.res_image);
         }
         //setGlobalFont(parent);
@@ -94,11 +96,12 @@ public class ResListAdapter extends ArrayAdapter<ResListItem> {
 
     static class ResListHolder
     {
-        String res_imgurl;
-        ImageView res_image;
+        //String res_imgurl;
+        //ImageView res_image;
         TextView res_name;
-        TextView res_cuisine;
+        //TextView res_cuisine;
         TextView res_distance;
-        TextView res_waittime;
+        TextView res_waitpeople;
+        TextView res_location;
     }
 }
