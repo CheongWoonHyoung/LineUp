@@ -57,6 +57,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <Button
+                        android:id="@+id/selection_1"
                         android:text="1"
                         android:textSize="13dp"
                         android:layout_width="30dp"
@@ -69,6 +70,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <Button
+                        android:id="@+id/selection_2"
                         android:text="2"
                         android:textSize="13dp"
                         android:layout_width="30dp"
@@ -81,6 +83,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <Button
+                        android:id="@+id/selection_3"
                         android:text="3"
                         android:textSize="13dp"
                         android:layout_width="30dp"
@@ -93,6 +96,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <Button
+                        android:id="@+id/selection_4"
                         android:text="4"
                         android:textSize="13dp"
                         android:layout_width="30dp"
@@ -105,6 +109,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <Button
+                        android:id="@+id/selection_5"
                         android:text="5"
                         android:textSize="13dp"
                         android:layout_width="30dp"
@@ -117,6 +122,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <Button
+                        android:id="@+id/selection_6"
                         android:text="6"
                         android:textSize="13dp"
                         android:layout_width="30dp"
@@ -202,6 +208,7 @@
             android:layout_height="match_parent"
             android:gravity="center">
             <Button
+                android:id="@+id/confirm_btn"
                 android:background="@drawable/lineup"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

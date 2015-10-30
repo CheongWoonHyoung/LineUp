@@ -79,6 +79,7 @@ public class RestaurantInfo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent map_intent = new Intent(mcontext, MapActivity.class);
+                map_intent.putExtra("flag",true);
                 map_intent.putExtra("lat",y_coordinate);
                 map_intent.putExtra("lon",x_coordinate);
                 startActivityForResult(map_intent,1);
