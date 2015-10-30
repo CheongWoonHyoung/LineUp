@@ -11,6 +11,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp">
             <Button
+                android:id="@+id/backBtn"
                 android:background="@drawable/back"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
@@ -26,7 +27,8 @@
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="15dp"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:id="@+id/settingBtn" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="120dp"

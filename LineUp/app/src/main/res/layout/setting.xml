@@ -32,6 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <TextView
+            android:id="@+id/pushAlarm"
             android:layout_marginLeft="30dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -49,6 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <TextView
+            android:id="@+id/couponAlarm"
             android:layout_marginLeft="30dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -74,6 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <TextView
+            android:id="@+id/version"
             android:layout_marginLeft="30dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -99,6 +102,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <TextView
+            android:id="@+id/clause"
             android:layout_marginLeft="30dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -124,6 +128,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <TextView
+            android:id="@+id/inquire"
             android:layout_marginLeft="30dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -149,6 +154,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp">
         <TextView
+            android:id="@+id/logout"
             android:layout_marginLeft="30dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

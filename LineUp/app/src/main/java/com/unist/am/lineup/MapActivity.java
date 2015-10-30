@@ -1,4 +1,4 @@
-package com.example.owner.lineup;
+package com.unist.am.lineup;
 
 import android.app.Activity;
 import android.app.AlertDialog;

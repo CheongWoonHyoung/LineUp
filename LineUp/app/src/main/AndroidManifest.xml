@@ -33,6 +33,11 @@
 
         </activity>
         <activity android:name=".MyPageActivity" />
+        <activity android:name=".SettingActivity"/>
+        <activity android:name=".PushalarmActivity"/>
+        <activity android:name=".ClauseActivity"/>
+        <activity android:name=".InquireActivity"/>
+        <activity android:name=".VersionActivity"/>
         <activity android:name=".LoginActivity" >
 
         </activity>
