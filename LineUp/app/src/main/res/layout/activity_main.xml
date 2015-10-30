@@ -31,7 +31,6 @@
 
             <ImageButton
                 android:stateListAnimator="@anim/anim"
-                android:background="@anim/ripple"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/search"
@@ -39,7 +38,6 @@
             <ImageButton
                 android:stateListAnimator="@anim/anim"
                 android:layout_marginLeft="10dp"
-                android:background="@anim/ripple"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/map" />
@@ -47,7 +45,6 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:stateListAnimator="@anim/anim"
-                android:background="@anim/ripple"
                 android:src="@drawable/mypage"
                 android:clickable="true"
                 android:layout_marginRight="15dp"
