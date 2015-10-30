@@ -39,6 +39,7 @@ public class MapActivity extends Activity implements LocationListener, MapView.P
     Location location;
     double lat;
     double lon;
+    Intent get_flag_intent;
 
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
@@ -53,6 +54,9 @@ public class MapActivity extends Activity implements LocationListener, MapView.P
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        get_flag_intent = getIntent();
+
 
         information = (FrameLayout) findViewById(R.id.information);
 /*        information.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +78,13 @@ public class MapActivity extends Activity implements LocationListener, MapView.P
             }
         });
 */
-        getLocation();
+        if(get_flag_intent.getExtras().getBoolean("flag")){
+            lat = get_flag_intent.getExtras().getDouble("lat");
+            lon = get_flag_intent.getExtras().getDouble("lon");
+        }
+        else{
+            getLocation();
+        }
         final MapView mapView = new MapView(this);
         mapView.setDaumMapApiKey("6f34a566bab64437f455521185842b3f");
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
