@@ -124,6 +124,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center">
                 <Button
+                    android:id="@+id/lineup_btn"
                     android:background="@drawable/lineup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

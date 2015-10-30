@@ -3,7 +3,10 @@ package com.unist.am.lineup;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.media.tv.TvInputService;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,11 +22,20 @@ import com.kakao.kakaotalk.KakaoTalkService;
 import com.kakao.usermgmt.LoginButton;
 import com.kakao.util.exception.KakaoException;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 
 public class LoginActivity extends AppCompatActivity {
 
 
-
+    public static final String PROPERTY_REG_ID = "registration_id";
+    private static final String PROPERTY_APP_VERSION = "1.0";
     private LoginButton kakaoLogin;
     private final SessionCallback mySessionCallback = new MySessionStatusCallback();
     private Session session;
@@ -99,9 +111,7 @@ public class LoginActivity extends AppCompatActivity {
                     profileImageURL = talkProfile.getProfileImageURL();
                     thumbnailURL = talkProfile.getThumbnailURL();
                     countryISO = talkProfile.getCountryISO();
-                    //new HttpPostRequest2().execute(manager_regid.returnRegid(), nickName);
-                    // display
-                    redirectMainActivity();
+                    new enroll_user().execute(getRegistrationId(getApplicationContext()), nickName);
 
                 }
             });
@@ -148,5 +158,85 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+
+    private class enroll_user extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... info) {
+            String sResult = "Error";
+
+            try {
+                URL url = new URL("http://52.69.163.43/queuing/user_enroll.php");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestMethod("POST");
+
+                String body = "regid=" + info[0] +"&"
+                        +"name=" + info[1];
+
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                osw.write(body);
+                osw.flush();
+
+
+                InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                BufferedReader reader = new BufferedReader(tmp);
+                StringBuilder builder = new StringBuilder();
+                String str;
+
+                while ((str = reader.readLine()) != null) {
+                    builder.append(str);
+                }
+                sResult     = builder.toString();
+                Log.e("enroll", sResult);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return sResult;
+        }
+
+        @Override
+        protected void onPostExecute(String result){
+            //finish();
+            final Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+
+        }
+
+    }
+    private String getRegistrationId(Context context) {
+        final SharedPreferences prefs = getGCMPreferences(context);
+        String registrationId = prefs.getString(PROPERTY_REG_ID, "");
+        Log.i("RegID_Stored", registrationId);
+        if (registrationId.isEmpty()) {
+            return "";
+        }
+
+        // 앱이 업데이트 되었는지 확인하고, 업데이트 되었다면 기존 등록 아이디를 제거한다.
+        // 새로운 버전에서도 기존 등록 아이디가 정상적으로 동작하는지를 보장할 수 없기 때문이다.
+        int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
+        int currentVersion = getAppVersion(context);
+        if (registeredVersion != currentVersion) {
+            return "";
+        }
+        return registrationId;
+    }
+    private SharedPreferences getGCMPreferences(Context context) {
+        return getSharedPreferences(LoginActivity.class.getSimpleName(),
+                Context.MODE_PRIVATE);
+    }
+    private static int getAppVersion(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            // should never happen
+            throw new RuntimeException("Could not get package name: " + e);
+        }
+    }
 }
 

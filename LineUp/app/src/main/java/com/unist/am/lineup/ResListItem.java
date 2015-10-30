@@ -16,15 +16,15 @@ public class ResListItem extends ArrayList<ResListItem> {
     public String res_timing;
     public String res_distance;
 
-    public String res_waittime;
+    public String res_waitpeople;
     public String res_dummyname;
 
-    public ResListItem(String imgurl, String name, String cuisine, String distance, String waittime, Double x_coordinate, Double y_coordinate, String location, String timing, String phone_num, String dummyname){
+    public ResListItem(String imgurl, String name, String cuisine, String distance, String waitpeople, Double x_coordinate, Double y_coordinate, String location, String timing, String phone_num, String dummyname){
         this.res_imgurl = imgurl;
         this.res_name = name;
         this.res_cuisine = cuisine;
         this.res_distance = distance;
-        this.res_waittime = waittime;
+        this.res_waitpeople = waitpeople;
         this.res_x_coordinate = x_coordinate;
         this.res_y_coordinate = y_coordinate;
         this.res_location = location;
