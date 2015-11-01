@@ -20,7 +20,7 @@ import ru.noties.scrollable.ScrollableLayout;
  * Created by owner on 2015-10-27.
  */
 
-public class MyPageActivity extends BaseActivity {
+public class MyPageActivity extends BaseActivity_myPage {
     private static final String ARG_LAST_SCROLL_Y = "arg.LastScrollY";
     private ScrollableLayout mScrollableLayout;
     Button settingBtn;
@@ -40,7 +40,7 @@ public class MyPageActivity extends BaseActivity {
         mScrollableLayout.setDraggableView(tabs);
 
         final ViewPager viewPager = findView(R.id.mypage_view_pager);
-        final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getResources(), getFragments());
+        final ViewPagerAdapter_myPage adapter = new ViewPagerAdapter_myPage(getSupportFragmentManager(), getResources(), getFragments());
         viewPager.setAdapter(adapter);
 
         tabs.setViewPager(viewPager);
@@ -104,9 +104,9 @@ public class MyPageActivity extends BaseActivity {
         super.onSaveInstanceState(outState);
     }
 
-    private List<BaseFragment> getFragments() {
+    private List<BaseFragment_myPage> getFragments() {
         final FragmentManager manager = getSupportFragmentManager();
-        final List<BaseFragment> list = new ArrayList<>();
+        final List<BaseFragment_myPage> list = new ArrayList<>();
         Mypage_tab1 tab01 = (Mypage_tab1) manager.findFragmentByTag(Mypage_tab1.TAG);
         Mypage_tab2 tab02 = (Mypage_tab2) manager.findFragmentByTag(Mypage_tab2.TAG);
         Mypage_tab3 tab03 = (Mypage_tab3) manager.findFragmentByTag(Mypage_tab3.TAG);

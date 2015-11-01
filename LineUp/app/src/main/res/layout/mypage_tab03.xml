@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/mypage_scroll_view_tab03">
+    android:id="@+id/scroll_view_my_tab03">
 
     <LinearLayout
         android:orientation="vertical"

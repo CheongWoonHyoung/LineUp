@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 
-public class Mypage_tab2 extends BaseFragment {
+public class Mypage_tab2 extends BaseFragment_myPage {
 
     static final String TAG = "tag.myPage_tab2";
     private ScrollView mScrollView;
@@ -25,7 +25,7 @@ public class Mypage_tab2 extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.mypage_tab02, parent, false);
-        mScrollView = findView(view, R.id.mypage_scroll_view_tab02);
+        mScrollView = findView(view, R.id.scroll_view_my_tab02);
         return view;
     }
 
