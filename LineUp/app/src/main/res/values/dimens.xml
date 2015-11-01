@@ -8,4 +8,8 @@
 
     <dimen name="button_elevation">0dp</dimen>
     <dimen name="button_press_elevation">-5dp</dimen>
+
+    <dimen name="header_height">200dp</dimen>
+    <dimen name="tabs_height">64dp</dimen>
+
 </resources>

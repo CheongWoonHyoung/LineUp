@@ -3,7 +3,8 @@ package com.unist.am.lineup;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,8 +14,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class RestaurantInfo extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import ru.noties.scrollable.CanScrollVerticallyDelegate;
+import ru.noties.scrollable.OnScrollChangedListener;
+import ru.noties.scrollable.ScrollableLayout;
+
+public class RestaurantInfo extends BaseActivity {
+    private static final String ARG_LAST_SCROLL_Y = "arg.LastScrollY";
+    private ScrollableLayout mScrollableLayout;
     Toolbar toolbar;
     FrameLayout res_confirm;
     Context mcontext;
@@ -28,6 +38,7 @@ public class RestaurantInfo extends AppCompatActivity {
     Double y_coordinate = null;
     String phone_num = null;
     String dummyname;
+
     Button lineup_btn;
     Button go_to_map_btn;
 
@@ -49,6 +60,52 @@ public class RestaurantInfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.res_info);
+
+        final View header = findViewById(R.id.header);
+        final TabsLayout tabs = findView(R.id.tabs);
+
+        mScrollableLayout = findView(R.id.scrollable_layout);
+        mScrollableLayout.setDraggableView(tabs);
+
+        final ViewPager viewPager = findView(R.id.view_pager);
+        final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getResources(), getFragments());
+        viewPager.setAdapter(adapter);
+
+        tabs.setViewPager(viewPager);
+
+        mScrollableLayout.setCanScrollVerticallyDelegate(new CanScrollVerticallyDelegate() {
+            @Override
+            public boolean canScrollVertically(int direction) {
+                return adapter.canScrollVertically(viewPager.getCurrentItem(), direction);
+            }
+        });
+
+        mScrollableLayout.setOnScrollChangedListener(new OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged(int y, int oldY, int maxY) {
+
+                final float tabsTranslationY;
+                if (y < maxY) {
+                    tabsTranslationY = .0F;
+                } else {
+                    tabsTranslationY = y - maxY;
+                }
+
+                tabs.setTranslationY(tabsTranslationY);
+
+                header.setTranslationY(y / 2);
+            }
+        });
+
+        if (savedInstanceState != null) {
+            final int y = savedInstanceState.getInt(ARG_LAST_SCROLL_Y);
+            mScrollableLayout.post(new Runnable() {
+                @Override
+                public void run() {
+                    mScrollableLayout.scrollTo(0, y);
+                }
+            });
+        }
         mcontext = this;
         Intent intent = getIntent();
         img_large = intent.getExtras().getString("img_large");
@@ -86,5 +143,35 @@ public class RestaurantInfo extends AppCompatActivity {
             }
         });
 
+    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(ARG_LAST_SCROLL_Y, mScrollableLayout.getScrollY());
+        super.onSaveInstanceState(outState);
+    }
+
+    private List<BaseFragment> getFragments() {
+        final FragmentManager manager = getSupportFragmentManager();
+        final List<BaseFragment> list = new ArrayList<>();
+        Rest_info_tab1 tab01 = (Rest_info_tab1) manager.findFragmentByTag(Rest_info_tab1.TAG);
+        Rest_info_tab2 tab02 = (Rest_info_tab2) manager.findFragmentByTag(Rest_info_tab2.TAG);
+        if (tab01 == null) {
+            tab01 = tab01.newInstance();
+            tab01.name = name;
+            tab01.cuisine = cuisine;
+            tab01.timing = timing;
+            tab01.location = location;
+            tab01.phone_num = phone_num;
+            tab01.x_coordinate = x_coordinate;
+            tab01.y_coordinate = y_coordinate;
+            tab01.dummyname = dummyname;
+        }
+        if (tab02 == null) {
+            tab02 = tab02.newInstance();
+            tab02.name = name;
+        }
+        Collections.addAll(list, tab01, tab02);
+
+        return list;
     }
 }
