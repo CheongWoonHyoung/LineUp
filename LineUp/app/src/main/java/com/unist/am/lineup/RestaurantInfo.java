@@ -40,7 +40,6 @@ public class RestaurantInfo extends BaseActivity {
     String dummyname;
 
     Button lineup_btn;
-    Button go_to_map_btn;
 
     ImageView resinfo_image;
     TextView resinfo_name;
@@ -64,9 +63,10 @@ public class RestaurantInfo extends BaseActivity {
         final View header = findViewById(R.id.header);
         final TabsLayout tabs = findView(R.id.tabs);
 
+
         mScrollableLayout = findView(R.id.scrollable_layout);
         mScrollableLayout.setDraggableView(tabs);
-
+        mcontext = this;
         final ViewPager viewPager = findView(R.id.view_pager);
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getResources(), getFragments());
         viewPager.setAdapter(adapter);
@@ -106,7 +106,6 @@ public class RestaurantInfo extends BaseActivity {
                 }
             });
         }
-        mcontext = this;
         Intent intent = getIntent();
         img_large = intent.getExtras().getString("img_large");
         name = intent.getExtras().getString("name");
@@ -120,7 +119,7 @@ public class RestaurantInfo extends BaseActivity {
         dummyname = intent.getExtras().getString("dummy_name");
         this.setResult(Activity.RESULT_OK);
 
-        lineup_btn = (Button) findViewById(R.id.lineup_btn);
+        lineup_btn = (Button) header.findViewById(R.id.lineup_btn);
         lineup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,16 +131,7 @@ public class RestaurantInfo extends BaseActivity {
         go_to_map_btn = (Button) findVIewById(R.id.go_to_map);
 
          */
-        go_to_map_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent map_intent = new Intent(mcontext, MapActivity.class);
-                map_intent.putExtra("flag",true);
-                map_intent.putExtra("lat",y_coordinate);
-                map_intent.putExtra("lon",x_coordinate);
-                startActivityForResult(map_intent,1);
-            }
-        });
+
 
     }
     @Override
@@ -156,7 +146,7 @@ public class RestaurantInfo extends BaseActivity {
         Rest_info_tab1 tab01 = (Rest_info_tab1) manager.findFragmentByTag(Rest_info_tab1.TAG);
         Rest_info_tab2 tab02 = (Rest_info_tab2) manager.findFragmentByTag(Rest_info_tab2.TAG);
         if (tab01 == null) {
-            tab01 = tab01.newInstance();
+            tab01 = tab01.newInstance(mcontext);
             tab01.name = name;
             tab01.cuisine = cuisine;
             tab01.timing = timing;
