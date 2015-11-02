@@ -96,10 +96,6 @@ public class SignUpActivity extends Activity {
 
     protected void redirectMainActivity() {
         final Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-        intent.putExtra("nickName",nickName);
-        intent.putExtra("profileImgURL",profileImageURL);
-        intent.putExtra("thumbnailURL",thumbnailURL);
-        intent.putExtra("countryISO",countryISO);
         startActivity(intent);
         finish();
     }

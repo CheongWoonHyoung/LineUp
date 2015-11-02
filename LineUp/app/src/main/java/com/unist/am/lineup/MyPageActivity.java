@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -11,6 +12,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.kakao.auth.APIErrorResult;
+import com.kakao.usermgmt.MeResponseCallback;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.UserProfile;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -34,7 +39,8 @@ public class MyPageActivity extends BaseActivity_myPage {
     LinearLayout BackBtn;
 
     String nickName;
-    String profileImgURL;
+    String profileImageURL;
+    String thumbnailURL;
 
     TextView cus_name;
     ImageView cus_profile;
@@ -44,11 +50,10 @@ public class MyPageActivity extends BaseActivity_myPage {
         super.onCreate(savedInstanceState);
         setContentView(com.unist.am.lineup.R.layout.activity_mypage);
         Intent profile_data = getIntent();
-        nickName = profile_data.getExtras().getString("nickName");
-        profileImgURL=profile_data.getExtras().getString("profileImgURL");
+        requestMe();
         cus_name = (TextView) findViewById(R.id.profile_name);
         cus_profile = (ImageView) findViewById(R.id.profile);
-        //cus_name.setText(nickName);
+        cus_name.setText(nickName);
         //Picasso.with(this).load(profileImgURL).resize(120,120).into(cus_profile);
         final View header = findViewById(R.id.my_page_header);
         final TabsLayout_myPage tabs = findView(R.id.mypage_tabs);
@@ -145,5 +150,43 @@ public class MyPageActivity extends BaseActivity_myPage {
         Collections.addAll(list, tab01, tab02, tab03, tab04);
 
         return list;
+    }
+    private void requestMe() {
+        UserManagement.requestMe(new MeResponseCallback() {
+
+            @Override
+            public void onSuccess(final UserProfile userProfile) {
+                Log.d("SUCCESS", "UserProfile : " + userProfile);
+                userProfile.saveUserToCache();
+                nickName = userProfile.getNickname();
+                profileImageURL = userProfile.getProfileImagePath();
+                thumbnailURL = userProfile.getThumbnailImagePath();
+            }
+
+            @Override
+            public void onNotSignedUp() {
+
+            }
+
+            @Override
+            public void onSessionClosedFailure(final APIErrorResult errorResult) {
+
+                redirectLoginActivity();
+            }
+
+            @Override
+            public void onFailure(final APIErrorResult errorResult) {
+                if (errorResult.getErrorCodeInt() == -777) {
+                    finish();
+                } else {
+                    redirectLoginActivity();
+                }
+            }
+        });
+    }
+    protected void redirectLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
