@@ -13,7 +13,7 @@
             android:layout_height="60dp">
             <LinearLayout
                 android:id="@+id/backBtn"
-                android:background="@color/white"
+                android:background="@anim/ripple"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:gravity="center"
@@ -30,7 +30,7 @@
                 android:layout_weight="1">
             </View>
             <LinearLayout
-                android:background="@color/white"
+                android:background="@anim/ripple"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:gravity="center"

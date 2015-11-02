@@ -6,6 +6,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,15 +29,29 @@ import ru.noties.scrollable.ScrollableLayout;
 public class MyPageActivity extends BaseActivity_myPage {
     private static final String ARG_LAST_SCROLL_Y = "arg.LastScrollY";
     private ScrollableLayout mScrollableLayout;
-    Button settingBtn;
-    Button BackBtn;
+
+    LinearLayout settingBtn;
+    LinearLayout BackBtn;
+
+    String nickName;
+    String profileImgURL;
+
+    TextView cus_name;
+    ImageView cus_profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.unist.am.lineup.R.layout.activity_mypage);
+        Intent profile_data = getIntent();
+        nickName = profile_data.getExtras().getString("nickName");
+        profileImgURL=profile_data.getExtras().getString("profileImgURL");
+        cus_name = (TextView) findViewById(R.id.profile_name);
+        cus_profile = (ImageView) findViewById(R.id.profile);
+        //cus_name.setText(nickName);
+        //Picasso.with(this).load(profileImgURL).resize(120,120).into(cus_profile);
         final View header = findViewById(R.id.my_page_header);
-        final TabsLayout tabs = findView(R.id.mypage_tabs);
+        final TabsLayout_myPage tabs = findView(R.id.mypage_tabs);
 
 
         // tab 부분
@@ -80,8 +100,9 @@ public class MyPageActivity extends BaseActivity_myPage {
         }
 
         // header 부분
-        settingBtn = (Button) header.findViewById(R.id.settingBtn);
-        BackBtn = (Button) header.findViewById(R.id.backBtn);
+
+        settingBtn = (LinearLayout) header.findViewById(R.id.settingBtn);
+        BackBtn = (LinearLayout) header.findViewById(R.id.backBtn);
         settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,8 +116,6 @@ public class MyPageActivity extends BaseActivity_myPage {
                 finish();
             }
         });
-
-
     }
     @Override
     public void onSaveInstanceState(Bundle outState) {

@@ -12,9 +12,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 public class Rest_info_tab1 extends BaseFragment {
 
@@ -28,12 +31,23 @@ public class Rest_info_tab1 extends BaseFragment {
     Double x_coordinate = null;
     Double y_coordinate = null;
     String phone_num = null;
-    String dummyname;
+    String dummyname=null;
+    String username=null;
+
+
+    ImageView resinfo_image;
+    TextView resinfo_name;
+    TextView resinfo_cuisine;
+    TextView resinfo_cuisine2;
+    TextView resinfo_timing;
+    TextView resinfo_location;
+    TextView resinfo_phone_num;
+    TextView resinfo_webpage;
     Context parent_context;
     Menu_Dialog menuDialog;
 
     RelativeLayout go_to_map_btn;
-    Button menu;
+    LinearLayout menu;
     public static Rest_info_tab1 newInstance(Context context){
         final Rest_info_tab1 fragment = new Rest_info_tab1();
         fragment.parent_context = context;
@@ -41,11 +55,34 @@ public class Rest_info_tab1 extends BaseFragment {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        name=getArguments().getString("name");
+        cuisine=getArguments().getString("cuisine");
+        timing=getArguments().getString("timing");
+        location=getArguments().getString("location");
+        x_coordinate=getArguments().getDouble("x_coordinate");
+        y_coordinate=getArguments().getDouble("y_coordinate");
+        phone_num=getArguments().getString("phone_num");
+        dummyname=getArguments().getString("dummy_name");
+        username=getArguments().getString("username");
+
+
+
+
+
         final View view = inflater.inflate(R.layout.res_info_tab1, parent, false);
+        resinfo_timing = (TextView) view.findViewById(R.id.res_time);
+        resinfo_cuisine= (TextView) view.findViewById(R.id.res_cuisine);
+        resinfo_location=(TextView) view.findViewById(R.id.res_location);
+        resinfo_phone_num=(TextView)view.findViewById(R.id.res_phonenum);
+
+        resinfo_timing.setText(timing);
+        resinfo_cuisine.setText(cuisine);
+        resinfo_location.setText(location);
+        resinfo_phone_num.setText(phone_num);
         mScrollView = findView(view, R.id.scroll_view_tab01);
 
         go_to_map_btn = (RelativeLayout) view.findViewById(R.id.go_to_map);
-        menu = (Button) view.findViewById(R.id.menu);
+        menu = (LinearLayout) view.findViewById(R.id.menu);
 
         go_to_map_btn.setOnClickListener(new View.OnClickListener() {
             @Override

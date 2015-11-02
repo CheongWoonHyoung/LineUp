@@ -1,67 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_height="wrap_content"
+
+    <android.support.v7.widget.Toolbar
+        android:elevation="3dp"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:layout_gravity="left"
+        android:layout_marginLeft="-82dp"
+        android:padding="0dp">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:layout_gravity="left"
-            android:layout_marginLeft="-72dp"
-            android:padding="0dp"
-            android:contentInsetRight="0dp"
-            android:contentInsetStart="0dp"
-            android:contentInsetLeft="0dp"
-            app:contentInsetRight="0dp"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-
-            <ImageButton
-                android:stateListAnimator="@anim/anim"
-                android:background="@anim/ripple"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/search"
-                android:layout_marginLeft="15dp"/>
-            <ImageButton
-                android:id="@+id/mapBtn"
-                android:stateListAnimator="@anim/anim"
-                android:layout_marginLeft="10dp"
-                android:background="@anim/ripple"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/map" />
-            <ImageButton
-                android:id="@+id/mypageBtn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:stateListAnimator="@anim/anim"
-                android:background="@anim/ripple"
-                android:src="@drawable/mypage"
-                android:clickable="true"
-                android:layout_marginRight="15dp"
-                android:layout_gravity="right"/>
-
-        </android.support.v7.widget.Toolbar>
+        <LinearLayout
+            android:stateListAnimator="@anim/anim"
+            android:background="@anim/ripple"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/search"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/mapBtn"
+            android:stateListAnimator="@anim/anim"
+            android:layout_marginLeft="0dp"
+            android:gravity="center"
+            android:background="@anim/ripple"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/map"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/mypageBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:stateListAnimator="@anim/anim"
+            android:background="@anim/ripple"
+            android:gravity="center"
+            android:src="@drawable/mypage"
+            android:clickable="true"
+            android:layout_marginRight="0dp"
+            android:layout_gravity="right">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/mypage"/>
+        </LinearLayout>
 
 
-    </android.support.design.widget.AppBarLayout>
+    </android.support.v7.widget.Toolbar>
+
+
 
     <LinearLayout
-        android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ListView
@@ -71,7 +73,5 @@
 
         </ListView>
     </LinearLayout>
+</LinearLayout>
 
-
-
-</android.support.design.widget.CoordinatorLayout>

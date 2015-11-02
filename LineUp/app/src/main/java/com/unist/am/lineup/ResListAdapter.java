@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 //import com.squareup.picasso.Picasso;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 //import com.squareup.picasso.Picasso;
@@ -46,7 +48,7 @@ public class ResListAdapter extends ArrayAdapter<ResListItem> {
             LayoutInflater vi =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(layoutResId,parent,false);
             holder = new ResListHolder();
-            //holder.res_image = (ImageView) v.findViewById(R.id.res_image);
+            holder.res_image = (ImageView) v.findViewById(R.id.res_image);
             holder.res_name = (TextView) v.findViewById(R.id.res_name);
             //holder.res_cuisine = (TextView) v.findViewById(R.id.res_cuisine);
             holder.res_distance = (TextView) v.findViewById(R.id.res_distance);
@@ -67,7 +69,7 @@ public class ResListAdapter extends ArrayAdapter<ResListItem> {
         Log.e("SIZE", ":" + width_image + " " + height_image + " " + v.getWidth());
 
         if(res_item!=null){
-            //holder.res_imgurl = res_item.res_imgurl;
+            holder.res_imgurl = res_item.res_imgurl;
             holder.res_name.setText(res_item.res_name);
             //holder.res_name.setTypeface(mTypeface);
             //holder.res_cuisine.setText(res_item.res_cuisine);
@@ -77,7 +79,7 @@ public class ResListAdapter extends ArrayAdapter<ResListItem> {
             holder.res_waitpeople.setText(res_item.res_waitpeople);
             //holder.res_imgurl = res_item.res_imgurl;
             holder.res_location.setText(res_item.res_location);
-            //Picasso.with(this.context).load(res_item.res_imgurl).fit().centerCrop().into(holder.res_image);
+            Picasso.with(this.context).load(res_item.res_imgurl).fit().centerCrop().into(holder.res_image);
         }
         //setGlobalFont(parent);
 
@@ -96,8 +98,8 @@ public class ResListAdapter extends ArrayAdapter<ResListItem> {
 
     static class ResListHolder
     {
-        //String res_imgurl;
-        //ImageView res_image;
+        String res_imgurl;
+        ImageView res_image;
         TextView res_name;
         //TextView res_cuisine;
         TextView res_distance;

@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -59,16 +61,46 @@ public class RestaurantInfo extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.res_info);
+        Intent intent = getIntent();
+        img_large = intent.getExtras().getString("img_large");
+        name = intent.getExtras().getString("name");
+        cuisine = intent.getExtras().getString("cuisine");
+        timing = intent.getExtras().getString("timing");
+        location = intent.getExtras().getString("location");
+        phone_num = intent.getExtras().getString("phone_num");
+        x_coordinate = intent.getExtras().getDouble("x_coordinate");
+        y_coordinate = intent.getExtras().getDouble("y_coordinate");
+        username = intent.getExtras().getString("username");
+        dummyname = intent.getExtras().getString("dummy_name");
+        this.setResult(Activity.RESULT_OK);
+
+        resinfo_image = (ImageView) findViewById(R.id.res_image);
+        resinfo_name = (TextView) findViewById(R.id.res_name);
+        resinfo_name.setText(name);
+        frame = (LinearLayout) findViewById(R.id.resinfo_frame);
+
 
         final View header = findViewById(R.id.header);
         final TabsLayout tabs = findView(R.id.tabs);
 
+        Bundle rb = new Bundle();
+        rb.putString("img_large",img_large);
+        rb.putString("name",name);
+        rb.putString("cuisine",cuisine);
+        rb.putString("timing",timing);
+        rb.putString("location",location);
+        rb.putString("phone_num",phone_num);
+        rb.putDouble("x_coordinate", x_coordinate);
+        rb.putDouble("y_coordinate",y_coordinate);
+        rb.putString("username", username);
+        rb.putString("dummy_name",dummyname);
 
         mScrollableLayout = findView(R.id.scrollable_layout);
         mScrollableLayout.setDraggableView(tabs);
         mcontext = this;
         final ViewPager viewPager = findView(R.id.view_pager);
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getResources(), getFragments());
+        adapter.getItem(0).setArguments(rb);
         viewPager.setAdapter(adapter);
 
         tabs.setViewPager(viewPager);
@@ -106,24 +138,17 @@ public class RestaurantInfo extends BaseActivity {
                 }
             });
         }
-        Intent intent = getIntent();
-        img_large = intent.getExtras().getString("img_large");
-        name = intent.getExtras().getString("name");
-        cuisine = intent.getExtras().getString("cuisine");
-        timing = intent.getExtras().getString("timing");
-        location = intent.getExtras().getString("location");
-        phone_num = intent.getExtras().getString("phone_num");
-        x_coordinate = intent.getExtras().getDouble("x_coordinate");
-        y_coordinate = intent.getExtras().getDouble("y_coordinate");
-        username = intent.getExtras().getString("username");
-        dummyname = intent.getExtras().getString("dummy_name");
-        this.setResult(Activity.RESULT_OK);
+
 
         lineup_btn = (Button) header.findViewById(R.id.lineup_btn);
         lineup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),ConfirmActivity.class));
+                Intent intent = new Intent(getApplicationContext(),ConfirmActivity.class);
+                intent.putExtra("username",username);
+                intent.putExtra("resname",name);
+                intent.putExtra("dummy_name",dummyname);
+                startActivity(intent);
             }
         });
 
@@ -163,5 +188,12 @@ public class RestaurantInfo extends BaseActivity {
         Collections.addAll(list, tab01, tab02);
 
         return list;
+    }
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        // TODO Auto-generated method stub
+        height_image = frame.getHeight();
+        width_image = frame.getWidth();
+        Picasso.with(getApplicationContext()).load(img_large).resize(width_image, height_image).centerCrop().into(resinfo_image);
     }
 }
