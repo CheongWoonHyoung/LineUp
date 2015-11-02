@@ -37,6 +37,7 @@
                 android:src="@drawable/search"
                 android:layout_marginLeft="15dp"/>
             <ImageButton
+                android:id="@+id/mapBtn"
                 android:stateListAnimator="@anim/anim"
                 android:layout_marginLeft="10dp"
                 android:background="@color/white"
@@ -44,6 +45,7 @@
                 android:layout_height="50dp"
                 android:src="@drawable/map" />
             <ImageButton
+                android:id="@+id/mypageBtn"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:stateListAnimator="@anim/anim"
@@ -62,11 +64,12 @@
         android:layout_marginTop="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ScrollView
+        <ListView
+            android:id="@+id/res_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </ScrollView>
+        </ListView>
     </LinearLayout>
 
 
