@@ -56,20 +56,26 @@ public class MapActivity_all_reslist extends Activity implements MapView.POIItem
         Log.e("Main_Map",String.valueOf(Items.size()));
 
 
-        final MapView mapView = new MapView(this);
-        mapView.setDaumMapApiKey("c139894fdfab4e242e1789b34b7fd34c");
-        ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view_restlist);
-        mapViewContainer.addView(mapView);
-        MapView.setMapTilePersistentCacheEnabled(true);
+        try {
 
-        mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
-        mapView.setHDMapTileEnabled(true);
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(lat, lon), true);
-        mapView.setZoomLevel(2, true);
-        mapView.setShowCurrentLocationMarker(true);
-        mapView.setPOIItemEventListener(this);
+            final MapView mapView = new MapView(this);
+            mapView.setDaumMapApiKey("c139894fdfab4e242e1789b34b7fd34c");
+            ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view_restlist);
+            mapViewContainer.addView(mapView);
+            MapView.setMapTilePersistentCacheEnabled(true);
 
-        addMarker(mapView);
+            mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
+            mapView.setHDMapTileEnabled(true);
+            mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(Items.get(0).res_x_coordinate, Items.get(0).res_y_coordinate), true);
+            mapView.setZoomLevel(2, true);
+            mapView.setShowCurrentLocationMarker(true);
+            mapView.setPOIItemEventListener(this);
+
+            addMarker(mapView);
+        }
+        catch (Exception e){
+            Log.e("Main_Map",e.toString());
+        }
 
 
     }
