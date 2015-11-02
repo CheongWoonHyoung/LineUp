@@ -115,6 +115,15 @@
     <orderEntry type="library" exported="" name="auth-1.1.2" level="project" />
     <orderEntry type="library" exported="" name="usermgmt-1.1.2" level="project" />
     <orderEntry type="library" exported="" name="jackson-databind-2.3.1" level="project" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    <orderEntry type="library" exported="" name="recyclerview-v7-23.1.0" level="project" />
+    <orderEntry type="library" exported="" name="multidex-1.0.1" level="project" />
+=======
+>>>>>>> bdb2a813ac10919a82af468371245ca828101d76
+    <orderEntry type="library" exported="" name="async-http-client-1.8.3" level="project" />
+>>>>>>> 7539d1f3c623f6b263c8f0ac1a58fbb31804ad45
     <orderEntry type="library" exported="" name="netty-3.9.0.Final" level="project" />
     <orderEntry type="library" exported="" name="async-http-client-1.8.3" level="project" />
     <orderEntry type="library" exported="" name="jackson-annotations-2.3.0" level="project" />
