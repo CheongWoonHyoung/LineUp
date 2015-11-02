@@ -89,6 +89,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MapActivity.class);
+                intent.putExtra("flag",true);
+                intent.putExtra("lat",37.557627);
+                intent.putExtra("lon", 126.936976);
                 startActivity(intent);
             }
         });
