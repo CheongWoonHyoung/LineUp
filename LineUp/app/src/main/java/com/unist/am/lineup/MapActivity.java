@@ -45,11 +45,11 @@ public class MapActivity extends Activity implements LocationListener, MapView.P
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
     protected LocationManager locationManager;
-
+/*
     public MapActivity(Context context){
         this.mContext = context;
     }
-
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
