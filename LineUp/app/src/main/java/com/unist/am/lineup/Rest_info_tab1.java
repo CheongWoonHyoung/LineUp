@@ -94,7 +94,7 @@ public class Rest_info_tab1 extends BaseFragment {
                 startActivityForResult(map_intent,1);
             }
         });
-        menuDialog = new Menu_Dialog(parent_context,name);
+        menuDialog = new Menu_Dialog(parent_context,dummyname);
         menuDialog.setTitle("메뉴");
         menuDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override

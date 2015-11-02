@@ -2,6 +2,7 @@ package com.unist.am.lineup;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Location;
@@ -33,21 +34,21 @@ public class MapActivity extends Activity implements LocationListener, MapView.P
     boolean isGPSEnabled = false;
     boolean isNetworkEnabled = false;
     boolean isGetLocation = false;
-    FrameLayout information;
+ //   FrameLayout information;
 
 
     Location location;
     double lat;
     double lon;
     Intent get_flag_intent;
-
+    Context mContext;
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
     protected LocationManager locationManager;
 
-    /*public MapActivity(Context context){
+    public MapActivity(Context context){
         this.mContext = context;
-    }*/
+    }
 
 
     @Override
@@ -66,6 +67,7 @@ public class MapActivity extends Activity implements LocationListener, MapView.P
             if (get_flag_intent.getExtras().getBoolean("flag")) {
                 lat = get_flag_intent.getExtras().getDouble("lat");
                 lon = get_flag_intent.getExtras().getDouble("lon");
+                Log.e("Location",String.valueOf(lat) + "\t" + String.valueOf(lon));
             } else {
                 getLocation();
             }
@@ -87,7 +89,7 @@ public class MapActivity extends Activity implements LocationListener, MapView.P
         mapView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                information.setVisibility(View.GONE);
+     //           information.setVisibility(View.GONE);
                 return false;
             }
         });
@@ -95,7 +97,7 @@ public class MapActivity extends Activity implements LocationListener, MapView.P
         mapView.setPOIItemEventListener(this);
   //      Toast.makeText(getApplicationContext(), "위도: " + lat + "경도: " + lon, Toast.LENGTH_LONG).show();
         addMarker(mapView);
-        information.bringToFront();
+ //       information.bringToFront();
 
 
     }
@@ -109,7 +111,7 @@ public class MapActivity extends Activity implements LocationListener, MapView.P
         location = poiItem.getMapPoint();
         Log.d("LOC", " " + location);
         mapView.moveCamera(CameraUpdateFactory.newMapPoint(location));
-        information.setVisibility(View.VISIBLE);
+  //      information.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -131,7 +133,7 @@ public class MapActivity extends Activity implements LocationListener, MapView.P
         MapPOIItem marker = new MapPOIItem();
         marker.setShowCalloutBalloonOnTouch(true);
         marker.setShowDisclosureButtonOnCalloutBalloon(false);
-        marker.setItemName("Default Marker");
+        marker.setItemName("레스토랑");
         marker.setTag(0);
         marker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat, lon));
         marker.setMarkerType(MapPOIItem.MarkerType.RedPin);
