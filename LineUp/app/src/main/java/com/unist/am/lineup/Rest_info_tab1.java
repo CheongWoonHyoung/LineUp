@@ -13,11 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-<<<<<<< HEAD
 import android.widget.ImageView;
-=======
 import android.widget.LinearLayout;
->>>>>>> design_5
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
