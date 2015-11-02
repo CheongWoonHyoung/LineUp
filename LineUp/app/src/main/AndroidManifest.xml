@@ -40,6 +40,7 @@
         <activity android:name=".LoginActivity" >
         </activity>
         <activity android:name=".MapActivity" />
+        <activity android:name="MapActivity_all_reslist"/>
         <activity android:name=".SignUpActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
