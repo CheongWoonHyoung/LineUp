@@ -53,6 +53,8 @@ public class MapActivity_all_reslist extends Activity implements MapView.POIItem
         Items = new ArrayList<ResListItem>((ArrayList<ResListItem>)mintent.getExtras().get("items"));
         nickname = mintent.getExtras().getString("username");
 
+        Log.e("Main_Map",String.valueOf(Items.size()));
+
 
         final MapView mapView = new MapView(this);
         mapView.setDaumMapApiKey("c139894fdfab4e242e1789b34b7fd34c");
