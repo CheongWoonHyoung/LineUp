@@ -54,6 +54,7 @@ public class Menu_Dialog extends Dialog implements View.OnTouchListener {
         items = new ArrayList<Res_menu_item>();
         adapter = new Res_menu_adapter(mcontext,R.layout.res_menu_item,items);
         mlist.setEnabled(false);
+        Log.e("resname",res_name);
         new HttpPostRequest().execute("");
         Cancel.setOnTouchListener(this);
     }

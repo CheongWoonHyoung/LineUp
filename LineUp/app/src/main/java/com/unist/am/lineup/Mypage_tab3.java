@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,7 +74,7 @@ public class Mypage_tab3 extends BaseFragment_myPage {
         if(isQueue){
              view = inflater.inflate(R.layout.mypage_tab03_reserv, parent, false);
             mScrollView = findView(view, R.id.scroll_view_my_tab03);
-            TextView cancel_btn = (TextView) view.findViewById(R.id.cancel_btn);
+            RelativeLayout cancel_btn = (RelativeLayout) view.findViewById(R.id.cancel_btn);
             /*v = inflater.inflate(R.layout.tab2_reservation_info,container,false);
             resrv_time = (TextView) v.findViewById(R.id.resrv_time);
             resrv_rname= (TextView) v.findViewById(R.id.resrv_rname);

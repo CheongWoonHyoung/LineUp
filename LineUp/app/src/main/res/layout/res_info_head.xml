@@ -115,7 +115,7 @@
                         android:textSize="13dp"
                         android:textStyle="bold"
                         android:gravity="center"
-                        android:textColor="#BDBDBD"/>
+                        android:textColor="#ADADAD"/>
                 </LinearLayout>
             </LinearLayout>
 
@@ -128,16 +128,25 @@
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:gravity="center">
-                <Button
+                <RelativeLayout
                     android:id="@+id/lineup_btn"
-                    android:background="@drawable/lineup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="@string/lineup"
                     android:gravity="center"
-                    android:textStyle="bold"
-                    android:textSize="15dp"
-                    android:textColor="@color/black"/>
+                    android:textColor="@color/black">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/lineup"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="@string/lineup"
+                        android:gravity="center"
+                        android:textSize="10dp"
+                        android:textStyle="bold"/>
+                </RelativeLayout>
 
             </LinearLayout>
         </LinearLayout>
