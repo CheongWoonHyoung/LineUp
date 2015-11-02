@@ -12,6 +12,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:layout_gravity="left"
+            android:elevation="3dp"
             android:layout_marginLeft="-82dp"
             android:padding="0dp">
 
