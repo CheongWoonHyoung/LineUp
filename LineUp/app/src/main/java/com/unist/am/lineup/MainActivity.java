@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        readProfile();
+        //readProfile();
 
         btn_mypage = (ImageButton) findViewById(R.id.mypageBtn);
         btn_map = (ImageButton) findViewById(R.id.mapBtn);
@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         // layout_img = (RelativeLayout) v.findViewById(R.id.layout_large_img);
         items = new ArrayList<ResListItem>();
         adapter = new ResListAdapter(this,R.layout.res_list_item,items);
-        res_listview.setEnabled(false);
+        //res_listview.setEnabled(false);
         new getResInfo().execute("");
         res_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

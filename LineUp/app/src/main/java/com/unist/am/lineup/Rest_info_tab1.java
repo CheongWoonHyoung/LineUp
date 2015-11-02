@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
@@ -33,7 +34,7 @@ public class Rest_info_tab1 extends BaseFragment {
     Menu_Dialog menuDialog;
 
     RelativeLayout go_to_map_btn;
-    Button menu;
+    LinearLayout menu;
     public static Rest_info_tab1 newInstance(Context context){
         final Rest_info_tab1 fragment = new Rest_info_tab1();
         fragment.parent_context = context;
@@ -45,7 +46,7 @@ public class Rest_info_tab1 extends BaseFragment {
         mScrollView = findView(view, R.id.scroll_view_tab01);
 
         go_to_map_btn = (RelativeLayout) view.findViewById(R.id.go_to_map);
-        menu = (Button) view.findViewById(R.id.menu);
+        menu = (LinearLayout) view.findViewById(R.id.menu);
 
         go_to_map_btn.setOnClickListener(new View.OnClickListener() {
             @Override
