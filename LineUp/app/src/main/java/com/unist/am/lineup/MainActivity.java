@@ -66,6 +66,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent profile_data = getIntent();
+        nickName=profile_data.getExtras().getString("nickName");
+        profileImageURL=profile_data.getExtras().getString("profileImageURL");
+        thumbnailURL=profile_data.getExtras().getString("thumbnailURL");
+        //countryISO=profile_data.getExtras().getString("countryISO");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -181,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 nickName = talkProfile.getNickName();
                 profileImageURL = talkProfile.getProfileImageURL();
                 thumbnailURL = talkProfile.getThumbnailURL();
-                countryISO = talkProfile.getCountryISO();
+                //countryISO = talkProfile.getCountryISO();
                 // display
                 Log.d("OPEND", "onHttpSuccess " + nickName);
                 res_listview.setEnabled(true);

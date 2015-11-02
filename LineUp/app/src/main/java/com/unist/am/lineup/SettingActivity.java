@@ -24,12 +24,12 @@ public class SettingActivity extends Activity implements View.OnClickListener{
 
         setContentView(R.layout.setting);
 
-        pushAlarm.setOnClickListener(new View.OnClickListener() {
+        /*pushAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
-        });
+        });*/
         pushAlarm.setOnClickListener(this);
         couponAlarm.setOnClickListener(this);
         versionBtn.setOnClickListener(this);

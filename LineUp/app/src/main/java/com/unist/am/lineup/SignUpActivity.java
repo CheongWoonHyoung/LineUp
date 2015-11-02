@@ -39,6 +39,11 @@ public class SignUpActivity extends Activity {
     private String regid;
     private Context context;
 
+    String nickName;
+    String profileImageURL ;
+    String thumbnailURL ;
+    String countryISO ;
+
     /**
      * Main으로 넘길지 가입 페이지를 그릴지 판단하기 위해 me를 호출한다.
      * @param savedInstanceState 기존 session 정보가 저장된 객체
@@ -90,7 +95,11 @@ public class SignUpActivity extends Activity {
     }
 
     protected void redirectMainActivity() {
-        final Intent intent = new Intent(this, MainActivity.class);
+        final Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+        intent.putExtra("nickName",nickName);
+        intent.putExtra("profileImgURL",profileImageURL);
+        intent.putExtra("thumbnailURL",thumbnailURL);
+        intent.putExtra("countryISO",countryISO);
         startActivity(intent);
         finish();
     }
@@ -111,6 +120,9 @@ public class SignUpActivity extends Activity {
             public void onSuccess(final UserProfile userProfile) {
                 Log.d("SUCCESS", "UserProfile : " + userProfile);
                 userProfile.saveUserToCache();
+                nickName=userProfile.getNickname();
+                profileImageURL=userProfile.getProfileImagePath();
+                thumbnailURL=userProfile.getThumbnailImagePath();
                 Log.e("regId",":"+regid);
                 redirectMainActivity();
             }

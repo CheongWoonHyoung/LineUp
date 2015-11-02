@@ -138,6 +138,9 @@ public class RestaurantInfo extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),ConfirmActivity.class);
+                intent.putExtra("username",username);
+                intent.putExtra("resname",name);
+                intent.putExtra("dummy_name",dummyname);
                 startActivity(intent);
             }
         });

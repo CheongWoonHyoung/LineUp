@@ -201,6 +201,10 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String result){
             //finish();
             final Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("nickName",nickName);
+            intent.putExtra("profileImgURL",profileImageURL);
+            intent.putExtra("thumbnailURL",thumbnailURL);
+            intent.putExtra("countryISO",countryISO);
             startActivity(intent);
             finish();
 
