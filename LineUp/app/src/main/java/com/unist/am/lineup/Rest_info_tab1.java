@@ -5,6 +5,7 @@ package com.unist.am.lineup;
  */
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class Rest_info_tab1 extends BaseFragment {
     String phone_num = null;
     String dummyname;
     Context parent_context;
+    Menu_Dialog menuDialog;
 
     RelativeLayout go_to_map_btn;
     Button menu;
@@ -55,12 +57,30 @@ public class Rest_info_tab1 extends BaseFragment {
                 startActivityForResult(map_intent,1);
             }
         });
-        menu.setOnClickListener(new View.OnClickListener() {
+        menuDialog = new Menu_Dialog(parent_context,name);
+        menuDialog.setTitle("메뉴");
+        menuDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
-            public void onClick(View v) {
+            public void onDismiss(DialogInterface dialogInterface) {
 
             }
         });
+        menuDialog.setCanceledOnTouchOutside(false);
+        menuDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+            }
+
+        });
+
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    menuDialog.show();
+                }
+
+
+            });
 
 
 
