@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -41,7 +42,7 @@ public class RestaurantInfo extends BaseActivity {
     String phone_num = null;
     String dummyname;
 
-    Button lineup_btn;
+    RelativeLayout lineup_btn;
 
     ImageView resinfo_image;
     TextView resinfo_name;
@@ -140,7 +141,7 @@ public class RestaurantInfo extends BaseActivity {
         }
 
 
-        lineup_btn = (Button) header.findViewById(R.id.lineup_btn);
+        lineup_btn = (RelativeLayout) header.findViewById(R.id.lineup_btn);
         lineup_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
