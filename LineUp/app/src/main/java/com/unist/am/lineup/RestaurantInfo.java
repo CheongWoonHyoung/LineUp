@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -71,6 +73,11 @@ public class RestaurantInfo extends BaseActivity {
         username = intent.getExtras().getString("username");
         dummyname = intent.getExtras().getString("dummy_name");
         this.setResult(Activity.RESULT_OK);
+
+        resinfo_image = (ImageView) findViewById(R.id.res_image);
+        resinfo_name = (TextView) findViewById(R.id.res_name);
+        resinfo_name.setText(name);
+        frame = (LinearLayout) findViewById(R.id.resinfo_frame);
 
 
         final View header = findViewById(R.id.header);
@@ -181,5 +188,12 @@ public class RestaurantInfo extends BaseActivity {
         Collections.addAll(list, tab01, tab02);
 
         return list;
+    }
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        // TODO Auto-generated method stub
+        height_image = frame.getHeight();
+        width_image = frame.getWidth();
+        Picasso.with(getApplicationContext()).load(img_large).resize(width_image, height_image).centerCrop().into(resinfo_image);
     }
 }

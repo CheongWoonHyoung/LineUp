@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import ru.noties.scrollable.ScrollableLayout;
 public class MyPageActivity extends BaseActivity_myPage {
     private static final String ARG_LAST_SCROLL_Y = "arg.LastScrollY";
     private ScrollableLayout mScrollableLayout;
+
     LinearLayout settingBtn;
     LinearLayout BackBtn;
 
@@ -98,6 +100,7 @@ public class MyPageActivity extends BaseActivity_myPage {
         }
 
         // header 부분
+
         settingBtn = (LinearLayout) header.findViewById(R.id.settingBtn);
         BackBtn = (LinearLayout) header.findViewById(R.id.backBtn);
         settingBtn.setOnClickListener(new View.OnClickListener() {
