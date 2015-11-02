@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -35,8 +36,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    ImageButton btn_mypage;
-    ImageButton btn_map;
+    LinearLayout btn_mypage;
+    LinearLayout btn_map;
     private static final int CALL_REQUEST = 123;
 
     ListView res_listview;
@@ -75,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        btn_mypage = (ImageButton) findViewById(R.id.mypageBtn);
-        btn_map = (ImageButton) findViewById(R.id.mapBtn);
+        btn_mypage = (LinearLayout) findViewById(R.id.mypageBtn);
+        btn_map = (LinearLayout) findViewById(R.id.mapBtn);
         btn_mypage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
