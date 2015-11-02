@@ -19,6 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.kakao.auth.APIErrorResult;
+import com.kakao.auth.Session;
 import com.kakao.kakaotalk.KakaoTalkHttpResponseHandler;
 import com.kakao.kakaotalk.KakaoTalkProfile;
 import com.kakao.kakaotalk.KakaoTalkService;
@@ -60,13 +61,13 @@ public class MainActivity extends AppCompatActivity {
     String profileImageURL ;
     String thumbnailURL ;
     String countryISO ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        readProfile();
 
         btn_mypage = (ImageButton) findViewById(R.id.mypageBtn);
         btn_map = (ImageButton) findViewById(R.id.mapBtn);
@@ -89,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         // layout_img = (RelativeLayout) v.findViewById(R.id.layout_large_img);
         items = new ArrayList<ResListItem>();
         adapter = new ResListAdapter(this,R.layout.res_list_item,items);
-        res_listview.setEnabled(false);
         new getResInfo().execute("");
         res_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

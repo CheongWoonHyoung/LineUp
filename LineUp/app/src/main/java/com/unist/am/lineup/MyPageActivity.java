@@ -31,7 +31,7 @@ public class MyPageActivity extends BaseActivity_myPage {
         super.onCreate(savedInstanceState);
         setContentView(com.unist.am.lineup.R.layout.activity_mypage);
         final View header = findViewById(R.id.my_page_header);
-        final TabsLayout tabs = findView(R.id.mypage_tabs);
+        final TabsLayout_myPage tabs = findView(R.id.mypage_tabs);
 
 
         // tab 부분

@@ -78,8 +78,8 @@ public class LoginActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-       backPressCloseHandler.onBackPressed();
-
+        backPressCloseHandler.onBackPressed();
+        Session.initialize(this);
     }
 
 
