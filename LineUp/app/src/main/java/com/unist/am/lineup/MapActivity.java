@@ -58,42 +58,31 @@ public class MapActivity extends Activity implements LocationListener, MapView.P
         get_flag_intent = getIntent();
 
 
-        information = (FrameLayout) findViewById(R.id.information);
-/*        information.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MapActivity.this, RestaurantInfo.class);
-                intent.putExtra("name","아웃백 스테이크 신촌점");
-                intent.putExtra("cuisine","스테이크, 패밀리 레스토랑");
-                intent.putExtra("timing","11:00 - 22:00");
-                intent.putExtra("img_large","http://52.69.163.43/queuing/img/large/outback_large.png");
-                intent.putExtra("location","서울특별시 서대문구 연세로12길 33 아웃백 스테이크 전문점");
-                intent.putExtra("phone_num","02-3147-1871");
-                intent.putExtra("x_coordinate",37.5592750);
-                intent.putExtra("y_coordinate",126.9387700);
-                intent.putExtra("username","정운");
-                intent.putExtra("dummy_name","outback_sinchon");
+     //   information = (FrameLayout) findViewById(R.id.information);
 
-                startActivity(intent);
+        try {
+
+
+            if (get_flag_intent.getExtras().getBoolean("flag")) {
+                lat = get_flag_intent.getExtras().getDouble("lat");
+                lon = get_flag_intent.getExtras().getDouble("lon");
+            } else {
+                getLocation();
             }
-        });
-*/
-        if(get_flag_intent.getExtras().getBoolean("flag")){
-            lat = get_flag_intent.getExtras().getDouble("lat");
-            lon = get_flag_intent.getExtras().getDouble("lon");
         }
-        else{
-            getLocation();
+        catch (Exception e){
+            Log.e("Map Error",e.toString());
         }
+
         final MapView mapView = new MapView(this);
-        mapView.setDaumMapApiKey("6f34a566bab64437f455521185842b3f");
+        mapView.setDaumMapApiKey("c139894fdfab4e242e1789b34b7fd34c");
         ViewGroup mapViewContainer = (ViewGroup) findViewById(R.id.map_view);
         mapViewContainer.addView(mapView);
         MapView.setMapTilePersistentCacheEnabled(true);
 
         mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
         mapView.setHDMapTileEnabled(true);
-        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(37.557627, 126.936976), true);
+        mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(lat, lon), true);
         mapView.setZoomLevel(2, true);
         mapView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -104,7 +93,7 @@ public class MapActivity extends Activity implements LocationListener, MapView.P
         });
         mapView.setShowCurrentLocationMarker(true);
         mapView.setPOIItemEventListener(this);
-        Toast.makeText(getApplicationContext(), "위도: " + lat + "경도: " + lon, Toast.LENGTH_LONG).show();
+  //      Toast.makeText(getApplicationContext(), "위도: " + lat + "경도: " + lon, Toast.LENGTH_LONG).show();
         addMarker(mapView);
         information.bringToFront();
 
@@ -144,7 +133,7 @@ public class MapActivity extends Activity implements LocationListener, MapView.P
         marker.setShowDisclosureButtonOnCalloutBalloon(false);
         marker.setItemName("Default Marker");
         marker.setTag(0);
-        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(37.556228, 126.934614));
+        marker.setMapPoint(MapPoint.mapPointWithGeoCoord(lat, lon));
         marker.setMarkerType(MapPOIItem.MarkerType.RedPin);
         marker.setSelectedMarkerType(MapPOIItem.MarkerType.BluePin);
 

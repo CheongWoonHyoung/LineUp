@@ -92,7 +92,7 @@ public class Menu_Dialog extends Dialog implements View.OnTouchListener {
                     builder.append(str);
                 }
                 sResult = builder.toString();
-                Log.e("sResult","완료");
+                Log.e(sResult,"완료");
             } catch (Exception e) {
                 e.printStackTrace();
                 Log.e(e.toString(),sResult);
