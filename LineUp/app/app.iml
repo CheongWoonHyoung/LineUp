@@ -115,8 +115,13 @@
     <orderEntry type="library" exported="" name="auth-1.1.2" level="project" />
     <orderEntry type="library" exported="" name="usermgmt-1.1.2" level="project" />
     <orderEntry type="library" exported="" name="jackson-databind-2.3.1" level="project" />
+<<<<<<< HEAD
     <orderEntry type="library" exported="" name="netty-3.9.0.Final" level="project" />
     <orderEntry type="library" exported="" name="async-http-client-1.8.3" level="project" />
+=======
+    <orderEntry type="library" exported="" name="async-http-client-1.8.3" level="project" />
+    <orderEntry type="library" exported="" name="netty-3.9.0.Final" level="project" />
+>>>>>>> design_5
     <orderEntry type="library" exported="" name="jackson-annotations-2.3.0" level="project" />
     <orderEntry type="library" exported="" name="slf4j-api-1.7.5" level="project" />
     <orderEntry type="library" exported="" name="scrollable-1.1.3" level="project" />

@@ -40,14 +40,13 @@
                         android:id="@+id/menu"
                         android:gravity="center"
                         android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_height="50dp"                  android:background="@anim/ripple"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="15dp"
                         android:layout_alignParentRight="true">
                         <ImageView
                             android:layout_width="25dp"
                             android:layout_height="25dp"
-                            android:background="@color/white"
                             android:src="@drawable/menu"/>
                     </LinearLayout>
                 </RelativeLayout>
@@ -80,7 +79,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                             <TextView
-                                android:id="@+id/res_time"
+                                android:id="@+id/time"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
@@ -225,7 +224,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                             <TextView
-                                android:id="@+id/res_cuisine"
+                                android:id="@+id/style"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
@@ -254,7 +253,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                             <TextView
-                                android:id="@+id/res_webpage"
+                                android:id="@+id/homepage"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
@@ -283,7 +282,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                             <TextView
-                                android:id="@+id/res_location"
+                                android:id="@+id/address"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
@@ -312,7 +311,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                             <TextView
-                                android:id="@+id/res_phonenum"
+                                android:id="@+id/phone"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
