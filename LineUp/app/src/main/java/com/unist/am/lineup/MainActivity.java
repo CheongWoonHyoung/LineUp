@@ -80,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MyPageActivity.class);
+                intent.putExtra("nickName",nickName);
+                intent.putExtra("profileImageURL",profileImageURL);
                 startActivity(intent);
             }
         });

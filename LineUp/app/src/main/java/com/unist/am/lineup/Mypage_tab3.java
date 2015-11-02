@@ -7,6 +7,7 @@ package com.unist.am.lineup;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,14 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class Mypage_tab3 extends BaseFragment_myPage {
 
@@ -62,9 +71,9 @@ public class Mypage_tab3 extends BaseFragment_myPage {
         if(manager.returnName().equals("nothing")) isQueue = false;
         else isQueue = true;
         if(isQueue){
-             view = inflater.inflate(R.layout.mypage_tab03, parent, false);
+             view = inflater.inflate(R.layout.mypage_tab03_reserv, parent, false);
             mScrollView = findView(view, R.id.scroll_view_my_tab03);
-            Toast.makeText(mContext,"lineup!",Toast.LENGTH_LONG).show();
+            TextView cancel_btn = (TextView) view.findViewById(R.id.cancel_btn);
             /*v = inflater.inflate(R.layout.tab2_reservation_info,container,false);
             resrv_time = (TextView) v.findViewById(R.id.resrv_time);
             resrv_rname= (TextView) v.findViewById(R.id.resrv_rname);
@@ -78,21 +87,21 @@ public class Mypage_tab3 extends BaseFragment_myPage {
             resrv_rname.setText(manager.returnName());
             resrv_party.setText(manager.returnParty());*/
 
-            /*cancel_btn.setOnClickListener(new View.OnClickListener() {
+            cancel_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     manager = new DBManager_reserv(mContext, "reserv_info.db", null, 1);
                     DBManager_regid manager_regid = new DBManager_regid(mContext,"regid_info.db",null,1);
 
                     Log.e("pass", manager.returnPid());
-                    //new HttpPostRequest().execute("out", manager.returnPid(), manager.returnDummyname(), manager_regid.returnRegid(), nickName);
+                    new lineup_cancel().execute("out", manager.returnPid(), manager.returnDummyname(), manager_regid.returnRegid(), nickName);
                     manager.delete("delete from RESERV_INFO");
                     Intent intent = new Intent(mContext,MainActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     //onCreate(savedInstanceState);
                 }
-            });*/
+            });
 
         }else{
             view = inflater.inflate(R.layout.mypage_tab03, parent, false);
@@ -122,6 +131,56 @@ public class Mypage_tab3 extends BaseFragment_myPage {
     @Override
     public boolean canScrollVertically(int direction) {
         return mScrollView != null && mScrollView.canScrollVertically(direction);
+    }
+
+    private class lineup_cancel extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... info) {
+            String sResult = "Error";
+
+            try {
+                URL url = new URL("http://52.69.163.43/queuing/line_manage.php");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestMethod("POST");
+                String body = "in_out=" + info[0] +"&"
+                        +"priority=" + info[1] + "&"
+                        +"resname=" + info[2] + "&"
+                        +"regid=" + info[3] + "&"
+                        +"method=App" + "&"
+                        +"name=" + info[4] + "&"
+                        +"location=phone";
+
+                Log.e("value",info[0]+" "+info[1]+" "+info[2]);
+
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                osw.write(body);
+                osw.flush();
+
+                InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                BufferedReader reader = new BufferedReader(tmp);
+                StringBuilder builder = new StringBuilder();
+                String str;
+
+                while ((str = reader.readLine()) != null) {
+                    builder.append(str);
+                }
+                sResult     = builder.toString();
+                Log.e("pass", sResult);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return sResult;
+        }
+
+        @Override
+        protected void onPostExecute(String result){
+            Toast.makeText(mContext, "Cancel complete!", Toast.LENGTH_SHORT).show();
+            //manager.delete("delete from RESERV_INFO");
+        }
     }
 }
 

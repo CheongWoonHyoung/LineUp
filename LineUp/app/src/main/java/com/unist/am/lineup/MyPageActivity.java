@@ -6,6 +6,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,10 +30,23 @@ public class MyPageActivity extends BaseActivity_myPage {
     Button settingBtn;
     Button BackBtn;
 
+    String nickName;
+    String profileImgURL;
+
+    TextView cus_name;
+    ImageView cus_profile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.unist.am.lineup.R.layout.activity_mypage);
+        Intent profile_data = getIntent();
+        nickName = profile_data.getExtras().getString("nickName");
+        profileImgURL=profile_data.getExtras().getString("profileImgURL");
+        cus_name = (TextView) findViewById(R.id.profile_name);
+        cus_profile = (ImageView) findViewById(R.id.profile);
+        cus_name.setText(nickName);
+        //Picasso.with(this).load(profileImgURL).resize(120,120).into(cus_profile);
         final View header = findViewById(R.id.my_page_header);
         final TabsLayout_myPage tabs = findView(R.id.mypage_tabs);
 
@@ -95,8 +112,6 @@ public class MyPageActivity extends BaseActivity_myPage {
                 finish();
             }
         });
-
-
     }
     @Override
     public void onSaveInstanceState(Bundle outState) {

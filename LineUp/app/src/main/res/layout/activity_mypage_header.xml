@@ -39,6 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp">
                 <ImageView
+                    android:id="@+id/profile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/bef_kakao"/>
@@ -47,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
+                    android:id="@+id/profile_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="USER"
