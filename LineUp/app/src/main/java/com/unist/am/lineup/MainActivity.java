@@ -5,14 +5,19 @@ import android.content.Intent;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -38,6 +43,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     LinearLayout btn_mypage;
     LinearLayout btn_map;
+    LinearLayout btn_search;
     private static final int CALL_REQUEST = 123;
 
     ListView res_listview;
@@ -63,6 +69,8 @@ public class MainActivity extends AppCompatActivity {
     String thumbnailURL ;
     String countryISO ;
 
+    private DrawerLayout mDrawerLayout;
+    private FrameLayout leftDrawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,9 +83,23 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        btn_search = (LinearLayout) findViewById(R.id.searchBtn);
         btn_mypage = (LinearLayout) findViewById(R.id.mypageBtn);
         btn_map = (LinearLayout) findViewById(R.id.mapBtn);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        leftDrawer = (FrameLayout) findViewById(R.id.lDrawer);
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               if(!leftDrawer.isShown()){
+                   mDrawerLayout.openDrawer(leftDrawer);
+               }
+               else{
+                   mDrawerLayout.closeDrawer(leftDrawer);
+               }
+            }
+        });
         btn_mypage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
