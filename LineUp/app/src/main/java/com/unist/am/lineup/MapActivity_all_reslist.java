@@ -50,8 +50,13 @@ public class MapActivity_all_reslist extends Activity implements MapView.POIItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_rest_list);
         Intent mintent = getIntent();
-        Items = new ArrayList<ResListItem>((ArrayList<ResListItem>)mintent.getExtras().get("items"));
-        nickname = mintent.getExtras().getString("username");
+        try {
+            Items = new ArrayList<ResListItem>((ArrayList<ResListItem>) mintent.getExtras().get("items"));
+            nickname = mintent.getExtras().getString("username");
+        }
+        catch(Exception e){
+            Log.e("Main_Map","Intent : " + e.toString());
+        }
 
         Log.e("Main_Map",String.valueOf(Items.size()));
 
@@ -74,7 +79,7 @@ public class MapActivity_all_reslist extends Activity implements MapView.POIItem
             addMarker(mapView);
         }
         catch (Exception e){
-            Log.e("Main_Map",e.toString());
+            Log.e("Main_Map","mapView settings :  " + e.toString());
         }
 
 
@@ -85,27 +90,34 @@ public class MapActivity_all_reslist extends Activity implements MapView.POIItem
 
 
         Log.d("MAP", "CLICKED");
-        MapPoint location;
-        location = poiItem.getMapPoint();
-        Log.d("LOC", " " + location);
-        for(int i = 0 ; i < Items.size(); i++){
-            if(poiItem.getItemName() == Items.get(i).res_name){
-                Intent intent = new Intent(mcontext, RestaurantInfo.class);
-                intent.putExtra("name",Items.get(i).res_name);
-                intent.putExtra("cuisine",Items.get(i).res_cuisine);
-                intent.putExtra("timing",Items.get(i).res_timing);
-                intent.putExtra("img_large",Items.get(i).res_imgurl);
-                intent.putExtra("location",Items.get(i).res_location);
-                intent.putExtra("phone_num",Items.get(i).res_phone_num);
-                intent.putExtra("x_coordinate",Items.get(i).res_x_coordinate);
-                intent.putExtra("y_coordinate",Items.get(i).res_y_coordinate);
-                intent.putExtra("username",nickname);
-                intent.putExtra("dummy_name", Items.get(i).res_dummyname);
+        MapPoint location = null;
+        try{
 
-                startActivity(intent);
-                break;
+            location = poiItem.getMapPoint();
+            Log.d("LOC", " " + location);
+
+            for (int i = 0; i < Items.size(); i++) {
+                if (poiItem.getItemName() == Items.get(i).res_name) {
+                    Intent intent = new Intent(mcontext, RestaurantInfo.class);
+                    intent.putExtra("name", Items.get(i).res_name);
+                    intent.putExtra("cuisine", Items.get(i).res_cuisine);
+                    intent.putExtra("timing", Items.get(i).res_timing);
+                    intent.putExtra("img_large", Items.get(i).res_imgurl);
+                    intent.putExtra("location", Items.get(i).res_location);
+                    intent.putExtra("phone_num", Items.get(i).res_phone_num);
+                    intent.putExtra("x_coordinate", Items.get(i).res_x_coordinate);
+                    intent.putExtra("y_coordinate", Items.get(i).res_y_coordinate);
+                    intent.putExtra("username", nickname);
+                    intent.putExtra("dummy_name", Items.get(i).res_dummyname);
+
+                    startActivity(intent);
+                    break;
+                }
+
             }
-
+        }
+        catch(Exception e){
+            Log.e("Main_Map", "PollItemSelectedListen : " + e.toString());
         }
         mapView.moveCamera(CameraUpdateFactory.newMapPoint(location));
   //      information.setVisibility(View.VISIBLE);
@@ -127,18 +139,25 @@ public class MapActivity_all_reslist extends Activity implements MapView.POIItem
     }
 
     public void addMarker(MapView mapView) {
-        for(int i = 0 ; i < Items.size(); i++) {
-            MapPOIItem marker = new MapPOIItem();
-            marker.setShowCalloutBalloonOnTouch(true);
-            marker.setShowDisclosureButtonOnCalloutBalloon(false);
-            marker.setItemName(Items.get(i).res_name);
-            marker.setTag(0);
-            marker.setMapPoint(MapPoint.mapPointWithGeoCoord(Items.get(i).res_x_coordinate, Items.get(i).res_y_coordinate));
-            marker.setMarkerType(MapPOIItem.MarkerType.RedPin);
-            marker.setSelectedMarkerType(MapPOIItem.MarkerType.BluePin);
+
+        try {
+
+            for (int i = 0; i < Items.size(); i++) {
+                MapPOIItem marker = new MapPOIItem();
+                marker.setShowCalloutBalloonOnTouch(true);
+                marker.setShowDisclosureButtonOnCalloutBalloon(false);
+                marker.setItemName(Items.get(i).res_name);
+                marker.setTag(0);
+                marker.setMapPoint(MapPoint.mapPointWithGeoCoord(Items.get(i).res_x_coordinate, Items.get(i).res_y_coordinate));
+                marker.setMarkerType(MapPOIItem.MarkerType.RedPin);
+                marker.setSelectedMarkerType(MapPOIItem.MarkerType.BluePin);
 
 
-            mapView.addPOIItem(marker);
+                mapView.addPOIItem(marker);
+            }
+        }
+        catch(Exception e){
+            Log.e("Main_Map", "AddMarker : " + e.toString());
         }
     }
 
