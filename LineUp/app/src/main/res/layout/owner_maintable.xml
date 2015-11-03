@@ -107,6 +107,20 @@
         android:background="#757575"
         android:layout_width="150dp"
         android:layout_height="match_parent">
+        <LinearLayout
+            android:background="@color/maincolor"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="70dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:text="테이블 관리"/>
+        </LinearLayout>
         <ImageView
             android:id="@+id/circle"
             android:layout_marginTop="50dp"
