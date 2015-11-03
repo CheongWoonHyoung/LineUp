@@ -40,7 +40,8 @@
                         android:id="@+id/menu"
                         android:gravity="center"
                         android:layout_width="50dp"
-                        android:layout_height="50dp"                  android:background="@anim/ripple"
+                        android:layout_height="50dp"
+                        android:background="@anim/ripple"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="15dp"
                         android:layout_alignParentRight="true">
@@ -79,7 +80,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                             <TextView
-                                android:id="@+id/time"
+                                android:id="@+id/res_time"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
@@ -224,7 +225,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                             <TextView
-                                android:id="@+id/style"
+                                android:id="@+id/res_cuisine"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
@@ -253,7 +254,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                             <TextView
-                                android:id="@+id/homepage"
+                                android:id="@+id/res_webpage"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
@@ -282,7 +283,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                             <TextView
-                                android:id="@+id/address"
+                                android:id="@+id/res_location"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
@@ -311,7 +312,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent">
                             <TextView
-                                android:id="@+id/phone"
+                                android:id="@+id/res_phonenum"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"

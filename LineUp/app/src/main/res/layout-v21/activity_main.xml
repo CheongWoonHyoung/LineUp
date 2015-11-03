@@ -17,6 +17,7 @@
         android:padding="0dp">
 
         <LinearLayout
+            android:id="@+id/searchBtn"
             android:stateListAnimator="@anim/anim"
             android:background="@anim/ripple"
             android:layout_width="50dp"
@@ -63,15 +64,30 @@
 
 
 
-    <LinearLayout
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ListView
-            android:id="@+id/res_list"
+        android:layout_height="match_parent"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <ListView
+                android:id="@+id/res_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </ListView>
-    </LinearLayout>
+            </ListView>
+        </LinearLayout>
+        <FrameLayout
+            android:id="@+id/lDrawer"
+            android:layout_gravity= "start"
+            android:layout_width= "240.0dip"
+            android:layout_height="fill_parent"
+            android:clickable="true"
+            android:background="#d4d4d4">
+
+        </FrameLayout>
+    </android.support.v4.widget.DrawerLayout>
 </LinearLayout>
 

@@ -111,10 +111,9 @@ public class MainActivity extends AppCompatActivity {
         btn_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                intent.putExtra("flag",true);
-                intent.putExtra("lat",37.557627);
-                intent.putExtra("lon", 126.936976);
+                Intent intent = new Intent(MainActivity.this, MapActivity_all_reslist.class);
+                intent.putExtra("items",items);
+                intent.putExtra("username", nickName);
                 startActivity(intent);
             }
         });

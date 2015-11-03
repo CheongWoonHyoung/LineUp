@@ -7,6 +7,6 @@
     <item android:state_selected="true"
         android:color="@color/white" />
 
-    <item android:color="@color/black" />
+    <item android:color="@color/white_disabled" />
 
 </selector>
