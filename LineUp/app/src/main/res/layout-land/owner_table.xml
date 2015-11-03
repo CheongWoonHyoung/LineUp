@@ -19,7 +19,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
                 <RelativeLayout
-                    android:background="@drawable/round_box_table"
+                    android:background="@drawable/round_box_ing"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <ImageView
