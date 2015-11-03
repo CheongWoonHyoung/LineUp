@@ -115,6 +115,7 @@ public class MyPageActivity extends BaseActivity_myPage {
         // header 부분
 
         settingBtn = (LinearLayout) header.findViewById(R.id.settingBtn);
+
         //BackBtn = (LinearLayout) header.findViewById(R.id.backBtn);
         settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,6 +130,7 @@ public class MyPageActivity extends BaseActivity_myPage {
                 finish();
             }
         });*/
+
     }
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -172,7 +174,8 @@ public class MyPageActivity extends BaseActivity_myPage {
                 cus_name = (TextView) findViewById(R.id.profile_name);
                 cus_profile = (ImageView) findViewById(R.id.profile);
                 cus_name.setText(nickName);
-                //Picasso.with(this).load(profileImgURL).resize(120,120).into(cus_profile);
+                Log.e(thumbnailURL,"thumnnail "+profileImageURL);
+                Picasso.with(MyPageActivity.this).load(thumbnailURL).centerCrop().into(cus_profile);
             }
 
             @Override
@@ -209,7 +212,7 @@ public class MyPageActivity extends BaseActivity_myPage {
             Log.e("CHECK", "onReceive");
             manager.delete("delete from RESERV_INFO");
             adapter.notifyDataSetChanged();
-            startActivity(new Intent(MyPageActivity.this,MyPageActivity.class));
+            startActivity(new Intent(MyPageActivity.this, MyPageActivity.class));
             finish();
         }
     };

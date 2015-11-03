@@ -46,6 +46,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    private BackPressCloseHandler backPressCloseHandler;
     LinearLayout btn_mypage;
     LinearLayout btn_map;
     LinearLayout btn_search;
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        backPressCloseHandler = new BackPressCloseHandler(this);
         requestMe();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -380,5 +382,10 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         Log.e("CHECK", "main onPause");
         getApplicationContext().unregisterReceiver(mReceiver);
+    }
+    @Override
+    public void onBackPressed() {
+        //super.onBackPressed();
+        backPressCloseHandler.onBackPressed();
     }
 }
