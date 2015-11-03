@@ -97,13 +97,14 @@ public class GcmIntentService extends IntentService
         context.sendBroadcast(intent);
     }
     private void updateMyActivity_customer_update(Context context,String update){
-
         Intent intent = new Intent("up");
         intent.putExtra("update", update);
         Log.e("CHECK", "update " + update);
 
         DBManager_update manager = new DBManager_update(getApplicationContext(), "update_info2.db", null, 1);
         manager.insert("insert into UPDATE_INFO values ('"+update+"')");
+        sendNotification("Notification");
+
 
         context.sendBroadcast(intent);
     }
@@ -114,11 +115,10 @@ public class GcmIntentService extends IntentService
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("msg", msg);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher).setContentTitle("Queuing Notification").setStyle(
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.mipmap.ic_launcher).setContentTitle("LineUp").setStyle(
                 new NotificationCompat.BigTextStyle().bigText(msg)).setContentText(msg).setAutoCancel(true).setVibrate(new long[]{0, 500});
 
         mBuilder.setContentIntent(contentIntent);

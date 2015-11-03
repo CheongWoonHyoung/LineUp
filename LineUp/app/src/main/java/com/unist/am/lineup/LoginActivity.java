@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.kakao.auth.APIErrorResult;
@@ -44,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     String profileImageURL ;
     String thumbnailURL ;
     String countryISO ;
+    ImageView owner_btn;
 
 
 
@@ -66,6 +68,14 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         }
+        owner_btn = (ImageView) findViewById(R.id.owner_btn);
+        owner_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,OwnerActivity.class));
+                finish();
+            }
+        });
 
 
     }

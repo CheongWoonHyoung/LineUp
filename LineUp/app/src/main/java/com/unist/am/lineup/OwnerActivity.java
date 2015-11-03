@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -37,30 +38,33 @@ public class OwnerActivity extends AppCompatActivity {
     ListView cus_list;
     ReservDialog reservDialog;
     TextView adduser_btn;
-
+    TextView offcancel_btn;
+    TextView table_manage;
     String user_regid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_owner);
+        setContentView(R.layout.owner_maintable);
 
         adduser_btn = (TextView) findViewById(R.id.adduser_btn);
+        offcancel_btn=(TextView) findViewById(R.id.offcancel_btn);
+        table_manage =(TextView) findViewById(R.id.table_manage);
+
         items = new ArrayList<>();
-        adapter = new CusListAdapter(getApplicationContext(),R.layout.activity_owner_item,items);
+        adapter = new CusListAdapter(getApplicationContext(),R.layout.owner_listitem,items);
         cus_list = (ListView) findViewById(R.id.cus_list);
         cus_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("pass", "regid: " + items.get(position).cus_regid);
+                /*Log.e("pass", "regid: " + items.get(position).cus_regid);
                 new HttpPostRequest_2().execute("out", items.get(position).cus_priority, owner_name, "", items.get(position).cus_name, items.get(position).cus_method, items.get(position).cus_regid);
                 items.remove(position);
-                adapter.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();*/
             }
         });
         new HttpPostRequest().execute();
         reservDialog = new ReservDialog(this);
-        reservDialog.setTitle("Your Information");
         reservDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
@@ -71,7 +75,7 @@ public class OwnerActivity extends AppCompatActivity {
         reservDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
-                if(reservDialog.focused==true) {
+                if (reservDialog.focused == true) {
                     if (items.size() == 0) {
                         items.add(new CusListItem("1", reservDialog._name, reservDialog._number, "13:00", "OFFLINE", ""));
 
@@ -83,15 +87,25 @@ public class OwnerActivity extends AppCompatActivity {
 
 
                     new HttpPostRequest_2().execute("in", String.valueOf(Integer.parseInt(items.get(items.size() - 1).cus_priority) + 1), owner_name, reservDialog._number, reservDialog._name, "OFFLINE", "");
-                    reservDialog.focused=false;
+                    reservDialog.focused = false;
                 }
             }
         });
+        ViewGroup.LayoutParams params = reservDialog.getWindow().getAttributes();
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        reservDialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
         adduser_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 reservDialog.show();
 
+            }
+        });
+        table_manage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //start tablemanage activity
             }
         });
 

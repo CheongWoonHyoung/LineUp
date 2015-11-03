@@ -97,6 +97,7 @@
 
             </LinearLayout>
             <ListView
+                android:id="@+id/cus_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -113,6 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="70dp">
             <TextView
+                android:id="@+id/table_manage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/black"
@@ -129,6 +131,7 @@
             android:layout_height="70dp"
             android:src="@drawable/round_logo"/>
         <TextView
+            android:id="@+id/adduser_btn"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:gravity="center"
@@ -146,6 +149,7 @@
             android:layout_height="70dp"
             android:src="@drawable/round_logo"/>
         <TextView
+            android:id="@+id/offcancel_btn"
             android:textStyle="bold"
             android:textColor="@color/black"
             android:gravity="center"

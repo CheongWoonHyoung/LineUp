@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -18,7 +19,7 @@ import android.widget.TextView;
  */
 public class ReservDialog extends Dialog implements View.OnTouchListener {
     public EditText name,phone,number;
-    public TextView Ok,Cancel;
+    public RelativeLayout Ok,Cancel;
     public boolean focused;
     private Typeface mTypeface;
     public String _name,_phone,_number;
@@ -29,18 +30,17 @@ public class ReservDialog extends Dialog implements View.OnTouchListener {
     @Override
     protected  void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dialog_reserve);
+        setContentView(R.layout.owner_resrvation_page);
         focused = false;
         name = (EditText) findViewById(R.id.input_name);
         phone = (EditText) findViewById(R.id.input_phoneno);
-        number = (EditText) findViewById(R.id.input_number);
-        Ok = (TextView) findViewById(R.id.Ok);
-        Cancel = (TextView) findViewById(R.id.Cancel);
+        Ok = (RelativeLayout) findViewById(R.id.Ok);
+        Cancel = (RelativeLayout) findViewById(R.id.Cancel);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!(hasFocus || phone.isFocused() || number.isFocused())) {
+                if (!(hasFocus || phone.isFocused())) {
                     hideKeyboard(v);
                     Log.d("FOCUS", "FOCUS = " + getCurrentFocus());
                 }
@@ -49,21 +49,13 @@ public class ReservDialog extends Dialog implements View.OnTouchListener {
         phone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!(hasFocus || phone.isFocused() || number.isFocused())) {
+                if (!(hasFocus || phone.isFocused() )) {
                     hideKeyboard(v);
                     Log.d("FOCUS", "FOCUS = " + getCurrentFocus());
                 }
             }
         });
-        number.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!(hasFocus || phone.isFocused() || number.isFocused())) {
-                    hideKeyboard(v);
-                    Log.d("FOCUS", "FOCUS = " + getCurrentFocus());
-                }
-            }
-        });
+
         /*
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(name.getWindowToken(),0);
@@ -80,16 +72,13 @@ public class ReservDialog extends Dialog implements View.OnTouchListener {
             Log.e("ok", "z");
             _name=name.getText().toString();
             _phone=phone.getText().toString();
-            _number=number.getText().toString();
             name.setText(null);
             phone.setText(null);
-            number.setText(null);
             name.setHint("Input your name");
             phone.setHint("Input your Phone number");
-            number.setHint("Input your Company number");
-            name.setTypeface(mTypeface);
-            number.setTypeface(mTypeface);
-            phone.setTypeface(mTypeface);
+            //name.setTypeface(mTypeface);
+            //number.setTypeface(mTypeface);
+            //phone.setTypeface(mTypeface);
             name.requestFocus();
             focused = true;
             cancel();
