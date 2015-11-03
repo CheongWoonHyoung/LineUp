@@ -38,11 +38,11 @@ public class CusListAdapter extends ArrayAdapter<CusListItem> {
             LayoutInflater vi =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             v = vi.inflate(layoutResId,parent,false);
             holder = new CusListHolder();
-            //holder.priority = (TextView) v.findViewById(R.id.cus_priority);
-            //holder.name = (TextView) v.findViewById(R.id.cus_name);
-            //holder.party = (TextView) v.findViewById(R.id.cus_party);
-            //holder.time = (TextView) v.findViewById(R.id.cus_time);
-            //holder.method = (TextView) v.findViewById(R.id.cus_method);
+            holder.priority = (TextView) v.findViewById(R.id.cus_priority);
+            holder.name = (TextView) v.findViewById(R.id.cus_name);
+            holder.party = (TextView) v.findViewById(R.id.cus_party);
+            holder.time = (TextView) v.findViewById(R.id.cus_time);
+            holder.method = (TextView) v.findViewById(R.id.cus_method);
 
             v.setTag(holder);
 
