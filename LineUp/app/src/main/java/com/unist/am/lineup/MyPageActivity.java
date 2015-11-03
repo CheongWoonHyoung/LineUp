@@ -39,7 +39,7 @@ public class MyPageActivity extends BaseActivity_myPage {
     private ScrollableLayout mScrollableLayout;
 
     LinearLayout settingBtn;
-    LinearLayout BackBtn;
+    //LinearLayout BackBtn;
 
     String nickName;
     String profileImageURL;
@@ -175,7 +175,7 @@ public class MyPageActivity extends BaseActivity_myPage {
                 cus_profile = (ImageView) findViewById(R.id.profile);
                 cus_name.setText(nickName);
                 Log.e(thumbnailURL,"thumnnail "+profileImageURL);
-                Picasso.with(MyPageActivity.this).load(thumbnailURL).centerCrop().into(cus_profile);
+                //Picasso.with(MyPageActivity.this).load(thumbnailURL).centerCrop().into(cus_profile);
             }
 
             @Override
