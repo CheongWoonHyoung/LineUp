@@ -1,7 +1,9 @@
 package com.unist.am.lineup;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -71,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
     String profileImageURL ;
     String thumbnailURL ;
     String countryISO ;
+
+    DBManager_reserv manager;
 
     private DrawerLayout mDrawerLayout;
     private FrameLayout leftDrawer;
@@ -352,5 +356,29 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
+            Log.e("CHECK", "onReceive");
+            manager.delete("delete from RESERV_INFO");
+        }
+    };
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("CHECK", "main onResume");
+
+        getApplicationContext().registerReceiver(mReceiver, new IntentFilter("cus"));
+
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.e("CHECK", "main onPause");
+        getApplicationContext().unregisterReceiver(mReceiver);
     }
 }

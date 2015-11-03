@@ -209,6 +209,8 @@ public class MyPageActivity extends BaseActivity_myPage {
             Log.e("CHECK", "onReceive");
             manager.delete("delete from RESERV_INFO");
             adapter.notifyDataSetChanged();
+            startActivity(new Intent(MyPageActivity.this,MyPageActivity.class));
+            finish();
         }
     };
     @Override
