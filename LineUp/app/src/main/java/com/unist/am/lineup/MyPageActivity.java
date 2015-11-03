@@ -1,6 +1,9 @@
 package com.unist.am.lineup;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
@@ -45,27 +48,32 @@ public class MyPageActivity extends BaseActivity_myPage {
     TextView cus_name;
     ImageView cus_profile;
 
+    ViewPager viewPager;
+    ViewPagerAdapter_myPage adapter;
+    View header;
+    TabsLayout_myPage tabs;
+
+    DBManager_reserv manager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.unist.am.lineup.R.layout.activity_mypage);
-        Intent profile_data = getIntent();
         requestMe();
-        cus_name = (TextView) findViewById(R.id.profile_name);
-        cus_profile = (ImageView) findViewById(R.id.profile);
-        cus_name.setText(nickName);
-        //Picasso.with(this).load(profileImgURL).resize(120,120).into(cus_profile);
-        final View header = findViewById(R.id.my_page_header);
-        final TabsLayout_myPage tabs = findView(R.id.mypage_tabs);
+
+        header = findViewById(R.id.my_page_header);
+        tabs = findView(R.id.mypage_tabs);
 
 
         // tab 부분
 
         mScrollableLayout = findView(R.id.scrollable_layout);
         mScrollableLayout.setDraggableView(tabs);
-
-        final ViewPager viewPager = findView(R.id.mypage_view_pager);
-        final ViewPagerAdapter_myPage adapter = new ViewPagerAdapter_myPage(getSupportFragmentManager(), getResources(), getFragments());
+        Bundle name = new Bundle();
+        name.putString("nickName",nickName);
+        viewPager = findView(R.id.mypage_view_pager);
+        adapter = new ViewPagerAdapter_myPage(getSupportFragmentManager(), getResources(), getFragments());
+        adapter.getItem(2).setArguments(name);
         viewPager.setAdapter(adapter);
 
         tabs.setViewPager(viewPager);
@@ -161,6 +169,10 @@ public class MyPageActivity extends BaseActivity_myPage {
                 nickName = userProfile.getNickname();
                 profileImageURL = userProfile.getProfileImagePath();
                 thumbnailURL = userProfile.getThumbnailImagePath();
+                cus_name = (TextView) findViewById(R.id.profile_name);
+                cus_profile = (ImageView) findViewById(R.id.profile);
+                cus_name.setText(nickName);
+                //Picasso.with(this).load(profileImgURL).resize(120,120).into(cus_profile);
             }
 
             @Override
@@ -189,4 +201,30 @@ public class MyPageActivity extends BaseActivity_myPage {
         startActivity(intent);
         finish();
     }
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
+            Log.e("CHECK", "onReceive");
+            manager.delete("delete from RESERV_INFO");
+            adapter.notifyDataSetChanged();
+        }
+    };
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("CHECK", "main onResume");
+
+        getApplicationContext().registerReceiver(mReceiver, new IntentFilter("cus"));
+
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.e("CHECK", "main onPause");
+        getApplicationContext().unregisterReceiver(mReceiver);
+    }
+
 }

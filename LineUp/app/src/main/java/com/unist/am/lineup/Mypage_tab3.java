@@ -4,8 +4,10 @@ package com.unist.am.lineup;
  * Created by Jeonghyun on 2015. 10. 30..
  */
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,10 +15,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.kakao.kakaolink.KakaoLink;
+import com.kakao.kakaolink.KakaoTalkLinkMessageBuilder;
+import com.kakao.util.KakaoParameterException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,6 +58,8 @@ public class Mypage_tab3 extends BaseFragment_myPage {
     ViewGroup container_g;
     Bundle savedInstanceState_g;
 
+    LinearLayout link_btn;
+
     static final String TAG = "tag.myPage_tab3";
     private ScrollView mScrollView;
 
@@ -62,11 +71,13 @@ public class Mypage_tab3 extends BaseFragment_myPage {
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        Log.e("CHECK","onCreateView");
         View view=null;
         mContext = parent.getContext();
         inflater_g=inflater;
         container_g=parent;
         savedInstanceState_g=savedInstanceState;
+        nickName = getArguments().getString("nickName");
 
         manager = new DBManager_reserv(mContext, "reserv_info.db", null, 1);
         if(manager.returnName().equals("nothing")) isQueue = false;
@@ -75,18 +86,20 @@ public class Mypage_tab3 extends BaseFragment_myPage {
              view = inflater.inflate(R.layout.mypage_tab03_reserv, parent, false);
             mScrollView = findView(view, R.id.scroll_view_my_tab03);
             RelativeLayout cancel_btn = (RelativeLayout) view.findViewById(R.id.cancel_btn);
-            /*v = inflater.inflate(R.layout.tab2_reservation_info,container,false);
-            resrv_time = (TextView) v.findViewById(R.id.resrv_time);
-            resrv_rname= (TextView) v.findViewById(R.id.resrv_rname);
-            resrv_name = (TextView) v.findViewById(R.id.resrv_name);
-            resrv_party = (TextView) v.findViewById(R.id.resrv_party);
-            time_left = (TextView) v.findViewById(R.id.time_left);
-            people_left = (TextView) v.findViewById(R.id.people_left);
-            cancel_btn = (TextView) v.findViewById(R.id.cancel_btn);
+            resrv_time = (TextView) view.findViewById(R.id.resrv_time);
+            resrv_rname= (TextView) view.findViewById(R.id.resrv_rname);
+            resrv_name = (TextView) view.findViewById(R.id.resrv_name);
+            resrv_party = (TextView) view.findViewById(R.id.resrv_party);
+            time_left = (TextView) view.findViewById(R.id.time_left);
+            people_left = (TextView) view.findViewById(R.id.people_left);
 
+            resrv_name.setText(nickName);
             resrv_time.setText(manager.returnTime());
             resrv_rname.setText(manager.returnName());
-            resrv_party.setText(manager.returnParty());*/
+            resrv_party.setText(manager.returnParty());
+
+
+            link_btn=(LinearLayout) view.findViewById(R.id.link_btn);
 
             cancel_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -103,6 +116,23 @@ public class Mypage_tab3 extends BaseFragment_myPage {
                     //onCreate(savedInstanceState);
                 }
             });
+            link_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        final KakaoLink kakaoLink = KakaoLink.getKakaoLink(mContext);
+                        final KakaoTalkLinkMessageBuilder kakaoTalkLinkMessageBuilder = kakaoLink.createKakaoTalkLinkMessageBuilder();
+                        kakaoTalkLinkMessageBuilder.addText("Test");
+                        final String linkContents = kakaoTalkLinkMessageBuilder.build();
+                        kakaoLink.sendMessage(linkContents, mContext);
+                    } catch (KakaoParameterException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
+            });
+
 
         }else{
             view = inflater.inflate(R.layout.mypage_tab03, parent, false);
@@ -182,6 +212,62 @@ public class Mypage_tab3 extends BaseFragment_myPage {
             Toast.makeText(mContext, "Cancel complete!", Toast.LENGTH_SHORT).show();
             //manager.delete("delete from RESERV_INFO");
         }
+    }
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            manager_update = new DBManager_update(mContext, "update_info2.db", null, 1);
+            Log.e("CHECK", manager_update.returnPid());
+            manager = new DBManager_reserv(mContext, "reserv_info.db", null, 1);
+            Log.e("info"," "+manager.returnName());
+            if(manager.returnName().equals("nothing")) isQueue = false;
+            else isQueue = true;
+            if(isQueue){
+                if(manager_update.returnPid().equals("nothing")){
+                }else if(manager_update.returnPid().equals("1000")){
+                    people_left.setText(String.valueOf(Integer.parseInt(people_left.getText().toString())-1));
+                    time_left.setText(String.valueOf((Integer.parseInt(people_left.getText().toString())-1)*3));
+                }else{
+                    people_left.setText(String.valueOf(Integer.parseInt(manager_update.returnPid()) - 1));
+                    time_left.setText(String.valueOf((Integer.parseInt(manager_update.returnPid()) - 1)*3));
+                }
+                manager_update.delete("delete from UPDATE_INFO");
+            }
+        }
+    };
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mContext.registerReceiver(mReceiver, new IntentFilter("up"));
+        manager_update = new DBManager_update(mContext, "update_info2.db", null, 1);
+        Log.e("CHECK", manager_update.returnPid());
+
+        manager = new DBManager_reserv(mContext, "reserv_info.db", null, 1);
+        Log.e("info"," "+manager.returnName());
+        if(manager.returnName().equals("nothing")) isQueue = false;
+        else isQueue = true;
+        if(isQueue){
+            if(manager_update.returnPid().equals("nothing")){
+            }else if(manager_update.returnPid().equals("1000")){
+                people_left.setText(String.valueOf(Integer.parseInt(people_left.getText().toString())-1));
+                time_left.setText(String.valueOf((Integer.parseInt(people_left.getText().toString())-1)*3));
+
+            }else{
+                people_left.setText(String.valueOf(Integer.parseInt(manager_update.returnPid()) - 1));
+                time_left.setText(String.valueOf((Integer.parseInt(manager_update.returnPid()) - 1)*3));
+            }
+            manager_update.delete("delete from UPDATE_INFO");
+        }
+
+
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        mContext.unregisterReceiver(mReceiver);
     }
 }
 

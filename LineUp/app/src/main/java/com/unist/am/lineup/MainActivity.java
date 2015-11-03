@@ -29,6 +29,9 @@ import com.kakao.auth.Session;
 import com.kakao.kakaotalk.KakaoTalkHttpResponseHandler;
 import com.kakao.kakaotalk.KakaoTalkProfile;
 import com.kakao.kakaotalk.KakaoTalkService;
+import com.kakao.usermgmt.MeResponseCallback;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.UserProfile;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -75,11 +78,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent profile_data = getIntent();
-        nickName=profile_data.getExtras().getString("nickName");
-        profileImageURL=profile_data.getExtras().getString("profileImageURL");
-        thumbnailURL=profile_data.getExtras().getString("thumbnailURL");
-        //countryISO=profile_data.getExtras().getString("countryISO");
+        requestMe();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -316,5 +315,43 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+    }
+    private void requestMe() {
+        UserManagement.requestMe(new MeResponseCallback() {
+
+            @Override
+            public void onSuccess(final UserProfile userProfile) {
+                Log.d("SUCCESS", "UserProfile : " + userProfile);
+                userProfile.saveUserToCache();
+                nickName = userProfile.getNickname();
+                profileImageURL = userProfile.getProfileImagePath();
+                thumbnailURL = userProfile.getThumbnailImagePath();
+            }
+
+            @Override
+            public void onNotSignedUp() {
+
+            }
+
+            @Override
+            public void onSessionClosedFailure(final APIErrorResult errorResult) {
+
+                redirectLoginActivity();
+            }
+
+            @Override
+            public void onFailure(final APIErrorResult errorResult) {
+                if (errorResult.getErrorCodeInt() == -777) {
+                    finish();
+                } else {
+                    redirectLoginActivity();
+                }
+            }
+        });
+    }
+    protected void redirectLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

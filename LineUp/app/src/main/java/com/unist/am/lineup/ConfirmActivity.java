@@ -212,6 +212,7 @@ public class ConfirmActivity extends Activity {
             finish();
         }
     }
+
     private void requestMe() {
         UserManagement.requestMe(new MeResponseCallback() {
 
