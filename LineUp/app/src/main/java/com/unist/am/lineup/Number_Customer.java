@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -11,14 +12,20 @@ import android.widget.TextView;
  */
 public class Number_Customer extends Dialog {
 
-    TextView btn1;
-    TextView btn2;
-    TextView btn3;
-    TextView btn4;
-    TextView btn5;
-    int No;
+    ImageView btn1;
+    ImageView btn2;
+    ImageView btn3;
+    ImageView btn4;
+    ImageView btn5;
+    ImageView btn6;
+    int Table_id;
+    int No=0;
     public Number_Customer(Context context) {
         super(context);
+    }
+    public Number_Customer(Context context, int tb_no) {
+        super(context);
+        Table_id = tb_no;
     }
 
 
@@ -26,14 +33,15 @@ public class Number_Customer extends Dialog {
     protected void onCreate(Bundle saveInstanceState){
         super.onCreate(saveInstanceState);
 
-        setContentView(R.layout.number_of_customer);
+        setContentView(R.layout.table_sit);
 
 
-        btn1 = (TextView) findViewById(R.id.btn1);
-        btn2 = (TextView) findViewById(R.id.btn2);
-        btn3 = (TextView) findViewById(R.id.btn3);
-        btn4 = (TextView) findViewById(R.id.btn4);
-        btn5 = (TextView) findViewById(R.id.btn5);
+        btn1 = (ImageView) findViewById(R.id.selection_1_table);
+        btn2 = (ImageView) findViewById(R.id.selection_2_table);
+        btn3 = (ImageView) findViewById(R.id.selection_3_table);
+        btn4 = (ImageView) findViewById(R.id.selection_4_table);
+        btn5 = (ImageView) findViewById(R.id.selection_5_table);
+        btn6 = (ImageView) findViewById(R.id.selection_6_table);
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,6 +76,14 @@ public class Number_Customer extends Dialog {
             @Override
             public void onClick(View v) {
                 No = 5;
+                cancel();
+            }
+        });
+        btn6.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                No = 6;
                 cancel();
             }
         });

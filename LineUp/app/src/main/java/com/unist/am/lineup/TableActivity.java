@@ -21,12 +21,31 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * 유효한 세션이 있다는 검증 후
@@ -36,57 +55,76 @@ import android.widget.Toast;
 public class TableActivity extends Activity {
 
     private Context mcontext;
-    private TextView table1;
-    private TextView table2;
-    private TextView table3;
-    private TextView table4;
-    private TextView table5;
-    private TextView table6;
-    private TextView table7;
-    private TextView table8;
-    private TextView table9;
-    private TextView table10;
-    private TextView table11;
-    private TextView table12;
-    private TextView table13;
-    private TextView table14;
-    private TextView table15;
+    private TextView table1_1;
+    private TextView table1_2;
+    private TextView table2_1;
+    private TextView table2_2;
+    private TextView table3_1;
+    private TextView table3_2;
+    private TextView table4_1;
+    private TextView table4_2;
+    private TextView table5_1;
+    private TextView table5_2;
+    private TextView table6_1;
+    private TextView table6_2;
+    private TextView table7_1;
+    private TextView table7_2;
+    private TextView table8_1;
+    private TextView table8_2;
+
+    private FrameLayout tb1_1;
+    private FrameLayout tb1_2;
+    private FrameLayout tb2_1;
+    private FrameLayout tb2_2;
+    private FrameLayout tb3_1;
+    private FrameLayout tb3_2;
+    private FrameLayout tb4_1;
+    private FrameLayout tb4_2;
+    private FrameLayout tb5_1;
+    private FrameLayout tb5_2;
+    private FrameLayout tb6_1;
+    private FrameLayout tb6_2;
+    private FrameLayout tb7_1;
+    private FrameLayout tb7_2;
+    private FrameLayout tb8_1;
+    private FrameLayout tb8_2;
+
+    private RelativeLayout tb1;
+    private RelativeLayout tb2;
+    private RelativeLayout tb3;
+    private RelativeLayout tb4;
+    private RelativeLayout tb5;
+    private RelativeLayout tb6;
+    private RelativeLayout tb7;
+    private RelativeLayout tb8;
+
+    TextView Sit;
+    TextView Out;
+    TextView Go_to_List;
 
 // 그냥 state는 가게단에서 하는 state변경값들 저장
-    static Boolean state1 = false;
-    static Boolean state2 = false;
-    static Boolean state3 = false;
-    static Boolean state4 = false;
-    static Boolean state5 = false;
-    static Boolean state6 = false;
-    static Boolean state7 = false;
-    static Boolean state8 = false;
-    static Boolean state9 = false;
-    static Boolean state10 = false;
-    static Boolean state11 = false;
-    static Boolean state12 = false;
-    static Boolean state13 = false;
-    static Boolean state14 = false;
-    static Boolean state15 = false;
+    
+    //비어있을 떄 off
+    static String state1 = "off";
+    static String state2 = "off";
+    static String state3 = "off";
+    static String state4 = "off";
+    static String state5 = "off";
+    static String state6 = "off";
+    static String state7 = "off";
+    static String state8 = "off";
 
 
 // _2 state는 서버에서 가져와 맨처음 앱 실행시 사용
-    static Boolean state1_2 = false;
-    static Boolean state2_2 = false;
-    static Boolean state3_2 = false;
-    static Boolean state4_2 = false;
-    static Boolean state5_2 = false;
-    static Boolean state6_2 = false;
-    static Boolean state7_2 = false;
-    static Boolean state8_2 = false;
-    static Boolean state9_2 = false;
-    static Boolean state10_2 = false;
-    static Boolean state11_2 = false;
-    static Boolean state12_2 = false;
-    static Boolean state13_2 = false;
-    static Boolean state14_2 = false;
-    static Boolean state15_2 = false;
-    static Boolean state_check = false;
+    static String state1_2 = null;
+    static String state2_2 = null;
+    static String state3_2 = null;
+    static String state4_2 = null;
+    static String state5_2 = null;
+    static String state6_2 = null;
+    static String state7_2 = null;
+    static String state8_2 = null;
+    static String state_check = null;
 
 
     long table1_start =0;
@@ -129,138 +167,157 @@ public class TableActivity extends Activity {
     long table6_start_from_server = 0;
     long table7_start_from_server = 0;
     long table8_start_from_server = 0;
-    long table9_start_from_server = 0;
-    long table10_start_from_server = 0;
-    long table11_start_from_server = 0;
-    long table12_start_from_server = 0;
-    long table13_start_from_server = 0;
-    long table14_start_from_server = 0;
-    long table15_start_from_server = 0;
 
     static Button check;
 
     int checkBtn_color;
     Number_Customer mdialog;
-    Check_system mSystem;
 
+    ArrayList<String> num_people = null;
+    ArrayList<String> start_time = null;
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        Context mcontext = this;
+        try {
+            DBManager_table db_manager = new DBManager_table(mcontext, "table_info", null, 1);
+            num_people = db_manager.returnNum();
+            start_time = db_manager.returnTime();
+        }
+        catch (Exception e){
+            Log.e("DB",e.toString());
+        }
         /*
-
+manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
         서버에서 시작시간과 stete 로드하여 각각 start_from_server 와 state_2에 저장
 
          */
-
-
-
-
-
-
-        setContentView(R.layout.table_grandmother);
-
+        setContentView(R.layout.owner_table);
    //     setContentView(R.layout.table_management);
 
-        table1 = (TextView) findViewById(R.id.tb1);
-        table2 = (TextView) findViewById(R.id.tb2);
-        table3 = (TextView) findViewById(R.id.tb3);
-        table4 = (TextView) findViewById(R.id.tb4);
-        table5 = (TextView) findViewById(R.id.tb5);
-        table6 = (TextView) findViewById(R.id.tb6);
-        table7 = (TextView) findViewById(R.id.tb7);
-        table8 = (TextView) findViewById(R.id.tb8);
-        table9 = (TextView) findViewById(R.id.tb9);
-        table10 = (TextView) findViewById(R.id.tb10);
-        table11 = (TextView) findViewById(R.id.tb11);
-        table12 = (TextView) findViewById(R.id.tb12);
-        table13 = (TextView) findViewById(R.id.tb13);
-        table14 = (TextView) findViewById(R.id.tb14);
-        table15 = (TextView) findViewById(R.id.tb15);
+        table1_1 = (TextView) findViewById(R.id.tb1_txt1);
+        table1_2 = (TextView) findViewById(R.id.tb1_txt2);
+        table2_1 = (TextView) findViewById(R.id.tb2_txt1);
+        table2_2 = (TextView) findViewById(R.id.tb2_txt2);
+        table3_1 = (TextView) findViewById(R.id.tb3_txt1);
+        table3_2 = (TextView) findViewById(R.id.tb3_txt2);
+        table4_1 = (TextView) findViewById(R.id.tb4_txt1);
+        table4_2 = (TextView) findViewById(R.id.tb4_txt2);
+        table5_1 = (TextView) findViewById(R.id.tb5_txt1);
+        table5_2 = (TextView) findViewById(R.id.tb5_txt2);
+        table6_1 = (TextView) findViewById(R.id.tb6_txt1);
+        table6_2 = (TextView) findViewById(R.id.tb6_txt2);
+        table7_1 = (TextView) findViewById(R.id.tb7_txt1);
+        table7_2 = (TextView) findViewById(R.id.tb7_txt2);
+        table8_1 = (TextView) findViewById(R.id.tb8_txt1);
+        table8_2 = (TextView) findViewById(R.id.tb8_txt2);
 
-        table1.setBackgroundResource(android.R.color.white);
-        table2.setBackgroundResource(android.R.color.white);
-        table3.setBackgroundResource(android.R.color.white);
-        table4.setBackgroundResource(android.R.color.white);
-        table5.setBackgroundResource(android.R.color.white);
-        table6.setBackgroundResource(android.R.color.white);
-        table7.setBackgroundResource(android.R.color.white);
-        table8.setBackgroundResource(android.R.color.white);
-        table9.setBackgroundResource(android.R.color.white);
-        table10.setBackgroundResource(android.R.color.white);
-        table11.setBackgroundResource(android.R.color.white);
-        table12.setBackgroundResource(android.R.color.white);
-        table13.setBackgroundResource(android.R.color.white);
-        table14.setBackgroundResource(android.R.color.white);
-        table15.setBackgroundResource(android.R.color.white);
+        tb1_1 = (FrameLayout) findViewById(R.id.tb1_box1);
+        tb1_2 = (FrameLayout) findViewById(R.id.tb1_box2);
+        tb2_1 = (FrameLayout) findViewById(R.id.tb2_box1);
+        tb2_2 = (FrameLayout) findViewById(R.id.tb2_box2);
+        tb3_1 = (FrameLayout) findViewById(R.id.tb5_box1);
+        tb3_2 = (FrameLayout) findViewById(R.id.tb5_box2);
+        tb4_1 = (FrameLayout) findViewById(R.id.tb6_box1);
+        tb4_2 = (FrameLayout) findViewById(R.id.tb6_box2);
+        tb5_1 = (FrameLayout) findViewById(R.id.tb9_box1);
+        tb5_2 = (FrameLayout) findViewById(R.id.tb9_box2);
+        tb6_1 = (FrameLayout) findViewById(R.id.tb10_box1);
+        tb6_2 = (FrameLayout) findViewById(R.id.tb10_box2);
+        tb7_1 = (FrameLayout) findViewById(R.id.tb13_box1);
+        tb7_2 = (FrameLayout) findViewById(R.id.tb13_box2);
+        tb8_1 = (FrameLayout) findViewById(R.id.tb14_box1);
+        tb8_2 = (FrameLayout) findViewById(R.id.tb14_box2);
 
-        if(state1_2)
-            table1.setBackgroundResource(android.R.color.black);
-        if(state2_2)
-            table2.setBackgroundResource(android.R.color.black);
-        if(state3_2)
-            table3.setBackgroundResource(android.R.color.black);
-        if(state4_2)
-            table4.setBackgroundResource(android.R.color.black);
-        if(state5_2)
-            table5.setBackgroundResource(android.R.color.black);
-        if(state6_2)
-            table6.setBackgroundResource(android.R.color.black);
-        if(state7_2)
-            table7.setBackgroundResource(android.R.color.black);
-        if(state8_2)
-            table8.setBackgroundResource(android.R.color.black);
-        if(state9_2)
-            table9.setBackgroundResource(android.R.color.black);
-        if(state10_2)
-            table10.setBackgroundResource(android.R.color.black);
-        if(state11_2)
-            table11.setBackgroundResource(android.R.color.black);
-        if(state12_2)
-            table12.setBackgroundResource(android.R.color.black);
-        if(state13_2)
-            table13.setBackgroundResource(android.R.color.black);
-        if(state14_2)
-            table14.setBackgroundResource(android.R.color.black);
-        if(state15_2)
-            table15.setBackgroundResource(android.R.color.black);
+        Sit = (TextView) findViewById(R.id.sit_table);
+        Out = (TextView)findViewById(R.id.out_table);
+        Go_to_List = (TextView) findViewById(R.id.list_table);
 
-        state1 = state1_2;
-        state2 = state2_2;
-        state3 = state3_2;
-        state4 = state4_2;
-        state5 = state5_2;
-        state6 = state6_2;
-        state7 = state7_2;
-        state8 = state8_2;
-        state9 = state9_2;
-        state10 = state10_2;
-        state11 = state11_2;
-        state12 = state12_2;
-        state13 = state13_2;
-        state14 = state14_2;
-        state15 = state15_2;
+        tb1 =(RelativeLayout) findViewById(R.id.tb1);
+        tb2 =(RelativeLayout) findViewById(R.id.tb2);
+        tb3 =(RelativeLayout) findViewById(R.id.tb5);
+        tb4 =(RelativeLayout) findViewById(R.id.tb6);
+        tb5 =(RelativeLayout) findViewById(R.id.tb9);
+        tb6 =(RelativeLayout) findViewById(R.id.tb10);
+        tb7 =(RelativeLayout) findViewById(R.id.tb13);
+        tb8 =(RelativeLayout) findViewById(R.id.tb14);
 
-        table1.setOnClickListener(new Click(1));
-        table2.setOnClickListener(new Click(2));
-        table3.setOnClickListener(new Click(3));
-        table4.setOnClickListener(new Click(4));
-        table5.setOnClickListener(new Click(5));
-        table6.setOnClickListener(new Click(6));
-        table7.setOnClickListener(new Click(7));
-        table8.setOnClickListener(new Click(8));
-        table9.setOnClickListener(new Click(9));
-        table10.setOnClickListener(new Click(10));
-        table11.setOnClickListener(new Click(11));
-        table12.setOnClickListener(new Click(12));
-        table13.setOnClickListener(new Click(13));
-        table14.setOnClickListener(new Click(14));
-        table15.setOnClickListener(new Click(15));
 
-        check = (Button) findViewById(R.id.checkBtn);
+        for(int i = 0; i < num_people.size(); i++){
+            if(num_people.get(i) != "0"){
+                switch (i){
+                    case 0:
+                        tb1_1.setVisibility(View.VISIBLE);
+                        tb1_2.setVisibility(View.VISIBLE);
+                        table1_1.setText(num_people.get(i));
+                        table1_2.setText(getDate(String.valueOf(start_time.get(i))));
+                        break;
+                    case 1:
+                        tb2_1.setVisibility(View.VISIBLE);
+                        tb2_2.setVisibility(View.VISIBLE);
+                        table2_1.setText(num_people.get(i));
+                        table2_2.setText(getDate(String.valueOf(start_time.get(i))));
+                        break;
+                    case 2:
+                        tb3_1.setVisibility(View.VISIBLE);
+                        tb3_2.setVisibility(View.VISIBLE);
+                        table3_1.setText(num_people.get(i));
+                        table3_2.setText(getDate(String.valueOf(start_time.get(i))));
+                        break;
+                    case 3:
+                        tb4_1.setVisibility(View.VISIBLE);
+                        tb4_2.setVisibility(View.VISIBLE);
+                        table4_1.setText(num_people.get(i));
+                        table4_2.setText(getDate(String.valueOf(start_time.get(i))));
+                        break;
+                    case 4:
+                        tb5_1.setVisibility(View.VISIBLE);
+                        tb5_2.setVisibility(View.VISIBLE);
+                        table5_1.setText(num_people.get(i));
+                        table5_2.setText(getDate(String.valueOf(start_time.get(i))));
+                        break;
+                    case 5:
+                        tb6_1.setVisibility(View.VISIBLE);
+                        tb6_2.setVisibility(View.VISIBLE);
+                        table6_1.setText(num_people.get(i));
+                        table6_2.setText(getDate(String.valueOf(start_time.get(i))));
+                        break;
+                    case 6:
+                        tb7_1.setVisibility(View.VISIBLE);
+                        tb7_2.setVisibility(View.VISIBLE);
+                        table7_1.setText(num_people.get(i));
+                        table7_2.setText(getDate(String.valueOf(start_time.get(i))));
+                        break;
+                    case 7:
+                        tb8_1.setVisibility(View.VISIBLE);
+                        tb8_2.setVisibility(View.VISIBLE);
+                        table8_1.setText(num_people.get(i));
+                        table8_2.setText(getDate(String.valueOf(start_time.get(i))));
+                        break;
+                }
+
+            }
+        }
+
+        Sit.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Out.setEnabled(false);
+                Go_to_List.setEnabled(false);
+                tb1.setOnClickListener(new Click(1,true));
+                tb2.setOnClickListener(new Click(2,true));
+                tb3.setOnClickListener(new Click(3,true));
+                tb4.setOnClickListener(new Click(4,true));
+                tb5.setOnClickListener(new Click(5,true));
+                tb6.setOnClickListener(new Click(6,true));
+                tb7.setOnClickListener(new Click(7,true));
+                tb8.setOnClickListener(new Click(8,true));
+
+            }
+        });
         mcontext = this;
-        mdialog = new Number_Customer(this);
+
    //     mdialog.setCancelable(false);
         mdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
@@ -271,59 +328,58 @@ public class TableActivity extends Activity {
         mdialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                if(mdialog.No != 0)
-                Toast.makeText(mcontext, "People on a table: " + String.valueOf(mdialog.No), Toast.LENGTH_LONG).show();
-            }
-        });
+                if(mdialog.No != 0){
+                    switch (mdialog.Table_id){
+                        case 1:
+                            table1_1.setText(String.valueOf(mdialog.No));
+                            table1_2.setText(getDate(String.valueOf(table1_start)));
 
-        check.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(state_check){
-                    mdialog.show();
+                            break;
+
+                        case 2:
+                            table2_1.setText(String.valueOf(mdialog.No));
+                            table2_2.setText(getDate(String.valueOf(table2_start)));
+                            break;
+
+                        case 3:
+                            table3_1.setText(String.valueOf(mdialog.No));
+                            table3_2.setText(getDate(String.valueOf(table3_start)));
+                            break;
+
+                        case 4:
+                            table4_1.setText(String.valueOf(mdialog.No));
+                            table4_2.setText(getDate(String.valueOf(table4_start)));
+                            break;
+
+                        case 5:
+                            table5_1.setText(String.valueOf(mdialog.No));
+                            table5_2.setText(getDate(String.valueOf(table5_start)));;
+                            break;
+                        case  6:
+                            table6_1.setText(String.valueOf(mdialog.No));
+                            table6_2.setText(getDate(String.valueOf(table6_start)));
+                            break;
+                        case 7:
+                            table7_1.setText(String.valueOf(mdialog.No));
+                            table7_2.setText(getDate(String.valueOf(table7_start)));
+                            break;
+                        case 8:
+                            table8_1.setText(String.valueOf(mdialog.No));
+                            table8_2.setText(getDate(String.valueOf(table8_start)));
+                            break;
+                    }
                 }
             }
         });
 
-        mSystem = new Check_system();
-
-
     }
-    public class Check_system{
 
-        public void Checking(){
-                if(state1 != state1_2
-                        || state2 != state2_2
-                        ||state3 != state3_2
-                        ||state4 != state4_2
-                        ||state5 != state5_2
-                        ||state6 != state6_2
-                        ||state7!= state7_2
-                        ||state8 != state8_2
-                        ||state9 != state9_2
-                        ||state10 != state10_2
-                        ||state11 != state11_2
-                        ||state12 != state12_2
-                        ||state13 != state13_2
-                        ||state14 != state14_2
-                        ||state15 != state15_2){
-
-                        check.setBackgroundColor(Color.parseColor("#ffff2121"));
-                        state_check = true;
-                    }
-                    else{
-                        check.setBackgroundColor(Color.parseColor("#44ff2121"));
-                        state_check = false;
-                    }
-
-        }
-    }
     public class Click implements OnClickListener {
 
         int mtype;
-
-        Click(int type){
-
+        Boolean TF;
+        Click(int type, Boolean sit_out){
+            TF = sit_out;
             mtype = type;
         }
 
@@ -332,244 +388,140 @@ public class TableActivity extends Activity {
             switch(mtype){
 
                 case 1:
-                    if(!state1) {
+                    if(state1 == "off" && TF) {
                         table1_start = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.black);
-                        state1 = true;
-                        mSystem.Checking();
+                        v.setBackgroundResource(R.drawable.round_box_selected);
+                        state1 = "on";
+                        mdialog = new Number_Customer(mcontext, mtype);
                     }
                     else{
-                        table1_end = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.white);
-                        state1 = false;
-                        mSystem.Checking();
+                        if(!TF) {
+                            table1_end = System.currentTimeMillis();
+                            v.setBackgroundResource(R.drawable.round_box);
+                            state1 = "off";
+                            tb1_1.setVisibility(View.INVISIBLE);
+                            tb1_2.setVisibility(View.INVISIBLE);
+                        }
                     }
                     break;
                 case 2:
-                    if(!state2) {
+                    if(state2 == "off" && TF) {
                         table2_start = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.black);
-                        state2 = true;
-                        mSystem.Checking();
+                        v.setBackgroundResource(R.drawable.round_box_selected);
+                        state2 = "on";
+                        mdialog = new Number_Customer(mcontext, mtype);
                     }
                     else{
                         table2_end = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.white);
-                        state2 = false;
-                        mSystem.Checking();
+                        v.setBackgroundResource(R.drawable.round_box);
+                        state2 = "off";
 
                     }
 
                     break;
                 case 3:
-                    if(!state3) {
+                    if(state3 == "off" && TF) {
                         table3_start = System.currentTimeMillis();
-
-                        v.setBackgroundResource(android.R.color.black);
-                        state3 = true;
-                        mSystem.Checking();
+                        v.setBackgroundResource(R.drawable.round_box_selected);
+                        state3 = "on";
+                        mdialog = new Number_Customer(mcontext, mtype);
                     }
                     else{
                         table3_end = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.white);
-                        state3 = false;
-                        mSystem.Checking();
+                        v.setBackgroundResource(R.drawable.round_box);
+                        state3 = "off";
 
                     }
 
                     break;
                 case 4:
-                    if(!state4) {
+                    if(state4 == "off" &&TF) {
                         table4_start = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.black);
-                        state4 = true;
-                        mSystem.Checking();
+                        v.setBackgroundResource(R.drawable.round_box_selected);
+                        state4 = "on";
+                        mdialog = new Number_Customer(mcontext, mtype);
                     }
                     else{
                         table4_end = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.white);
-                        state4 = false;
-                        mSystem.Checking();
+                        v.setBackgroundResource(R.drawable.round_box);
+                        state4 = "off";
 
                     }
 
                     break;
                 case 5:
-                    if(!state5) {
+                    if(state5 == "off" && TF) {
                         table5_start = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.black);
-                        state5 = true;
-                        mSystem.Checking();
+                        v.setBackgroundResource(R.drawable.round_box_selected);
+                        state5 = "on";
+                        mdialog = new Number_Customer(mcontext, mtype);
                     }
                     else{
                         table5_end = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.white);
-                        state5 = false;
-                        mSystem.Checking();
+                        v.setBackgroundResource(R.drawable.round_box);
+                        state5 = "off";
                     }
                     break;
                 case 6:
-                    if(!state6) {
+                    if(state6 == "off" &&TF) {
                         table6_start = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.black);
-                        state6 = true;
-                        mSystem.Checking();
+                        v.setBackgroundResource(R.drawable.round_box_selected);
+                        state6 = "on";
+                        mdialog = new Number_Customer(mcontext, mtype);
                     }
                     else{
                         table6_end = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.white);
-                        state6 = false;
-                        mSystem.Checking();
+                        v.setBackgroundResource(R.drawable.round_box);
+                        state6 = "off";
 
                     }
 
                     break;
                 case 7:
-                    if(!state7) {
+                    if(state7 == "off" &&TF) {
                         table7_start = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.black);
-                        state7 = true;
-                        mSystem.Checking();
+                        v.setBackgroundResource(R.drawable.round_box_selected);
+                        state7 = "on";
+                        mdialog = new Number_Customer(mcontext, mtype);
                     }
                     else{
                         table7_end = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.white);
-                        state7 = false;
-                        mSystem.Checking();
+                        v.setBackgroundResource(R.drawable.round_box);
+                        state7 = "off";
 
                     }
 
                     break;
                 case 8:
-                    if(!state8) {
+                    if(state8 == "off" &&TF) {
                         table8_start = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.black);
-                        state8 = true;
-                        mSystem.Checking();
+                        v.setBackgroundResource(R.drawable.round_box_selected);
+                        state8 = "on";
+                        mdialog = new Number_Customer(mcontext, mtype);
                     }
                     else{
                         table8_end = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.white);
-                        state8 = false;
-                        mSystem.Checking();
+                        v.setBackgroundResource(R.drawable.round_box);
+                        state8 = "off";
                     }
 
                     break;
-                case 9:
-                    if(!state9) {
-                        table9_start = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.black);
-                        state9 = true;
-                        mSystem.Checking();
-                    }
-                    else{
-                        table9_end = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.white);
-                        state9 = false;
-                        mSystem.Checking();
-                    }
-                    break;
-                case 10:
-                    if(!state10) {
-                        table10_start = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.black);
-                        state10 = true;
-                        mSystem.Checking();
-                    }
-                    else{
-                        table10_end = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.white);
-                        state10 = false;
-                        mSystem.Checking();
-
-                    }
-
-                    break;
-                case 11:
-                    if(!state11) {
-                        table11_start = System.currentTimeMillis();
-
-                        v.setBackgroundResource(android.R.color.black);
-                        state11 = true;
-                        mSystem.Checking();
-                    }
-                    else{
-                        table11_end = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.white);
-                        state11 = false;
-                        mSystem.Checking();
-
-                    }
-
-                    break;
-                case 12:
-                    if(!state12) {
-                        table12_start = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.black);
-                        state12 = true;
-                        mSystem.Checking();
-                    }
-                    else{
-                        table12_end = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.white);
-                        state12 = false;
-                        mSystem.Checking();
-
-                    }
-
-                    break;
-                case 13:
-                    if(!state13) {
-                        table1_start = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.black);
-                        state13 = true;
-                        mSystem.Checking();
-                    }
-                    else{
-                        table13_end = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.white);
-                        state13 = false;
-                        mSystem.Checking();
-                    }
-                    break;
-                case 14:
-                    if(!state14) {
-                        table14_start = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.black);
-                        state14 = true;
-                        mSystem.Checking();
-                    }
-                    else{
-                        table14_end = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.white);
-                        state14 = false;
-                        mSystem.Checking();
-
-                    }
-
-                    break;
-                case 15:
-                    if(!state15) {
-                        table15_start = System.currentTimeMillis();
-
-                        v.setBackgroundResource(android.R.color.black);
-                        state15 = true;
-                        mSystem.Checking();
-                    }
-                    else{
-                        table15_end = System.currentTimeMillis();
-                        v.setBackgroundResource(android.R.color.white);
-                        state15 = false;
-                        mSystem.Checking();
-
-                    }
-
-                    break;
+              
             }
+
 
         }
 
 
     }
+    String getDate(String times){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.US);
+
+        GregorianCalendar calendar = new GregorianCalendar(TimeZone.getTimeZone("US/Central"));
+        calendar.setTimeInMillis(Long.valueOf(times));
+
+        return sdf.format(calendar.getTime());
+    }
+
 
 }

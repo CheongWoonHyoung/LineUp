@@ -39,6 +39,9 @@
         <activity android:name=".VersionActivity"/>
         <activity android:name=".LoginActivity" >
         </activity>
+        <activity android:name=".TableActivity"
+            android:screenOrientation="landscape">
+        </activity>
         <activity android:name=".MapActivity" />
         <activity android:name="MapActivity_all_reslist"/>
         <activity android:name=".SignUpActivity" >

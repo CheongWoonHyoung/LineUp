@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:background="@color/margin"
-    android:layout_width="300dp"
+    android:layout_width="450dp"
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="150dp">
         <TextView
-            android:id="@+id/res1"
+            android:id="@+id/res1_table"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="테이블 손님 정보"
@@ -48,7 +48,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <ImageView
-                        android:id="@+id/selection_1"
+                        android:id="@+id/selection_1_table"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/reservation_select_event_number"/>
@@ -60,7 +60,7 @@
                     android:layout_height="match_parent">
                     <ImageView
 
-                        android:id="@+id/selection_2"
+                        android:id="@+id/selection_2_table"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/reservation_select_event_number"/>
@@ -72,7 +72,7 @@
                     android:layout_height="match_parent">
                     <ImageView
 
-                        android:id="@+id/selection_3"
+                        android:id="@+id/selection_3_table"
 
                         android:layout_width="30dp"
                         android:layout_height="30dp"
@@ -85,7 +85,7 @@
                     android:layout_height="match_parent">
                     <ImageView
 
-                        android:id="@+id/selection_4"
+                        android:id="@+id/selection_4_table"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/reservation_select_event_number"/>
@@ -97,7 +97,7 @@
                     android:layout_height="match_parent">
                     <ImageView
                         android:clickable="true"
-                        android:id="@+id/selection_5"
+                        android:id="@+id/selection_5_table"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/reservation_select_event_number"/>
@@ -109,7 +109,7 @@
                     android:layout_height="match_parent">
                     <ImageView
 
-                        android:id="@+id/selection_6"
+                        android:id="@+id/selection_6_table"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/reservation_select_event_number"/>
@@ -192,7 +192,7 @@
                 android:id="@+id/confirm_btn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/lineup"
+                android:text="입력 완료"
                 android:gravity="center"
                 android:textColor="@color/black">
                 <ImageView
