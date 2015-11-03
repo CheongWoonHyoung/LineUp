@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +42,8 @@ import java.util.Date;
  */
 public class ConfirmActivity extends Activity {
 
-    private Button select1, select2, select3, select4, select5, select6, confirm_btn;
+    private Button select1, select2, select3, select4, select5, select6;
+    private RelativeLayout confirm_btn;
     private int party_num;
     String username;
     String resname;
@@ -61,7 +63,7 @@ public class ConfirmActivity extends Activity {
         select4 = (Button) findViewById(R.id.selection_4);
         select5 = (Button) findViewById(R.id.selection_5);
         select6 = (Button) findViewById(R.id.selection_6);
-        confirm_btn = (Button) findViewById(R.id.confirm_btn);
+        confirm_btn = (RelativeLayout) findViewById(R.id.confirm_btn);
 
         select1.setOnClickListener(mOnClick);
         select2.setOnClickListener(mOnClick);
