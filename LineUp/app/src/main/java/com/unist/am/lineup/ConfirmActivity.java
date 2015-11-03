@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +43,7 @@ import java.util.Date;
  */
 public class ConfirmActivity extends Activity {
 
-    private Button select1, select2, select3, select4, select5, select6;
+    private ImageView select1, select2, select3, select4, select5, select6;
     private RelativeLayout confirm_btn;
     private int party_num;
     String username;
@@ -62,12 +63,12 @@ public class ConfirmActivity extends Activity {
         resname =intent.getExtras().getString("resname");
         dummy_name = intent.getExtras().getString("dummy_name");
 
-        select1 = (Button) findViewById(R.id.selection_1);
-        select2 = (Button) findViewById(R.id.selection_2);
-        select3 = (Button) findViewById(R.id.selection_3);
-        select4 = (Button) findViewById(R.id.selection_4);
-        select5 = (Button) findViewById(R.id.selection_5);
-        select6 = (Button) findViewById(R.id.selection_6);
+        select1 = (ImageView) findViewById(R.id.selection_1);
+        select2 = (ImageView) findViewById(R.id.selection_2);
+        select3 = (ImageView) findViewById(R.id.selection_3);
+        select4 = (ImageView) findViewById(R.id.selection_4);
+        select5 = (ImageView) findViewById(R.id.selection_5);
+        select6 = (ImageView) findViewById(R.id.selection_6);
         confirm_btn = (RelativeLayout) findViewById(R.id.confirm_btn);
 
         select1.setOnClickListener(mOnClick);
@@ -88,7 +89,6 @@ public class ConfirmActivity extends Activity {
             switch(view.getId()){
                 case R.id.selection_1: {
                     party_num = 1;
-                    select1.setBackgroundColor(Color.parseColor("#B3E5FC"));
                     select2.setBackgroundResource(0);
                     select3.setBackgroundResource(0);
                     select4.setBackgroundResource(0);
@@ -100,7 +100,6 @@ public class ConfirmActivity extends Activity {
                 case R.id.selection_2: {
                     party_num = 2;
                     select1.setBackgroundResource(0);
-                    select2.setBackgroundColor(Color.parseColor("#B3E5FC"));
                     select3.setBackgroundResource(0);
                     select4.setBackgroundResource(0);
                     select5.setBackgroundResource(0);
@@ -111,7 +110,6 @@ public class ConfirmActivity extends Activity {
                     party_num = 3;
                     select1.setBackgroundResource(0);
                     select2.setBackgroundResource(0);
-                    select3.setBackgroundColor(Color.parseColor("#B3E5FC"));
                     select4.setBackgroundResource(0);
                     select5.setBackgroundResource(0);
                     select6.setBackgroundResource(0);
@@ -122,7 +120,6 @@ public class ConfirmActivity extends Activity {
                     select1.setBackgroundResource(0);
                     select2.setBackgroundResource(0);
                     select3.setBackgroundResource(0);
-                    select4.setBackgroundColor(Color.parseColor("#B3E5FC"));
                     select5.setBackgroundResource(0);
                     select6.setBackgroundResource(0);
                     break;
@@ -133,7 +130,6 @@ public class ConfirmActivity extends Activity {
                     select2.setBackgroundResource(0);
                     select3.setBackgroundResource(0);
                     select4.setBackgroundResource(0);
-                    select5.setBackgroundColor(Color.parseColor("#B3E5FC"));
                     select6.setBackgroundResource(0);
                     break;
                 }
@@ -144,7 +140,6 @@ public class ConfirmActivity extends Activity {
                     select3.setBackgroundResource(0);
                     select4.setBackgroundResource(0);
                     select5.setBackgroundResource(0);
-                    select6.setBackgroundColor(Color.parseColor("#B3E5FC"));
                     break;
                 }
                 case R.id.confirm_btn: {

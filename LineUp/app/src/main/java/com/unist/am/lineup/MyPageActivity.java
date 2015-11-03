@@ -115,7 +115,7 @@ public class MyPageActivity extends BaseActivity_myPage {
         // header 부분
 
         settingBtn = (LinearLayout) header.findViewById(R.id.settingBtn);
-        BackBtn = (LinearLayout) header.findViewById(R.id.backBtn);
+        //BackBtn = (LinearLayout) header.findViewById(R.id.backBtn);
         settingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,12 +123,12 @@ public class MyPageActivity extends BaseActivity_myPage {
                 startActivity(mintent);
             }
         });
-        BackBtn.setOnClickListener(new View.OnClickListener() {
+        /*BackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
-        });
+        });*/
     }
     @Override
     public void onSaveInstanceState(Bundle outState) {

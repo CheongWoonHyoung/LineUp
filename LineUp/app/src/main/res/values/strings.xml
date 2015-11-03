@@ -54,4 +54,8 @@
     <string name="no_rev">등록된 라인업이 없습니다.</string>
     <string name="no_fav">등록된 즐겨찾기가 없습니다.</string>
     <string name="no_review">현재 등록된 리뷰가 없습니다.</string>
+    <string name="Korean">한 식</string>
+    <string name="Japanese">일 식</string>
+    <string name="Chinese">중 식</string>
+    <string name="Western">양 식</string>
 </resources>
