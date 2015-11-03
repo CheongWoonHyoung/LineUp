@@ -89,8 +89,8 @@ public class Rest_info_tab1 extends BaseFragment {
             public void onClick(View v) {
                 Intent map_intent = new Intent(parent_context, MapActivity.class);
                 map_intent.putExtra("flag",true);
-                map_intent.putExtra("lat",y_coordinate);
-                map_intent.putExtra("lon",x_coordinate);
+                map_intent.putExtra("lat",x_coordinate);
+                map_intent.putExtra("lon",y_coordinate);
                 startActivityForResult(map_intent,1);
             }
         });

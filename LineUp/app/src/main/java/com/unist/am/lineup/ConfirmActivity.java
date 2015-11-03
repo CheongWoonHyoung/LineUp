@@ -48,12 +48,17 @@ public class ConfirmActivity extends Activity {
     String username;
     String resname;
     String dummy_name;
+
+    String nickName;
+    String profileImageURL ;
+    String thumbnailURL ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.reservation_page);
         Intent intent = getIntent();
-        username=intent.getExtras().getString("username");
+        //username=intent.getExtras().getString("username");
+        requestMe();
         resname =intent.getExtras().getString("resname");
         dummy_name = intent.getExtras().getString("dummy_name");
 
@@ -145,7 +150,7 @@ public class ConfirmActivity extends Activity {
                 case R.id.confirm_btn: {
                     DBManager_reserv manager = new DBManager_reserv(getApplicationContext(), "reserv_info.db", null, 1);
                     DBManager_regid manager_regid = new DBManager_regid(getApplicationContext(),"regid_info.db",null,1);
-                    if(manager.returnName().equals("nothing")) new HttpPostRequest().execute("in",username,String.valueOf(party_num),"App",dummy_name,manager_regid.returnRegid());
+                    if(manager.returnName().equals("nothing")) new HttpPostRequest().execute("in",nickName,String.valueOf(party_num),"App",dummy_name,manager_regid.returnRegid());
                     else Toast.makeText(getApplicationContext(),"You already queue!",Toast.LENGTH_LONG).show();
                     break;
                 }
@@ -153,39 +158,6 @@ public class ConfirmActivity extends Activity {
         }
     };
 
-    private void requestMe() {
-        UserManagement.requestMe(new MeResponseCallback() {
-
-            @Override
-            public void onSuccess(final UserProfile userProfile) {
-                Log.d("SUCCESS", "UserProfile : " + userProfile + " & party num : " + party_num);
-                userProfile.saveUserToCache();
-            }
-
-            @Override
-            public void onNotSignedUp() {
-                //showSignup();
-            }
-
-            @Override
-            public void onSessionClosedFailure(final APIErrorResult errorResult) {
-            }
-
-            @Override
-            public void onFailure(final APIErrorResult errorResult) {
-                String message = "failed to get user info. msg=" + errorResult;
-                Log.d("FAIL", message);
-
-                if (errorResult.getErrorCodeInt() == -777) {
-                    Toast.makeText(getApplicationContext(), "SERVICE_UNAVAILABLE", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
-                else {
-
-                }
-            }
-        });
-    }
 
 
     private class HttpPostRequest extends AsyncTask<String, Void, String> {
@@ -241,6 +213,45 @@ public class ConfirmActivity extends Activity {
             startActivity(intent);
             finish();
         }
+    }
+
+    private void requestMe() {
+        UserManagement.requestMe(new MeResponseCallback() {
+
+            @Override
+            public void onSuccess(final UserProfile userProfile) {
+                Log.d("SUCCESS", "UserProfile : " + userProfile);
+                userProfile.saveUserToCache();
+                nickName=userProfile.getNickname();
+                profileImageURL=userProfile.getProfileImagePath();
+                thumbnailURL=userProfile.getThumbnailImagePath();
+            }
+
+            @Override
+            public void onNotSignedUp() {
+
+            }
+
+            @Override
+            public void onSessionClosedFailure(final APIErrorResult errorResult) {
+
+                redirectLoginActivity();
+            }
+
+            @Override
+            public void onFailure(final APIErrorResult errorResult) {
+                if (errorResult.getErrorCodeInt() == -777) {
+                    finish();
+                } else {
+                    redirectLoginActivity();
+                }
+            }
+        });
+    }
+    protected void redirectLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

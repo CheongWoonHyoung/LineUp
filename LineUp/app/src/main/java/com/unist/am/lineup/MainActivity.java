@@ -1,7 +1,9 @@
 package com.unist.am.lineup;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,6 +31,9 @@ import com.kakao.auth.Session;
 import com.kakao.kakaotalk.KakaoTalkHttpResponseHandler;
 import com.kakao.kakaotalk.KakaoTalkProfile;
 import com.kakao.kakaotalk.KakaoTalkService;
+import com.kakao.usermgmt.MeResponseCallback;
+import com.kakao.usermgmt.UserManagement;
+import com.kakao.usermgmt.UserProfile;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -69,17 +74,15 @@ public class MainActivity extends AppCompatActivity {
     String thumbnailURL ;
     String countryISO ;
 
+    DBManager_reserv manager;
+
     private DrawerLayout mDrawerLayout;
     private FrameLayout leftDrawer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent profile_data = getIntent();
-        nickName=profile_data.getExtras().getString("nickName");
-        profileImageURL=profile_data.getExtras().getString("profileImageURL");
-        thumbnailURL=profile_data.getExtras().getString("thumbnailURL");
-        //countryISO=profile_data.getExtras().getString("countryISO");
+        requestMe();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -315,5 +318,67 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+    }
+    private void requestMe() {
+        UserManagement.requestMe(new MeResponseCallback() {
+
+            @Override
+            public void onSuccess(final UserProfile userProfile) {
+                Log.d("SUCCESS", "UserProfile : " + userProfile);
+                userProfile.saveUserToCache();
+                nickName = userProfile.getNickname();
+                profileImageURL = userProfile.getProfileImagePath();
+                thumbnailURL = userProfile.getThumbnailImagePath();
+            }
+
+            @Override
+            public void onNotSignedUp() {
+
+            }
+
+            @Override
+            public void onSessionClosedFailure(final APIErrorResult errorResult) {
+
+                redirectLoginActivity();
+            }
+
+            @Override
+            public void onFailure(final APIErrorResult errorResult) {
+                if (errorResult.getErrorCodeInt() == -777) {
+                    finish();
+                } else {
+                    redirectLoginActivity();
+                }
+            }
+        });
+    }
+    protected void redirectLoginActivity() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+    }
+    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
+            Log.e("CHECK", "onReceive");
+            manager.delete("delete from RESERV_INFO");
+        }
+    };
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("CHECK", "main onResume");
+
+        getApplicationContext().registerReceiver(mReceiver, new IntentFilter("cus"));
+
+    }
+
+    @Override
+    public void onPause(){
+        super.onPause();
+        Log.e("CHECK", "main onPause");
+        getApplicationContext().unregisterReceiver(mReceiver);
     }
 }

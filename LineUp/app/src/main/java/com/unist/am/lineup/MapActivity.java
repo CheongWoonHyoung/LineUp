@@ -67,7 +67,7 @@ public class MapActivity extends Activity implements LocationListener, MapView.P
             if (get_flag_intent.getExtras().getBoolean("flag")) {
                 lat = get_flag_intent.getExtras().getDouble("lat");
                 lon = get_flag_intent.getExtras().getDouble("lon");
-                Log.e("Location",String.valueOf(lat) + "\t" + String.valueOf(lon));
+                Log.e("Location1",String.valueOf(lat) + "\t" + String.valueOf(lon));
             } else {
                 getLocation();
             }
