@@ -252,11 +252,12 @@ public class Mypage_tab3 extends BaseFragment_myPage {
             if(manager_update.returnPid().equals("nothing")){
             }else if(manager_update.returnPid().equals("1000")){
                 people_left.setText(String.valueOf(Integer.parseInt(people_left.getText().toString())-1));
+                Log.e("CHECK",people_left.getText().toString());
                 time_left.setText(String.valueOf((Integer.parseInt(people_left.getText().toString())-1)*3));
 
             }else{
                 people_left.setText(String.valueOf(Integer.parseInt(manager_update.returnPid()) - 1));
-                time_left.setText(String.valueOf((Integer.parseInt(manager_update.returnPid()) - 1)*3));
+                time_left.setText(String.valueOf((Integer.parseInt(manager_update.returnPid())-1)*3));
             }
             manager_update.delete("delete from UPDATE_INFO");
         }

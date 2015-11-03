@@ -115,6 +115,12 @@ public class MyPageActivity extends BaseActivity_myPage {
         // header 부분
 
         settingBtn = (LinearLayout) header.findViewById(R.id.settingBtn);
+        settingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MyPageActivity.this,SettingActivity.class));
+            }
+        });
 
     }
     @Override
@@ -159,8 +165,8 @@ public class MyPageActivity extends BaseActivity_myPage {
                 cus_name = (TextView) findViewById(R.id.profile_name);
                 cus_profile = (ImageView) findViewById(R.id.profile);
                 cus_name.setText(nickName);
-                Log.e(thumbnailURL,"thumnnail "+profileImageURL);
-                Picasso.with(MyPageActivity.this).load(thumbnailURL).centerCrop().into(cus_profile);
+                //Log.e(thumbnailURL,"thumnnail "+profileImageURL);
+                //Picasso.with(MyPageActivity.this).load(thumbnailURL).centerCrop().into(cus_profile);
             }
 
             @Override

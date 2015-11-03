@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.kakao.auth.APIErrorResult;
@@ -26,6 +28,16 @@ public class SettingActivity extends Activity implements View.OnClickListener{
     TextView clauseBtn;
     TextView inquireBtn;
     TextView logoutBtn;
+    Switch switch1;
+    Switch switch2;
+    public static SharedPreferences pref1;
+    public static SharedPreferences pref2;
+    SharedPreferences.Editor editor1;
+    SharedPreferences.Editor editor2;
+
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -38,9 +50,49 @@ public class SettingActivity extends Activity implements View.OnClickListener{
         clauseBtn = (TextView) findViewById(R.id.clause);
         inquireBtn= (TextView) findViewById(R.id.inquire);
         logoutBtn = (TextView) findViewById(R.id.logout);
+        switch1 = (Switch) findViewById(R.id.switch_notification);
+        switch2 = (Switch) findViewById(R.id.switch_notification2);
 
-        pushAlarm.setOnClickListener(this);
-        couponAlarm.setOnClickListener(this);
+        pref1 = getApplicationContext().getSharedPreferences("Push_Notification_ONOFF", MODE_PRIVATE);
+        pref2 = getApplicationContext().getSharedPreferences("Coupon_Notification_ONOFF", MODE_PRIVATE);
+        editor1 = pref1.edit();
+        editor2 = pref2.edit();
+
+        switch1.setChecked(pref1.getBoolean("Notification",true));
+        switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    editor1.putBoolean("Notification", true);
+                    editor1.commit();
+                    Log.d("NOTIFY", "TF : " + pref1.getBoolean("Notification", true));
+                } else {
+                    editor1.putBoolean("Notification", false);
+                    editor1.commit();
+                    Log.d("NOTIFY", "TF : " + pref1.getBoolean("Notification", true));
+
+                }
+            }
+        });
+
+        switch2.setChecked(pref1.getBoolean("Notification",true));
+        switch2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    editor2.putBoolean("Notification", true);
+                    editor2.commit();
+                    Log.d("NOTIFY", "TF2 : " + pref2.getBoolean("Notification", true));
+                } else {
+                    editor2.putBoolean("Notification", false);
+                    editor2.commit();
+                    Log.d("NOTIFY", "TF2 : " + pref2.getBoolean("Notification", true));
+
+                }
+            }
+        });
+
+
         versionBtn.setOnClickListener(this);
         clauseBtn.setOnClickListener(this);
         inquireBtn.setOnClickListener(this);
@@ -52,14 +104,6 @@ public class SettingActivity extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         Intent mintent = null;
         switch(v.getId()){
-            case R.id.pushAlarm:
-                mintent = new Intent(this, PushalarmActivity.class);
-                startActivity(mintent);
-                break;
-            case R.id.couponAlarm:
-                mintent = new Intent(this, CouponalarmActivity.class);
-                startActivity(mintent);
-                break;
             case R.id.version:
                 mintent = new Intent(this, VersionActivity.class);
                 startActivity(mintent);
