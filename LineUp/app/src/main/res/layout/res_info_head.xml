@@ -46,78 +46,59 @@
             android:gravity="center"
             android:layout_height="60dp">
 
-            <LinearLayout
-                android:background="@drawable/untitled_1"
-                android:orientation="horizontal"
-                android:layout_width="300dp"
-                android:layout_height="55dp">
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="200dp"
-                    android:layout_height="match_parent">
-                    <LinearLayout
-                        android:layout_width="25dp"
-                        android:layout_height="match_parent">
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_width="130dp"
-                        android:layout_height="match_parent">
-                        <LinearLayout
-                            android:gravity="center"
-                            android:layout_width="55dp"
-                            android:layout_height="match_parent">
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="15dp"
-                                android:text="3.0"
-                                android:textColor="@color/maincolor"/>
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical">
-                            <RatingBar
-                                android:layout_width="wrap_content"
-                                android:layout_height="10dp"
-                                style="@style/starratingbar"
-                                android:layout_gravity="center"
-                                android:numStars="5"
-                                android:stepSize="0.5"
-                                android:rating="5.0"/>
-                        </LinearLayout>
-
-                    </LinearLayout>
-                    <LinearLayout
-                        android:layout_marginRight="3dp"
-                        android:layout_width="37dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="14dp"
-                            android:text="N"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="14dp"
-                            android:text="@string/n"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="80dp"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="@string/add_star"
-                        android:textSize="13dp"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:textColor="#ADADAD"/>
-                </LinearLayout>
-            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="240dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/add_star_click"/>
+                <ImageView
+                    android:src="@drawable/star"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="35dp"
+                    android:id="@+id/star"/>
+                <TextView
+                    android:layout_toRightOf="@+id/star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/maincolor"
+                    android:text="3.0"
+                    android:textSize="18dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="5dp"/>
+                <TextView
+                    android:id="@+id/add_star"
+                    android:layout_marginRight="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_star"
+                    android:textColor="@color/white_disabled"
+                    android:textSize="15dp"/>
+                <TextView
+                    android:id="@+id/num_people"
+                    android:layout_marginRight="35dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"
+                    android:layout_toLeftOf="@+id/add_star"
+                    android:text="@string/n"/>
+                <TextView
+                    android:layout_marginRight="2dp"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"
+                    android:layout_toLeftOf="@+id/num_people"
+                    android:text="N"/>
+            </RelativeLayout>
 
         </LinearLayout>
         <LinearLayout
@@ -138,7 +119,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:src="@drawable/lineup"/>
+                        android:src="@drawable/line_up"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
