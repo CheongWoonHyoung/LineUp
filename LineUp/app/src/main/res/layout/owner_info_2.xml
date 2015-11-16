@@ -23,7 +23,7 @@
                     android:textSize="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="<찾아오는 손님의 성 비>"/>
+                    android:text="찾아오는 손님의 성 비"/>
                 <TextView
                     android:layout_marginLeft="10dp"
                     android:textSize="20dp"
@@ -109,7 +109,7 @@
                     android:textSize="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="<찾아오는 손님의 관계>"/>
+                    android:text="찾아오는 손님의 관계"/>
                 <TextView
                     android:layout_marginLeft="10dp"
                     android:textSize="20dp"

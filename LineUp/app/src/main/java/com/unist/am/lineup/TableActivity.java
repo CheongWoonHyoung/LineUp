@@ -20,6 +20,7 @@ package com.unist.am.lineup;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -101,100 +103,51 @@ public class TableActivity extends Activity {
     TextView Sit;
     TextView Out;
     TextView Go_to_List;
+    ImageView cle1;
+    ImageView cle2;
+    ImageView cle3;
 
 // 그냥 state는 가게단에서 하는 state변경값들 저장
-    
+
     //비어있을 떄 off
-    static String state1 = "off";
-    static String state2 = "off";
-    static String state3 = "off";
-    static String state4 = "off";
-    static String state5 = "off";
-    static String state6 = "off";
-    static String state7 = "off";
-    static String state8 = "off";
+    static Boolean state1 = false;
+    static Boolean state2 = false;
+    static Boolean state3 = false;
+    static Boolean state4 = false;
+    static Boolean state5 = false;
+    static Boolean state6 = false;
+    static Boolean state7 = false;
+    static Boolean state8 = false;
 
 
-// _2 state는 서버에서 가져와 맨처음 앱 실행시 사용
-    static String state1_2 = null;
-    static String state2_2 = null;
-    static String state3_2 = null;
-    static String state4_2 = null;
-    static String state5_2 = null;
-    static String state6_2 = null;
-    static String state7_2 = null;
-    static String state8_2 = null;
-    static String state_check = null;
+    // _2 state는 서버에서 가져와 맨처음 앱 실행시 사용
+    static Boolean state1_2 = null;
+    static Boolean state2_2 = null;
+    static Boolean state3_2 = null;
+    static Boolean state4_2 = null;
+    static Boolean state5_2 = null;
+    static Boolean state6_2 = null;
+    static Boolean state7_2 = null;
+    static Boolean state8_2 = null;
+    static Boolean state_check = null;
 
-
-    long table1_start =0;
-    long table1_end = 0;
-    long table2_start =0;
-    long table2_end = 0;
-    long table3_start =0;
-    long table3_end = 0;
-    long table4_start =0;
-    long table4_end = 0;
-    long table5_start =0;
-    long table5_end = 0;
-    long table6_start =0;
-    long table6_end = 0;
-    long table7_start =0;
-    long table7_end = 0;
-    long table8_start =0;
-    long table8_end = 0;
-    long table9_start =0;
-    long table9_end = 0;
-    long table10_start =0;
-    long table10_end = 0;
-    long table11_start =0;
-    long table11_end = 0;
-    long table12_start =0;
-    long table12_end = 0;
-    long table13_start =0;
-    long table13_end = 0;
-    long table14_start =0;
-    long table14_end = 0;
-    long table15_start =0;
-    long table15_end = 0;
-
-// from_server 서버에서 받는 테이블이 켜졌을 때의 시간
-    long table1_start_from_server = 0;
-    long table2_start_from_server = 0;
-    long table3_start_from_server = 0;
-    long table4_start_from_server = 0;
-    long table5_start_from_server = 0;
-    long table6_start_from_server = 0;
-    long table7_start_from_server = 0;
-    long table8_start_from_server = 0;
-
-    static Button check;
+    static TextView check;
 
     int checkBtn_color;
     Number_Customer mdialog;
 
     ArrayList<String> num_people = null;
     ArrayList<String> start_time = null;
+    ArrayList<Integer> selected_tables = null;
+    ArrayList<String>selected_table= null;
+    String current_times;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        Context mcontext = this;
-        try {
-            DBManager_table db_manager = new DBManager_table(mcontext, "table_info", null, 1);
-            num_people = db_manager.returnNum();
-            start_time = db_manager.returnTime();
-        }
-        catch (Exception e){
-            Log.e("DB",e.toString());
-        }
-        /*
-manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
-        서버에서 시작시간과 stete 로드하여 각각 start_from_server 와 state_2에 저장
-
-         */
         setContentView(R.layout.owner_table);
-   //     setContentView(R.layout.table_management);
+        //     setContentView(R.layout.table_management);
 
         table1_1 = (TextView) findViewById(R.id.tb1_txt1);
         table1_2 = (TextView) findViewById(R.id.tb1_txt2);
@@ -230,95 +183,107 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
         tb8_1 = (FrameLayout) findViewById(R.id.tb14_box1);
         tb8_2 = (FrameLayout) findViewById(R.id.tb14_box2);
 
+        cle1 = (ImageView) findViewById(R.id.circle);
+        cle2 = (ImageView) findViewById(R.id.circle2);
+        cle3 = (ImageView) findViewById(R.id.circle3);
+
         Sit = (TextView) findViewById(R.id.sit_table);
-        Out = (TextView)findViewById(R.id.out_table);
+        Out = (TextView) findViewById(R.id.out_table);
+        check = (TextView) findViewById(R.id.ok_table);
+        check.setEnabled(false);
+        cle3.setBackgroundResource(R.drawable.round_logo_blocked);
         Go_to_List = (TextView) findViewById(R.id.list_table);
-
-        tb1 =(RelativeLayout) findViewById(R.id.tb1);
-        tb2 =(RelativeLayout) findViewById(R.id.tb2);
-        tb3 =(RelativeLayout) findViewById(R.id.tb5);
-        tb4 =(RelativeLayout) findViewById(R.id.tb6);
-        tb5 =(RelativeLayout) findViewById(R.id.tb9);
-        tb6 =(RelativeLayout) findViewById(R.id.tb10);
-        tb7 =(RelativeLayout) findViewById(R.id.tb13);
-        tb8 =(RelativeLayout) findViewById(R.id.tb14);
-
-
-        for(int i = 0; i < num_people.size(); i++){
-            if(num_people.get(i) != "0"){
-                switch (i){
-                    case 0:
-                        tb1_1.setVisibility(View.VISIBLE);
-                        tb1_2.setVisibility(View.VISIBLE);
-                        table1_1.setText(num_people.get(i));
-                        table1_2.setText(getDate(String.valueOf(start_time.get(i))));
-                        break;
-                    case 1:
-                        tb2_1.setVisibility(View.VISIBLE);
-                        tb2_2.setVisibility(View.VISIBLE);
-                        table2_1.setText(num_people.get(i));
-                        table2_2.setText(getDate(String.valueOf(start_time.get(i))));
-                        break;
-                    case 2:
-                        tb3_1.setVisibility(View.VISIBLE);
-                        tb3_2.setVisibility(View.VISIBLE);
-                        table3_1.setText(num_people.get(i));
-                        table3_2.setText(getDate(String.valueOf(start_time.get(i))));
-                        break;
-                    case 3:
-                        tb4_1.setVisibility(View.VISIBLE);
-                        tb4_2.setVisibility(View.VISIBLE);
-                        table4_1.setText(num_people.get(i));
-                        table4_2.setText(getDate(String.valueOf(start_time.get(i))));
-                        break;
-                    case 4:
-                        tb5_1.setVisibility(View.VISIBLE);
-                        tb5_2.setVisibility(View.VISIBLE);
-                        table5_1.setText(num_people.get(i));
-                        table5_2.setText(getDate(String.valueOf(start_time.get(i))));
-                        break;
-                    case 5:
-                        tb6_1.setVisibility(View.VISIBLE);
-                        tb6_2.setVisibility(View.VISIBLE);
-                        table6_1.setText(num_people.get(i));
-                        table6_2.setText(getDate(String.valueOf(start_time.get(i))));
-                        break;
-                    case 6:
-                        tb7_1.setVisibility(View.VISIBLE);
-                        tb7_2.setVisibility(View.VISIBLE);
-                        table7_1.setText(num_people.get(i));
-                        table7_2.setText(getDate(String.valueOf(start_time.get(i))));
-                        break;
-                    case 7:
-                        tb8_1.setVisibility(View.VISIBLE);
-                        tb8_2.setVisibility(View.VISIBLE);
-                        table8_1.setText(num_people.get(i));
-                        table8_2.setText(getDate(String.valueOf(start_time.get(i))));
-                        break;
-                }
+        Go_to_List.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mintent = new Intent(mcontext,OwnerActivity.class);
+                startActivity(mintent);
 
             }
-        }
+        });
+        tb1 = (RelativeLayout) findViewById(R.id.tb1);
+        tb2 = (RelativeLayout) findViewById(R.id.tb2);
+        tb3 = (RelativeLayout) findViewById(R.id.tb5);
+        tb4 = (RelativeLayout) findViewById(R.id.tb6);
+        tb5 = (RelativeLayout) findViewById(R.id.tb9);
+        tb6 = (RelativeLayout) findViewById(R.id.tb10);
+        tb7 = (RelativeLayout) findViewById(R.id.tb13);
+        tb8 = (RelativeLayout) findViewById(R.id.tb14);
+        Boolean complete = false;
+        mcontext = this;
+        setEnabledOfTb(false);
+        try {
+            new HttpPostRequest().execute("");
+        } catch (Exception e) {
 
+            Log.e("DB", e.toString());
+        }
+        /*
+manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
+        서버에서 시작시간과 stete 로드하여 각각 start_from_server 와 state_2에 저장
+
+         */
+
+
+
+        state1_2 = state1;
+        state2_2 = state2;
+        state3_2 = state3;
+        state4_2 = state4;
+        state5_2 = state5;
+        state6_2 = state6;
+        state7_2 = state7;
+        state8_2 = state8;
+
+        mdialog = new Number_Customer(mcontext);
         Sit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Out.setEnabled(false);
-                Go_to_List.setEnabled(false);
-                tb1.setOnClickListener(new Click(1,true));
-                tb2.setOnClickListener(new Click(2,true));
-                tb3.setOnClickListener(new Click(3,true));
-                tb4.setOnClickListener(new Click(4,true));
-                tb5.setOnClickListener(new Click(5,true));
-                tb6.setOnClickListener(new Click(6,true));
-                tb7.setOnClickListener(new Click(7,true));
-                tb8.setOnClickListener(new Click(8,true));
+                Sit.setEnabled(false);
+                cle1.setBackgroundResource(R.drawable.round_logo_blocked);
+                cle2.setBackgroundResource(R.drawable.round_logo_blocked);
+                cle3.setBackgroundResource(R.drawable.round_logo);
+                check.setEnabled(true);
+                setEnabledOfTb(true);
+                current_times = String.valueOf(System.currentTimeMillis());
+                tb1.setOnClickListener(new Click(1, true));
+                tb2.setOnClickListener(new Click(2, true));
+                tb3.setOnClickListener(new Click(3, true));
+                tb4.setOnClickListener(new Click(4, true));
+                tb5.setOnClickListener(new Click(5, true));
+                tb6.setOnClickListener(new Click(6, true));
+                tb7.setOnClickListener(new Click(7, true));
+                tb8.setOnClickListener(new Click(8, true));
+                check.setOnClickListener(new Click(9, true));
 
             }
         });
-        mcontext = this;
+        Out.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Sit.setEnabled(false);
+                Out.setEnabled(false);
+                current_times = String.valueOf(System.currentTimeMillis());
+                cle1.setBackgroundResource(R.drawable.round_logo_blocked);
+                cle2.setBackgroundResource(R.drawable.round_logo_blocked);
+                cle3.setBackgroundResource(R.drawable.round_logo);
+                check.setEnabled(true);
+                setEnabledOfTb(true);
+                tb1.setOnClickListener(new Click(1, false));
+                tb2.setOnClickListener(new Click(2, false));
+                tb3.setOnClickListener(new Click(3, false));
+                tb4.setOnClickListener(new Click(4, false));
+                tb5.setOnClickListener(new Click(5, false));
+                tb6.setOnClickListener(new Click(6, false));
+                tb7.setOnClickListener(new Click(7, false));
+                tb8.setOnClickListener(new Click(8, false));
+                check.setOnClickListener(new Click(10, false));
 
-   //     mdialog.setCancelable(false);
+            }
+        });
+
+        //     mdialog.setCancelable(false);
         mdialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
@@ -328,51 +293,145 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
         mdialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                if(mdialog.No != 0){
-                    switch (mdialog.Table_id){
-                        case 1:
-                            table1_1.setText(String.valueOf(mdialog.No));
-                            table1_2.setText(getDate(String.valueOf(table1_start)));
-
-                            break;
-
-                        case 2:
-                            table2_1.setText(String.valueOf(mdialog.No));
-                            table2_2.setText(getDate(String.valueOf(table2_start)));
-                            break;
-
-                        case 3:
-                            table3_1.setText(String.valueOf(mdialog.No));
-                            table3_2.setText(getDate(String.valueOf(table3_start)));
-                            break;
-
-                        case 4:
-                            table4_1.setText(String.valueOf(mdialog.No));
-                            table4_2.setText(getDate(String.valueOf(table4_start)));
-                            break;
-
-                        case 5:
-                            table5_1.setText(String.valueOf(mdialog.No));
-                            table5_2.setText(getDate(String.valueOf(table5_start)));;
-                            break;
-                        case  6:
-                            table6_1.setText(String.valueOf(mdialog.No));
-                            table6_2.setText(getDate(String.valueOf(table6_start)));
-                            break;
-                        case 7:
-                            table7_1.setText(String.valueOf(mdialog.No));
-                            table7_2.setText(getDate(String.valueOf(table7_start)));
-                            break;
-                        case 8:
-                            table8_1.setText(String.valueOf(mdialog.No));
-                            table8_2.setText(getDate(String.valueOf(table8_start)));
-                            break;
+                if (mdialog.No != 0) {
+                    for(int i = 0 ; i < selected_tables.size(); i++){
+                        TextPutter(selected_tables.get(i));
                     }
+                    // 서버에 시간저장
+                    Out.setEnabled(true);
+                    Sit.setEnabled(true);
+                    check.setEnabled(false);
+                    cle1.setBackgroundResource(R.drawable.round_logo);
+                    cle2.setBackgroundResource(R.drawable.round_logo);
+                    cle3.setBackgroundResource(R.drawable.round_logo_blocked);
+                    setEnabledOfTb(false);
                 }
+                state1_2 = state1;
+                state2_2 = state2;
+                state3_2 = state3;
+                state4_2 = state4;
+                state5_2 = state5;
+                state6_2 = state6;
+                state7_2 = state7;
+                state8_2 = state8;
             }
         });
 
     }
+
+    void TextPutter(int id) {
+        switch (id) {
+            case 1:
+                tb1_2.setVisibility(View.VISIBLE);
+                tb1_1.setVisibility(View.VISIBLE);
+                table1_1.setText(String.valueOf(mdialog.No));
+                table1_2.setText(getDate(String.valueOf(current_times)));
+                tb1.setBackgroundResource(R.drawable.round_box_ing);
+                break;
+
+            case 2:
+                tb2_2.setVisibility(View.VISIBLE);
+                tb2_1.setVisibility(View.VISIBLE);
+                table2_1.setText(String.valueOf(mdialog.No));
+                table2_2.setText(getDate(String.valueOf(current_times)));
+                tb2.setBackgroundResource(R.drawable.round_box_ing);
+                break;
+
+            case 3:
+                tb3_2.setVisibility(View.VISIBLE);
+                tb3_1.setVisibility(View.VISIBLE);
+                table3_1.setText(String.valueOf(mdialog.No));
+                table3_2.setText(getDate(String.valueOf(current_times)));
+                tb3.setBackgroundResource(R.drawable.round_box_ing);
+                break;
+
+            case 4:
+                tb4_2.setVisibility(View.VISIBLE);
+                tb4_1.setVisibility(View.VISIBLE);
+                table4_1.setText(String.valueOf(mdialog.No));
+                table4_2.setText(getDate(String.valueOf(current_times)));
+                tb4.setBackgroundResource(R.drawable.round_box_ing);
+                break;
+
+            case 5:
+                tb5_2.setVisibility(View.VISIBLE);
+                tb5_1.setVisibility(View.VISIBLE);
+                table5_1.setText(String.valueOf(mdialog.No));
+                table5_2.setText(getDate(String.valueOf(current_times)));
+                tb5.setBackgroundResource(R.drawable.round_box_ing);
+                break;
+            case 6:
+                tb6_2.setVisibility(View.VISIBLE);
+                tb6_1.setVisibility(View.VISIBLE);
+                table6_1.setText(String.valueOf(mdialog.No));
+                table6_2.setText(getDate(String.valueOf(current_times)));
+                tb6.setBackgroundResource(R.drawable.round_box_ing);
+                break;
+            case 7:
+                tb7_2.setVisibility(View.VISIBLE);
+                tb7_1.setVisibility(View.VISIBLE);
+                table7_1.setText(String.valueOf(mdialog.No));
+                table7_2.setText(getDate(String.valueOf(current_times)));
+                tb7.setBackgroundResource(R.drawable.round_box_ing);
+                break;
+            case 8:
+                tb8_2.setVisibility(View.VISIBLE);
+                tb8_1.setVisibility(View.VISIBLE);
+                table8_1.setText(String.valueOf(mdialog.No));
+                table8_2.setText(getDate(String.valueOf(current_times)));
+                tb8.setBackgroundResource(R.drawable.round_box_ing);
+                break;
+        }
+    }
+    void TextDeletor(int id) {
+        switch (id) {
+            case 1:
+                tb1_2.setVisibility(View.INVISIBLE);
+                tb1_1.setVisibility(View.INVISIBLE);
+                tb1.setBackgroundResource(R.drawable.round_box_table);
+                break;
+
+            case 2:
+                tb2_2.setVisibility(View.INVISIBLE);
+                tb2_1.setVisibility(View.INVISIBLE);
+                tb2.setBackgroundResource(R.drawable.round_box_table);
+                break;
+
+            case 3:
+                tb3_2.setVisibility(View.INVISIBLE);
+                tb3_1.setVisibility(View.INVISIBLE);
+                tb3.setBackgroundResource(R.drawable.round_box_table);
+                break;
+
+            case 4:
+                tb4_2.setVisibility(View.INVISIBLE);
+                tb4_1.setVisibility(View.INVISIBLE);
+                tb4.setBackgroundResource(R.drawable.round_box_table);
+                break;
+
+            case 5:
+                tb5_2.setVisibility(View.INVISIBLE);
+                tb5_1.setVisibility(View.INVISIBLE);
+                tb5.setBackgroundResource(R.drawable.round_box_table);
+                break;
+            case 6:
+                tb6_2.setVisibility(View.INVISIBLE);
+                tb6_1.setVisibility(View.INVISIBLE);
+                tb6.setBackgroundResource(R.drawable.round_box_table);
+                break;
+            case 7:
+                tb7_2.setVisibility(View.INVISIBLE);
+                tb7_1.setVisibility(View.INVISIBLE);
+                tb7.setBackgroundResource(R.drawable.round_box_table);
+                break;
+            case 8:
+                tb8_2.setVisibility(View.INVISIBLE);
+                tb8_1.setVisibility(View.INVISIBLE);
+                tb8.setBackgroundResource(R.drawable.round_box_table);
+                break;
+        }
+    }
+
 
     public class Click implements OnClickListener {
 
@@ -386,127 +445,306 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
         @Override
         public void onClick(View v) {
             switch(mtype){
-
                 case 1:
-                    if(state1 == "off" && TF) {
-                        table1_start = System.currentTimeMillis();
-                        v.setBackgroundResource(R.drawable.round_box_selected);
-                        state1 = "on";
-                        mdialog = new Number_Customer(mcontext, mtype);
+                    if(state1 == false && TF) {
+                        v.setBackgroundResource(R.drawable.round_box_table_selected);
+                        state1 = true;
+                    }
+                    else if(state1 && !state1_2 && TF){
+                        v.setBackgroundResource(R.drawable.round_box_table);
+                        state1 = !state1;
                     }
                     else{
-                        if(!TF) {
-                            table1_end = System.currentTimeMillis();
-                            v.setBackgroundResource(R.drawable.round_box);
-                            state1 = "off";
-                            tb1_1.setVisibility(View.INVISIBLE);
-                            tb1_2.setVisibility(View.INVISIBLE);
+                        if(state1 && !TF) {
+                            v.setBackgroundResource(R.drawable.round_box_ing_selected);
+                            state1 = false;
+                        }
+                        else if(!state1 && state1_2 && !TF){
+                            v.setBackgroundResource(R.drawable.round_box_ing);
+                            state1 = true;
                         }
                     }
                     break;
                 case 2:
-                    if(state2 == "off" && TF) {
-                        table2_start = System.currentTimeMillis();
-                        v.setBackgroundResource(R.drawable.round_box_selected);
-                        state2 = "on";
-                        mdialog = new Number_Customer(mcontext, mtype);
+                    if(state2 == false && TF) {
+                        v.setBackgroundResource(R.drawable.round_box_table_selected);
+                        state2 = true;
+                    }
+                    else if(state2 && !state2_2 && TF){
+                        v.setBackgroundResource(R.drawable.round_box_table);
+                        state2 = !state2;
                     }
                     else{
-                        table2_end = System.currentTimeMillis();
-                        v.setBackgroundResource(R.drawable.round_box);
-                        state2 = "off";
+                        if(state2 && !TF) {
+                            v.setBackgroundResource(R.drawable.round_box_ing_selected);
+                            state2 = false;
+                        }
+                        else if(!state2 && state2_2 && !TF){
+                            v.setBackgroundResource(R.drawable.round_box_ing);
+                            state2 = true;
 
+                        }
                     }
 
                     break;
                 case 3:
-                    if(state3 == "off" && TF) {
-                        table3_start = System.currentTimeMillis();
-                        v.setBackgroundResource(R.drawable.round_box_selected);
-                        state3 = "on";
-                        mdialog = new Number_Customer(mcontext, mtype);
+                    if(state3 == false && TF) {
+                        v.setBackgroundResource(R.drawable.round_box_table_selected);
+                        state3 = true;
+                    }
+                    else if(state3 && !state3_2 && TF){
+                        v.setBackgroundResource(R.drawable.round_box_table);
+                        state3 = !state3;
                     }
                     else{
-                        table3_end = System.currentTimeMillis();
-                        v.setBackgroundResource(R.drawable.round_box);
-                        state3 = "off";
+                        if(state3 && !TF) {
+                            v.setBackgroundResource(R.drawable.round_box_ing_selected);
+                            state3 = false;
+                        }
+                        else if(!state3 && state3_2 && !TF){
+                            v.setBackgroundResource(R.drawable.round_box_ing);
+                            state3 = true;
 
+                        }
                     }
 
                     break;
                 case 4:
-                    if(state4 == "off" &&TF) {
-                        table4_start = System.currentTimeMillis();
-                        v.setBackgroundResource(R.drawable.round_box_selected);
-                        state4 = "on";
-                        mdialog = new Number_Customer(mcontext, mtype);
+                    if(state4 == false &&TF) {
+                        v.setBackgroundResource(R.drawable.round_box_table_selected);
+                        state4 = true;
+                    }
+                    else if(state4 && !state4_2 && TF){
+                        v.setBackgroundResource(R.drawable.round_box_table);
+                        state4 = !state4;
                     }
                     else{
-                        table4_end = System.currentTimeMillis();
-                        v.setBackgroundResource(R.drawable.round_box);
-                        state4 = "off";
+                        if(state4 && !TF) {
+                            v.setBackgroundResource(R.drawable.round_box_ing_selected);
+                            state4 = false;
+                        }
+                        else if(!state4 && state4_2 && !TF){
+                            v.setBackgroundResource(R.drawable.round_box_ing);
+                            state4 = true;
 
+                        }
                     }
 
                     break;
                 case 5:
-                    if(state5 == "off" && TF) {
-                        table5_start = System.currentTimeMillis();
-                        v.setBackgroundResource(R.drawable.round_box_selected);
-                        state5 = "on";
-                        mdialog = new Number_Customer(mcontext, mtype);
+                    if(state5 == false && TF) {
+                        v.setBackgroundResource(R.drawable.round_box_table_selected);
+                        state5 = true;
+                    }
+                    else if(state5 && !state5_2 && TF){
+                        v.setBackgroundResource(R.drawable.round_box_table);
+                        state5 = !state5;
                     }
                     else{
-                        table5_end = System.currentTimeMillis();
-                        v.setBackgroundResource(R.drawable.round_box);
-                        state5 = "off";
+                        if(state5 && !TF) {
+                            v.setBackgroundResource(R.drawable.round_box_ing_selected);
+                            state5 = false;
+                        }
+                        else if(!state5 && state5_2 && !TF){
+                            v.setBackgroundResource(R.drawable.round_box_ing);
+                            state5 = true;
+
+                        }
                     }
                     break;
                 case 6:
-                    if(state6 == "off" &&TF) {
-                        table6_start = System.currentTimeMillis();
-                        v.setBackgroundResource(R.drawable.round_box_selected);
-                        state6 = "on";
-                        mdialog = new Number_Customer(mcontext, mtype);
+                    if(state6 == false &&TF) {
+                        v.setBackgroundResource(R.drawable.round_box_table_selected);
+                        state6 = true;
+                    }
+                    else if(state6 && !state6_2 && TF){
+                        v.setBackgroundResource(R.drawable.round_box_table);
+                        state6 = !state6;
                     }
                     else{
-                        table6_end = System.currentTimeMillis();
-                        v.setBackgroundResource(R.drawable.round_box);
-                        state6 = "off";
+                        if(state6 && !TF) {
+                            v.setBackgroundResource(R.drawable.round_box_ing_selected);
+                            state6 = false;
+                        }
+                        else if(!state6 && state6_2 && !TF){
+                            v.setBackgroundResource(R.drawable.round_box_ing);
+                            state6 = true;
+
+                        }
 
                     }
 
                     break;
                 case 7:
-                    if(state7 == "off" &&TF) {
-                        table7_start = System.currentTimeMillis();
-                        v.setBackgroundResource(R.drawable.round_box_selected);
-                        state7 = "on";
-                        mdialog = new Number_Customer(mcontext, mtype);
+                    if(state7 == false &&TF) {
+                        v.setBackgroundResource(R.drawable.round_box_table_selected);
+                        state7 = true;
+                    }
+                    else if(state7 && !state7_2 && TF){
+                        v.setBackgroundResource(R.drawable.round_box_table);
+                        state7 = !state7;
                     }
                     else{
-                        table7_end = System.currentTimeMillis();
-                        v.setBackgroundResource(R.drawable.round_box);
-                        state7 = "off";
+                        if(state7 && !TF) {
+                            v.setBackgroundResource(R.drawable.round_box_ing_selected);
+                            state7 = false;
+                        }
+                        else if(!state7 && state7_2 && !TF){
+                            v.setBackgroundResource(R.drawable.round_box_ing);
+                            state7 = true;
+
+                        }
 
                     }
 
                     break;
                 case 8:
-                    if(state8 == "off" &&TF) {
-                        table8_start = System.currentTimeMillis();
-                        v.setBackgroundResource(R.drawable.round_box_selected);
-                        state8 = "on";
-                        mdialog = new Number_Customer(mcontext, mtype);
+                    if(state8 == false &&TF) {
+                        v.setBackgroundResource(R.drawable.round_box_table_selected);
+                        state8 = true;
+                    }
+                    else if(state8 && !state8_2 && TF){
+                        v.setBackgroundResource(R.drawable.round_box_table);
+                        state8 = !state8;
                     }
                     else{
-                        table8_end = System.currentTimeMillis();
-                        v.setBackgroundResource(R.drawable.round_box);
-                        state8 = "off";
+                        if(state8 && !TF) {
+                            v.setBackgroundResource(R.drawable.round_box_ing_selected);
+                            state8 = false;
+                        }
+                        else if(!state8 && state8_2 && !TF){
+                            v.setBackgroundResource(R.drawable.round_box_ing);
+                            state8 = true;
+
+                        }
                     }
 
                     break;
-              
+                case 9:
+                        if(TF){
+                        selected_tables = new ArrayList<Integer>();
+                        selected_table = new ArrayList<String>();
+                        if(state1 != state1_2 && !state1_2){
+                            selected_tables.add(1);
+                            selected_table.add(current_times);
+                        }
+                        if(state2!= state2_2 && !state2_2){
+                            selected_tables.add(2);
+                            selected_table.add(current_times);
+                        }
+                        if(state3!= state3_2 && !state3_2){
+                            selected_tables.add(3);
+                            selected_table.add(current_times);
+                        }
+                        if(state4!= state4_2 && !state4_2){
+                            selected_tables.add(4);
+                            selected_table.add(current_times);
+                        }
+                        if(state5!= state5_2 && !state5_2){
+                            selected_tables.add(5);
+                            selected_table.add(current_times);
+                        }
+                        if(state6!= state6_2 && !state6_2){
+                            selected_tables.add(6);
+                            selected_table.add(current_times);
+                        }
+                        if(state7!= state7_2 && !state7_2){
+                            selected_tables.add(7);
+                            selected_table.add(current_times);
+                        }
+                        if(state8!= state8_2 && !state8_2){
+                            selected_tables.add(8);
+                            selected_table.add(current_times);
+                        }
+                        mdialog.table_list = selected_tables;
+                        mdialog.table_time_list = selected_table;
+
+                    }
+                    if(selected_table.size()>0) {
+                        mdialog.show();
+                    }
+                    else{
+                        Out.setEnabled(true);
+                        Sit.setEnabled(true);
+                        check.setEnabled(false);
+                        cle1.setBackgroundResource(R.drawable.round_logo);
+                        cle2.setBackgroundResource(R.drawable.round_logo);
+                        cle3.setBackgroundResource(R.drawable.round_logo_blocked);
+                    }
+                    break;
+
+                case 10:
+                    selected_table= new ArrayList<String>();
+                    selected_tables=new ArrayList<Integer>();
+
+                    if(!state1 && state1_2){
+                        selected_table.add(current_times);
+                        selected_tables.add(1);
+                        TextDeletor(1);
+                        state1 = state1_2 = false;
+                    }
+                    if(!state2 && state2_2){
+                        selected_table.add(current_times);
+                        selected_tables.add(2);
+                        state2 = state2_2 = false;
+                        TextDeletor(2);
+                    }
+
+                    if(!state3 && state3_2){
+                        selected_table.add(current_times);
+                        selected_tables.add(3);
+                        state3 = state3_2 = false;
+                        TextDeletor(3);
+                    }
+
+                    if(!state4 && state4_2){
+                        selected_table.add(current_times);
+                        selected_tables.add(4);
+                        state4 = state4_2 = false;
+                        TextDeletor(4);
+                    }
+
+                    if(!state5 && state5_2){
+                        selected_table.add(current_times);
+                        selected_tables.add(5);
+                        state5 = state5_2 = false;
+                        TextDeletor(5);
+                    }
+
+                    if(!state6 && state6_2){
+                        selected_table.add(current_times);
+                        selected_tables.add(6);
+                        state6 = state6_2 = false;
+                        TextDeletor(6);
+                    }
+
+                    if(!state7 && state7_2){
+                        selected_table.add(current_times);
+                        selected_tables.add(7);
+                        state7 = state7_2 = false;
+                        TextDeletor(7);
+                    }
+
+                    if(!state8 && state8_2){
+                        selected_table.add(current_times);
+                        selected_tables.add(8);
+                        state8 = state8_2 = false;
+                        TextDeletor(8);
+                    }
+                    if(selected_table.size() >0){
+                        new HttpPostRequest2().execute("");
+                    }
+                    Sit.setEnabled(true);
+                    Out.setEnabled(true);
+                    check.setEnabled(false);
+                    cle1.setBackgroundResource(R.drawable.round_logo);
+                    cle2.setBackgroundResource(R.drawable.round_logo);
+                    cle3.setBackgroundResource(R.drawable.round_logo_blocked);
+                    setEnabledOfTb(false);
+
+
+
+                    break;
             }
 
 
@@ -521,6 +759,193 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
         calendar.setTimeInMillis(Long.valueOf(times));
 
         return sdf.format(calendar.getTime());
+    }
+    public class HttpPostRequest extends AsyncTask<String,Void,String> {
+        String sResult="error";
+        @Override
+        protected String doInBackground(String... info) {
+            URL url = null;
+            try {
+                url = new URL("http://52.69.163.43/queuing/get_all_table_info.php");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                Log.e("Http connection", "완료");
+                conn.setRequestMethod("POST");
+                String post_value = "";
+                String body = "resname=" + "sample";
+
+
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                osw.write(body);
+                osw.flush();
+
+                Log.e("Http connection2","완료");
+
+                InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                BufferedReader reader = new BufferedReader(tmp);
+                StringBuilder builder = new StringBuilder();
+                Log.e("InputStreamReader","완료");
+
+                String str;
+                while ((str = reader.readLine()) != null) {
+                    builder.append(str);
+                }
+                sResult = builder.toString();
+                Log.e(sResult,"완료");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(e.toString(),sResult);
+            }
+
+
+            return sResult;
+        }
+        @Override
+        protected void onPostExecute(String result){
+            Log.e("RESULT", result);
+
+            String jsonall = result;
+            JSONArray jArray = null;
+
+            try{
+                jArray = new JSONArray(jsonall);
+                JSONObject json_data = null;
+
+                for (int i = 0; i < jArray.length(); i++) {
+                    json_data = jArray.getJSONObject(i);
+                    num_people.add(json_data.getString("num_people"));
+                    start_time.add(json_data.getString("start_time"));
+                    Log.e("PROFILE",":"+i);
+
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            try{
+                    for (int i = 0; i < num_people.size(); i++) {
+                        if (num_people.get(i) != "0") {
+                            switch (i) {
+                                case 0:
+                                    tb1_1.setVisibility(View.VISIBLE);
+                                    tb1_2.setVisibility(View.VISIBLE);
+                                    table1_1.setText(num_people.get(i));
+                                    tb1.setBackgroundResource(R.drawable.round_box_ing);
+                                    table1_2.setText(getDate(String.valueOf(start_time.get(i))));
+                                    state1 = true;
+                                    break;
+                                case 1:
+                                    tb2_1.setVisibility(View.VISIBLE);
+                                    tb2_2.setVisibility(View.VISIBLE);
+                                    table2_1.setText(num_people.get(i));
+                                    tb2.setBackgroundResource(R.drawable.round_box_ing);
+                                    table2_2.setText(getDate(String.valueOf(start_time.get(i))));
+                                    state2 = true;
+                                    break;
+                                case 2:
+                                    tb3_1.setVisibility(View.VISIBLE);
+                                    tb3_2.setVisibility(View.VISIBLE);
+                                    table3_1.setText(num_people.get(i));
+                                    tb3.setBackgroundResource(R.drawable.round_box_ing);
+                                    table3_2.setText(getDate(String.valueOf(start_time.get(i))));
+                                    state3 = true;
+                                    break;
+                                case 3:
+                                    tb4_1.setVisibility(View.VISIBLE);
+                                    tb4_2.setVisibility(View.VISIBLE);
+                                    table4_1.setText(num_people.get(i));
+                                    tb4.setBackgroundResource(R.drawable.round_box_ing);
+                                    table4_2.setText(getDate(String.valueOf(start_time.get(i))));
+                                    state4 = true;
+                                    break;
+                                case 4:
+                                    tb5_1.setVisibility(View.VISIBLE);
+                                    tb5_2.setVisibility(View.VISIBLE);
+                                    table5_1.setText(num_people.get(i));
+                                    tb5.setBackgroundResource(R.drawable.round_box_ing);
+                                    table5_2.setText(getDate(String.valueOf(start_time.get(i))));
+                                    state5 = true;
+                                    break;
+                                case 5:
+                                    tb6_1.setVisibility(View.VISIBLE);
+                                    tb6_2.setVisibility(View.VISIBLE);
+                                    table6_1.setText(num_people.get(i));
+                                    tb6.setBackgroundResource(R.drawable.round_box_ing);
+                                    table6_2.setText(getDate(String.valueOf(start_time.get(i))));
+                                    state6 = true;
+                                    break;
+                                case 6:
+                                    tb7_1.setVisibility(View.VISIBLE);
+                                    tb7_2.setVisibility(View.VISIBLE);
+                                    table7_1.setText(num_people.get(i));
+                                    tb7.setBackgroundResource(R.drawable.round_box_ing);
+                                    table7_2.setText(getDate(String.valueOf(start_time.get(i))));
+                                    state7 = true;
+                                    break;
+                                case 7:
+                                    tb8_1.setVisibility(View.VISIBLE);
+                                    tb8_2.setVisibility(View.VISIBLE);
+                                    table8_1.setText(num_people.get(i));
+                                    tb8.setBackgroundResource(R.drawable.round_box_ing);
+                                    table8_2.setText(getDate(String.valueOf(start_time.get(i))));
+                                    state8 = true;
+                                    break;
+                            }
+
+                        }
+                    }
+            }
+            catch (Exception e){
+                Log.e("error",e.toString());
+            }
+        }
+    }
+    public class HttpPostRequest2 extends AsyncTask<String,Void,String> {
+        String sResult="error100";
+        @Override
+        protected String doInBackground(String... info) {
+            URL url = null;
+            try {
+                url = new URL("http://52.69.163.43/queuing/all_table_management.php");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                Log.e("Http connection", "완료");
+                conn.setRequestMethod("POST");
+                for (int i = 0; i < selected_table.size(); i++) {
+                    String body = "resname=" + "sample&type=2&table_id="+String.valueOf(selected_tables.get(i))+"&end_time="+selected_table.get(i);
+                    Log.e("body222",body);
+                    OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                    osw.write(body);
+                    osw.flush();
+                    Log.e("Http connection2", "완료");
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+                Log.e(e.toString(), sResult);
+            }
+
+
+            return sResult;
+        }
+        @Override
+        protected void onPostExecute(String result){
+            Log.e("RESULT", result);
+
+
+
+        }
+    }
+    @Override protected void onStop(){
+        super.onStop();
+        finish();
+    }
+    void setEnabledOfTb(Boolean BN){
+        tb1.setEnabled(BN);
+        tb2.setEnabled(BN);
+        tb3.setEnabled(BN);
+        tb4.setEnabled(BN);
+        tb5.setEnabled(BN);
+        tb6.setEnabled(BN);
+        tb7.setEnabled(BN);
+        tb8.setEnabled(BN);
     }
 
 
