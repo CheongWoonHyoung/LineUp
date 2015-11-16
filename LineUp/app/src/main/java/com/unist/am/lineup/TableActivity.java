@@ -209,11 +209,14 @@ public class TableActivity extends Activity {
         tb6 = (RelativeLayout) findViewById(R.id.tb10);
         tb7 = (RelativeLayout) findViewById(R.id.tb13);
         tb8 = (RelativeLayout) findViewById(R.id.tb14);
-        Boolean complete = false;
         mcontext = this;
         setEnabledOfTb(false);
+        state1 = false;state2 = false;state3 = false;state4 = false;state5 = false;state6 = false;state7 = false;state8 = false;
         try {
-            new HttpPostRequest().execute("");
+            HttpPostRequest Reception = new HttpPostRequest();
+            Reception.execute("");
+
+            Log.e("server","완료");
         } catch (Exception e) {
 
             Log.e("DB", e.toString());
@@ -234,7 +237,6 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
         state6_2 = state6;
         state7_2 = state7;
         state8_2 = state8;
-
         mdialog = new Number_Customer(mcontext);
         Sit.setOnClickListener(new OnClickListener() {
             @Override
@@ -768,17 +770,18 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
             try {
                 url = new URL("http://52.69.163.43/queuing/get_all_table_info.php");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                Log.e("Http connection", "완료");
+                Log.e("Http connection_http1", "완료");
                 conn.setRequestMethod("POST");
-                String post_value = "";
+                Log.e("1","1");
                 String body = "resname=" + "sample";
 
-
-                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
+                Log.e("1","1");
+                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream(),"UTF-8");
+                Log.e("1", "1");
                 osw.write(body);
+                Log.e("1", "1");
                 osw.flush();
-
-                Log.e("Http connection2","완료");
+                Log.e("Http connection2_http2","완료");
 
                 InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
                 BufferedReader reader = new BufferedReader(tmp);
@@ -793,8 +796,7 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
                 Log.e(sResult,"완료");
 
             } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(e.toString(),sResult);
+                Log.e(e.toString()+"http1",sResult+"       "+e.toString());
             }
 
 
@@ -802,7 +804,7 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
         }
         @Override
         protected void onPostExecute(String result){
-            Log.e("RESULT", result);
+            Log.e("RESULT", result+"http1");
 
             String jsonall = result;
             JSONArray jArray = null;
@@ -895,7 +897,7 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
                     }
             }
             catch (Exception e){
-                Log.e("error",e.toString());
+                Log.e("error_http1",e.toString());
             }
         }
     }
@@ -907,7 +909,7 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
             try {
                 url = new URL("http://52.69.163.43/queuing/all_table_management.php");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                Log.e("Http connection", "완료");
+                Log.e("Http connection_http2", "완료");
                 conn.setRequestMethod("POST");
                 for (int i = 0; i < selected_table.size(); i++) {
                     String body = "resname=" + "sample&type=2&table_id="+String.valueOf(selected_tables.get(i))+"&end_time="+selected_table.get(i);
@@ -915,7 +917,7 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
                     OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
                     osw.write(body);
                     osw.flush();
-                    Log.e("Http connection2", "완료");
+                    Log.e("Http connection2_http2", "완료");
                 }
             }catch(Exception e){
                 e.printStackTrace();
@@ -935,6 +937,7 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
     }
     @Override protected void onStop(){
         super.onStop();
+
         finish();
     }
     void setEnabledOfTb(Boolean BN){
