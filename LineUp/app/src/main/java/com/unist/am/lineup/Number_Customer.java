@@ -50,7 +50,6 @@ public class Number_Customer extends Dialog {
 
         setContentView(R.layout.table_sit);
 
-
         btn1 = (ImageView) findViewById(R.id.selection_1_table);
         btn2 = (ImageView) findViewById(R.id.selection_2_table);
         btn3 = (ImageView) findViewById(R.id.selection_3_table);
@@ -62,7 +61,6 @@ public class Number_Customer extends Dialog {
             @Override
             public void onClick(View v) {
                 No = 1;
-                new HttpPostRequest().execute("");
                 cancel();
             }
         });
@@ -71,7 +69,6 @@ public class Number_Customer extends Dialog {
             @Override
             public void onClick(View v) {
                 No = 2;
-                new HttpPostRequest().execute("");
                 cancel();
             }
         });
@@ -79,7 +76,6 @@ public class Number_Customer extends Dialog {
             @Override
             public void onClick(View v) {
                 No = 3;
-                new HttpPostRequest().execute("");
                 cancel();
             }
         });
@@ -87,7 +83,6 @@ public class Number_Customer extends Dialog {
             @Override
             public void onClick(View v) {
                 No = 4;
-                new HttpPostRequest().execute("");
                 cancel();
             }
         });
@@ -95,7 +90,6 @@ public class Number_Customer extends Dialog {
             @Override
             public void onClick(View v) {
                 No = 5;
-                new HttpPostRequest().execute("");
                 cancel();
             }
         });
@@ -104,85 +98,12 @@ public class Number_Customer extends Dialog {
             @Override
             public void onClick(View v) {
                 No = 6;
-                new HttpPostRequest().execute("");
                 cancel();
             }
         });
 
 
 
-    }
-    public class HttpPostRequest extends AsyncTask<String,Void,String> {
-        String sResult="error99";
-        @Override
-        protected String doInBackground(String... info) {
-            URL url = null;
-            try {
-                url = new URL("http://52.69.163.43/queuing/all_table_management.php");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                Log.e("Http connection", "완료");
-                conn.setRequestMethod("POST");
-                String post_value = "";
-                for(int i = 0 ; i < table_list.size(); i++) {
-
-                    String body = "resname=" + "sample&type=1&table_id=" + String.valueOf(table_list.get(i)) + "&start_time="+ String.valueOf(table_time_list.get(i));
-                    Log.e("body",body);
-                    OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                    osw.write(body);
-                    osw.flush();
-                    Log.e("Http connection2", "완료");
-                }
-                /*
-                InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
-                BufferedReader reader = new BufferedReader(tmp);
-                StringBuilder builder = new StringBuilder();
-                Log.e("InputStreamReader","완료");
-
-                String str;
-                while ((str = reader.readLine()) != null) {
-                    builder.append(str);
-                }
-                sResult = builder.toString();
-                Log.e(sResult,"완료");
-                */
-            } catch (Exception e) {
-                e.printStackTrace();
-                Log.e(e.toString(),sResult);
-            }
-
-
-            return sResult;
-        }
-        @Override
-        protected void onPostExecute(String result){
-            Log.e("RESULT", result);
-            /*
-            String jsonall = result;
-            JSONArray jArray = null;
-
-            try{
-                jArray = new JSONArray(jsonall);
-                JSONObject json_data = null;
-
-                for (int i = 0; i < jArray.length(); i++) {
-                    json_data = jArray.getJSONObject(i);
-                    name = json_data.getString("food_name");
-                    price = json_data.getInt("price");
-
-                    items.add(new Res_menu_item(name,price));
-                    Log.e("PROFILE",":"+i);
-
-                }
-            }catch(Exception e){
-                e.printStackTrace();
-            }
-            mlist.setAdapter(adapter);
-
-*/
-
-
-
-        }
     }
 
 }

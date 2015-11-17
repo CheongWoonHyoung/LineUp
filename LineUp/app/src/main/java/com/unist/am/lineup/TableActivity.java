@@ -121,14 +121,14 @@ public class TableActivity extends Activity {
 
 
     // _2 state는 서버에서 가져와 맨처음 앱 실행시 사용
-    static Boolean state1_2 = null;
-    static Boolean state2_2 = null;
-    static Boolean state3_2 = null;
-    static Boolean state4_2 = null;
-    static Boolean state5_2 = null;
-    static Boolean state6_2 = null;
-    static Boolean state7_2 = null;
-    static Boolean state8_2 = null;
+    static Boolean state1_2 = false;
+    static Boolean state2_2 = false;
+    static Boolean state3_2 = false;
+    static Boolean state4_2 = false;
+    static Boolean state5_2 = false;
+    static Boolean state6_2 = false;
+    static Boolean state7_2 = false;
+    static Boolean state8_2 = false;
     static Boolean state_check = null;
 
     static TextView check;
@@ -136,7 +136,7 @@ public class TableActivity extends Activity {
     int checkBtn_color;
     Number_Customer mdialog;
 
-    ArrayList<String> num_people = null;
+    ArrayList<String>num_people = null;
     ArrayList<String> start_time = null;
     ArrayList<Integer> selected_tables = null;
     ArrayList<String>selected_table= null;
@@ -212,12 +212,12 @@ public class TableActivity extends Activity {
         mcontext = this;
         setEnabledOfTb(false);
         state1 = false;state2 = false;state3 = false;state4 = false;state5 = false;state6 = false;state7 = false;state8 = false;
+        HttpPostRequest Reception = new HttpPostRequest();
         try {
-            HttpPostRequest Reception = new HttpPostRequest();
-            Reception.execute("");
+            Reception.execute();
 
-            Log.e("server","완료");
-        } catch (Exception e) {
+            Log.e("server", "완료");
+        }catch (Exception e) {
 
             Log.e("DB", e.toString());
         }
@@ -226,17 +226,6 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
         서버에서 시작시간과 stete 로드하여 각각 start_from_server 와 state_2에 저장
 
          */
-
-
-
-        state1_2 = state1;
-        state2_2 = state2;
-        state3_2 = state3;
-        state4_2 = state4;
-        state5_2 = state5;
-        state6_2 = state6;
-        state7_2 = state7;
-        state8_2 = state8;
         mdialog = new Number_Customer(mcontext);
         Sit.setOnClickListener(new OnClickListener() {
             @Override
@@ -295,6 +284,7 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
         mdialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
+                new HttpPostRequest3().execute("");
                 if (mdialog.No != 0) {
                     for(int i = 0 ; i < selected_tables.size(); i++){
                         TextPutter(selected_tables.get(i));
@@ -658,10 +648,13 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
                             selected_tables.add(8);
                             selected_table.add(current_times);
                         }
+
+                            Log.e("after insert",selected_table.toString()+"\n"+selected_tables.toString());
                         mdialog.table_list = selected_tables;
                         mdialog.table_time_list = selected_table;
 
                     }
+
                     if(selected_table.size()>0) {
                         mdialog.show();
                     }
@@ -733,6 +726,7 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
                         state8 = state8_2 = false;
                         TextDeletor(8);
                     }
+                    Log.e("after delete",selected_table.toString()+"\n"+selected_tables.toString());
                     if(selected_table.size() >0){
                         new HttpPostRequest2().execute("");
                     }
@@ -768,32 +762,19 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
         protected String doInBackground(String... info) {
             URL url = null;
             try {
-                url = new URL("http://52.69.163.43/queuing/get_all_table_info.php");
+                url = new URL("http://52.69.163.43/queuing/get_all_table_info.php?resname=sample");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                Log.e("Http connection_http1", "완료");
-                conn.setRequestMethod("POST");
-                Log.e("1","1");
-                String body = "resname=" + "sample";
 
-                Log.e("1","1");
-                OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream(),"UTF-8");
-                Log.e("1", "1");
-                osw.write(body);
-                Log.e("1", "1");
-                osw.flush();
                 Log.e("Http connection2_http2","완료");
-
                 InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
                 BufferedReader reader = new BufferedReader(tmp);
                 StringBuilder builder = new StringBuilder();
-                Log.e("InputStreamReader","완료");
 
                 String str;
                 while ((str = reader.readLine()) != null) {
                     builder.append(str);
                 }
                 sResult = builder.toString();
-                Log.e(sResult,"완료");
 
             } catch (Exception e) {
                 Log.e(e.toString()+"http1",sResult+"       "+e.toString());
@@ -804,28 +785,30 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
         }
         @Override
         protected void onPostExecute(String result){
-            Log.e("RESULT", result+"http1");
 
             String jsonall = result;
             JSONArray jArray = null;
-
+            num_people = new ArrayList<String>();
+            start_time = new ArrayList<String>();
             try{
                 jArray = new JSONArray(jsonall);
                 JSONObject json_data = null;
-
+                Log.e("json",jArray.toString());
                 for (int i = 0; i < jArray.length(); i++) {
                     json_data = jArray.getJSONObject(i);
                     num_people.add(json_data.getString("num_people"));
                     start_time.add(json_data.getString("start_time"));
-                    Log.e("PROFILE",":"+i);
 
                 }
             }catch(Exception e){
+                Log.e("error in receive",e.toString());
                 e.printStackTrace();
             }
             try{
                     for (int i = 0; i < num_people.size(); i++) {
-                        if (num_people.get(i) != "0") {
+                        Log.e("num_people", i+ num_people.get(i));
+                        if (!num_people.get(i).equals("0")) {
+                            Log.e("why",num_people.get(i) + "\t" +i);
                             switch (i) {
                                 case 0:
                                     tb1_1.setVisibility(View.VISIBLE);
@@ -895,6 +878,14 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
 
                         }
                     }
+                state1_2 = state1;
+                state2_2 = state2;
+                state3_2 = state3;
+                state4_2 = state4;
+                state5_2 = state5;
+                state6_2 = state6;
+                state7_2 = state7;
+                state8_2 = state8;
             }
             catch (Exception e){
                 Log.e("error_http1",e.toString());
@@ -906,18 +897,26 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
         @Override
         protected String doInBackground(String... info) {
             URL url = null;
+            HttpURLConnection conn = null;
             try {
-                url = new URL("http://52.69.163.43/queuing/all_table_management.php");
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                Log.e("Http connection_http2", "완료");
-                conn.setRequestMethod("POST");
                 for (int i = 0; i < selected_table.size(); i++) {
+                    String tb_manager = "http://52.69.163.43/queuing/all_table_management.php?";
+                    Log.e("Http connection_http2", "완료");
                     String body = "resname=" + "sample&type=2&table_id="+String.valueOf(selected_tables.get(i))+"&end_time="+selected_table.get(i);
-                    Log.e("body222",body);
-                    OutputStreamWriter osw = new OutputStreamWriter(conn.getOutputStream());
-                    osw.write(body);
-                    osw.flush();
-                    Log.e("Http connection2_http2", "완료");
+                    url = new URL(tb_manager+body);
+                    conn = (HttpURLConnection) url.openConnection();
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuilder builder = new StringBuilder();
+                    Log.e("InputStreamReader","완료");
+
+                    String str;
+                    while ((str = reader.readLine()) != null) {
+                        builder.append(str);
+                    }
+                    sResult = builder.toString();
+                    Log.e(sResult, "완료");
+                    conn.disconnect();
                 }
             }catch(Exception e){
                 e.printStackTrace();
@@ -930,6 +929,71 @@ manager = new DBManager_reserv(context, "reserv_info.db", null, 1);
         @Override
         protected void onPostExecute(String result){
             Log.e("RESULT", result);
+
+
+
+        }
+    }
+    public class HttpPostRequest3 extends AsyncTask<String,Void,String> {
+        String sResult="error99";
+        @Override
+        protected String doInBackground(String... info) {
+            URL url = null;
+            try {
+                for(int i = 0; i < mdialog.table_list.size(); i++) {
+                    String tb_manager ="http://52.69.163.43/queuing/all_table_management.php?";
+                    HttpURLConnection conn;
+                    String post_value = "";
+                    String body = "resname=sample&type=1&table_id=" + String.valueOf(mdialog.table_list.get(i)) + "&start_time="+ String.valueOf(mdialog.table_time_list.get(i))+"&num_people="+String.valueOf(mdialog.No);
+                    url = new URL(tb_manager+body);
+                    Log.e("url 검사",tb_manager+body);
+                    conn = (HttpURLConnection) url.openConnection();
+                    InputStreamReader tmp = new InputStreamReader(conn.getInputStream(), "UTF-8");
+                    BufferedReader reader = new BufferedReader(tmp);
+                    StringBuilder builder = new StringBuilder();
+
+                    String str;
+                    while ((str = reader.readLine()) != null) {
+                        builder.append(str);
+                    }
+                    sResult = builder.toString();
+                    Log.e(sResult, "완료");
+                    conn.disconnect();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(e.toString(),sResult);
+            }
+
+
+            return sResult;
+        }
+        @Override
+        protected void onPostExecute(String result){
+            Log.e("RESULT", result);
+            /*
+            String jsonall = result;
+            JSONArray jArray = null;
+
+            try{
+                jArray = new JSONArray(jsonall);
+                JSONObject json_data = null;
+
+                for (int i = 0; i < jArray.length(); i++) {
+                    json_data = jArray.getJSONObject(i);
+                    name = json_data.getString("food_name");
+                    price = json_data.getInt("price");
+
+                    items.add(new Res_menu_item(name,price));
+                    Log.e("PROFILE",":"+i);
+
+                }
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+            mlist.setAdapter(adapter);
+
+*/
 
 
 
