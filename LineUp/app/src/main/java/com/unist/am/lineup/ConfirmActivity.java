@@ -43,7 +43,7 @@ import java.util.Date;
  */
 public class ConfirmActivity extends Activity {
 
-    private ImageView select1, select2, select3, select4, select5, select6;
+    private ImageView select1, select2, select3, select4, select5, select6,date,family,group;
     private RelativeLayout confirm_btn;
     private int party_num;
     String username;
@@ -69,6 +69,9 @@ public class ConfirmActivity extends Activity {
         select4 = (ImageView) findViewById(R.id.selection_4);
         select5 = (ImageView) findViewById(R.id.selection_5);
         select6 = (ImageView) findViewById(R.id.selection_6);
+        date    = (ImageView) findViewById(R.id.date);
+        family  = (ImageView) findViewById(R.id.family);
+        group   = (ImageView) findViewById(R.id.group);
         confirm_btn = (RelativeLayout) findViewById(R.id.confirm_btn);
 
         select1.setOnClickListener(mOnClick);
@@ -77,6 +80,9 @@ public class ConfirmActivity extends Activity {
         select4.setOnClickListener(mOnClick);
         select5.setOnClickListener(mOnClick);
         select6.setOnClickListener(mOnClick);
+        date.setOnClickListener(mOnClick);
+        family.setOnClickListener(mOnClick);
+        group.setOnClickListener(mOnClick);
         confirm_btn.setOnClickListener(mOnClick);
 
 
@@ -146,6 +152,24 @@ public class ConfirmActivity extends Activity {
                     select5.setSelected(false);
                     select6.setSelected(true);
                     party_num = 6;
+                    break;
+                }
+                case R.id.date:{
+                    date.setSelected(true);
+                    family.setSelected(false);
+                    group.setSelected(false);
+                    break;
+                }
+                case R.id.family:{
+                    date.setSelected(false);
+                    family.setSelected(true);
+                    group.setSelected(false);
+                    break;
+                }
+                case R.id.group:{
+                    date.setSelected(false);
+                    family.setSelected(false);
+                    group.setSelected(true);
                     break;
                 }
                 case R.id.confirm_btn: {

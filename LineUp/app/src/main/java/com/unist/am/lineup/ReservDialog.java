@@ -24,7 +24,7 @@ public class ReservDialog extends Dialog implements View.OnTouchListener {
     public boolean focused;
     private Typeface mTypeface;
     public String _name,_phone,_number;
-    private ImageView select1, select2, select3, select4, select5, select6;
+    private ImageView select1, select2, select3, select4, select5, select6,date,family,group;
     public ReservDialog(Context context) {
         super(context);
     }
@@ -46,6 +46,9 @@ public class ReservDialog extends Dialog implements View.OnTouchListener {
         select4 = (ImageView) findViewById(R.id.selection_4);
         select5 = (ImageView) findViewById(R.id.selection_5);
         select6 = (ImageView) findViewById(R.id.selection_6);
+        date    = (ImageView) findViewById(R.id.owner_date);
+        family  = (ImageView) findViewById(R.id.owner_family);
+        group   = (ImageView) findViewById(R.id.owner_group);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -59,7 +62,7 @@ public class ReservDialog extends Dialog implements View.OnTouchListener {
         phone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!(hasFocus || phone.isFocused() )) {
+                if (!(hasFocus || phone.isFocused())) {
                     hideKeyboard(v);
                     Log.d("FOCUS", "FOCUS = " + getCurrentFocus());
                 }
@@ -71,6 +74,9 @@ public class ReservDialog extends Dialog implements View.OnTouchListener {
         select4.setOnClickListener(mOnClick);
         select5.setOnClickListener(mOnClick);
         select6.setOnClickListener(mOnClick);
+        date.setOnClickListener(mOnClick);
+        family.setOnClickListener(mOnClick);
+        group.setOnClickListener(mOnClick);
 
         /*
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -172,6 +178,24 @@ public class ReservDialog extends Dialog implements View.OnTouchListener {
                     select4.setSelected(false);
                     select5.setSelected(false);
                     select6.setSelected(true);
+                    break;
+                }
+                case R.id.owner_date:{
+                    date.setSelected(true);
+                    family.setSelected(false);
+                    group.setSelected(false);
+                    break;
+                }
+                case R.id.owner_family:{
+                    date.setSelected(false);
+                    family.setSelected(true);
+                    group.setSelected(false);
+                    break;
+                }
+                case R.id.owner_group:{
+                    date.setSelected(false);
+                    family.setSelected(false);
+                    group.setSelected(true);
                     break;
                 }
             }
