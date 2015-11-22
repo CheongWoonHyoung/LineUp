@@ -24,7 +24,6 @@ public class SettingActivity extends Activity implements View.OnClickListener{
 
     TextView pushAlarm;
     TextView couponAlarm;
-    TextView versionBtn;
     TextView clauseBtn;
     TextView inquireBtn;
     TextView logoutBtn;
@@ -46,7 +45,6 @@ public class SettingActivity extends Activity implements View.OnClickListener{
 
         pushAlarm = (TextView) findViewById(R.id.pushAlarm);
         couponAlarm =(TextView)findViewById(R.id.couponAlarm);
-        versionBtn =(TextView) findViewById(R.id.version);
         clauseBtn = (TextView) findViewById(R.id.clause);
         inquireBtn= (TextView) findViewById(R.id.inquire);
         logoutBtn = (TextView) findViewById(R.id.logout);
@@ -93,7 +91,6 @@ public class SettingActivity extends Activity implements View.OnClickListener{
         });
 
 
-        versionBtn.setOnClickListener(this);
         clauseBtn.setOnClickListener(this);
         inquireBtn.setOnClickListener(this);
         logoutBtn.setOnClickListener(this);
@@ -104,10 +101,6 @@ public class SettingActivity extends Activity implements View.OnClickListener{
     public void onClick(View v) {
         Intent mintent = null;
         switch(v.getId()){
-            case R.id.version:
-                mintent = new Intent(this, VersionActivity.class);
-                startActivity(mintent);
-                break;
             case R.id.clause:
                 mintent = new Intent(this, ClauseActivity.class);
                 startActivity(mintent);
