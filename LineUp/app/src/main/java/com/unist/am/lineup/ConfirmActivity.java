@@ -89,57 +89,63 @@ public class ConfirmActivity extends Activity {
             switch(view.getId()){
                 case R.id.selection_1: {
                     party_num = 1;
-                    select2.setBackgroundResource(0);
-                    select3.setBackgroundResource(0);
-                    select4.setBackgroundResource(0);
-                    select5.setBackgroundResource(0);
-                    select6.setBackgroundResource(0);
+                    select1.setSelected(true);
+                    select2.setSelected(false);
+                    select3.setSelected(false);
+                    select4.setSelected(false);
+                    select5.setSelected(false);
+                    select6.setSelected(false);
 
                     break;
                 }
                 case R.id.selection_2: {
+                    select1.setSelected(false);
+                    select2.setSelected(true);
+                    select3.setSelected(false);
+                    select4.setSelected(false);
+                    select5.setSelected(false);
+                    select6.setSelected(false);
                     party_num = 2;
-                    select1.setBackgroundResource(0);
-                    select3.setBackgroundResource(0);
-                    select4.setBackgroundResource(0);
-                    select5.setBackgroundResource(0);
-                    select6.setBackgroundResource(0);
                     break;
                 }
                 case R.id.selection_3: {
+                    select1.setSelected(false);
+                    select2.setSelected(false);
+                    select3.setSelected(true);
+                    select4.setSelected(false);
+                    select5.setSelected(false);
+                    select6.setSelected(false);
                     party_num = 3;
-                    select1.setBackgroundResource(0);
-                    select2.setBackgroundResource(0);
-                    select4.setBackgroundResource(0);
-                    select5.setBackgroundResource(0);
-                    select6.setBackgroundResource(0);
                     break;
                 }
                 case R.id.selection_4: {
+                    select1.setSelected(false);
+                    select2.setSelected(false);
+                    select3.setSelected(false);
+                    select4.setSelected(true);
+                    select5.setSelected(false);
+                    select6.setSelected(false);
                     party_num = 4;
-                    select1.setBackgroundResource(0);
-                    select2.setBackgroundResource(0);
-                    select3.setBackgroundResource(0);
-                    select5.setBackgroundResource(0);
-                    select6.setBackgroundResource(0);
                     break;
                 }
                 case R.id.selection_5: {
+                    select1.setSelected(false);
+                    select2.setSelected(false);
+                    select3.setSelected(false);
+                    select4.setSelected(false);
+                    select5.setSelected(true);
+                    select6.setSelected(false);
                     party_num = 5;
-                    select1.setBackgroundResource(0);
-                    select2.setBackgroundResource(0);
-                    select3.setBackgroundResource(0);
-                    select4.setBackgroundResource(0);
-                    select6.setBackgroundResource(0);
                     break;
                 }
                 case R.id.selection_6: {
+                    select1.setSelected(false);
+                    select2.setSelected(false);
+                    select3.setSelected(false);
+                    select4.setSelected(false);
+                    select5.setSelected(false);
+                    select6.setSelected(true);
                     party_num = 6;
-                    select1.setBackgroundResource(0);
-                    select2.setBackgroundResource(0);
-                    select3.setBackgroundResource(0);
-                    select4.setBackgroundResource(0);
-                    select5.setBackgroundResource(0);
                     break;
                 }
                 case R.id.confirm_btn: {

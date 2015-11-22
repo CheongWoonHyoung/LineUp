@@ -37,7 +37,7 @@ public class Owner_mainActivity extends Activity {
                 startActivity(reservation_intent);
             }
         });
-
+/*
         table.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +45,7 @@ public class Owner_mainActivity extends Activity {
                 startActivity(table_intent);
             }
         });
-
+*/
 
     }
     @Override

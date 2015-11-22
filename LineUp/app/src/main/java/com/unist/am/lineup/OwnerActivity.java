@@ -49,7 +49,7 @@ public class OwnerActivity extends AppCompatActivity {
 
         adduser_btn = (TextView) findViewById(R.id.adduser_btn);
         offcancel_btn=(TextView) findViewById(R.id.offcancel_btn);
-        table_manage =(TextView) findViewById(R.id.table_manage);
+      //  table_manage =(TextView) findViewById(R.id.table_manage);
 
         items = new ArrayList<>();
         adapter = new CusListAdapter(getApplicationContext(),R.layout.owner_listitem,items);
@@ -57,10 +57,10 @@ public class OwnerActivity extends AppCompatActivity {
         cus_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                /*Log.e("pass", "regid: " + items.get(position).cus_regid);
+                Log.e("pass", "regid: " + items.get(position).cus_regid);
                 new HttpPostRequest_2().execute("out", items.get(position).cus_priority, owner_name, "", items.get(position).cus_name, items.get(position).cus_method, items.get(position).cus_regid);
                 items.remove(position);
-                adapter.notifyDataSetChanged();*/
+                adapter.notifyDataSetChanged();
             }
         });
         new HttpPostRequest().execute();
@@ -102,13 +102,13 @@ public class OwnerActivity extends AppCompatActivity {
 
             }
         });
-        table_manage.setOnClickListener(new View.OnClickListener() {
+      /*  table_manage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //start tablemanage activity
             }
         });
-
+*/
     }
 
     private class HttpPostRequest extends AsyncTask<String, Void, String> {

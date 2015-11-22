@@ -51,78 +51,127 @@
                 android:paddingRight="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-                <LinearLayout
+                <RelativeLayout
                     android:gravity="center"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <ImageView
+                        android:layout_centerInParent="true"
                         android:id="@+id/selection_1"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/reservation_select_event_number"/>
-                </LinearLayout>
-                <LinearLayout
+                    <TextView
+                        android:layout_centerInParent="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="1"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"/>
+                </RelativeLayout>
+                <RelativeLayout
                     android:gravity="center"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <ImageView
-
+                        android:layout_centerInParent="true"
                         android:id="@+id/selection_2"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/reservation_select_event_number"/>
-                </LinearLayout>
-                <LinearLayout
+                    <TextView
+                        android:layout_centerInParent="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="2"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"/>
+                </RelativeLayout>
+                <RelativeLayout
                     android:gravity="center"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <ImageView
-
+                        android:layout_centerInParent="true"
                         android:id="@+id/selection_3"
-
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/reservation_select_event_number"/>
-                </LinearLayout>
-                <LinearLayout
+                    <TextView
+                        android:layout_centerInParent="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="3"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"/>
+                </RelativeLayout>
+                <RelativeLayout
                     android:gravity="center"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <ImageView
-
+                        android:layout_centerInParent="true"
                         android:id="@+id/selection_4"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/reservation_select_event_number"/>
-                </LinearLayout>
-                <LinearLayout
+                    <TextView
+                        android:layout_centerInParent="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="4"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"/>
+                </RelativeLayout>
+                <RelativeLayout
                     android:gravity="center"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <ImageView
+                        android:layout_centerInParent="true"
                         android:clickable="true"
                         android:id="@+id/selection_5"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/reservation_select_event_number"/>
-                </LinearLayout>
-                <LinearLayout
+                    <TextView
+                        android:layout_centerInParent="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="5"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"/>
+                </RelativeLayout>
+                <RelativeLayout
                     android:gravity="center"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent">
                     <ImageView
-
+                        android:layout_centerInParent="true"
                         android:id="@+id/selection_6"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:src="@drawable/reservation_select_event_number"/>
-                </LinearLayout>
+                    <TextView
+                        android:layout_centerInParent="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="5"
+                        android:textColor="@color/black"
+                        android:textSize="15dp"/>
+                </RelativeLayout>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

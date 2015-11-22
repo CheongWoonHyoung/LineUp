@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,9 +24,11 @@ public class ReservDialog extends Dialog implements View.OnTouchListener {
     public boolean focused;
     private Typeface mTypeface;
     public String _name,_phone,_number;
+    private ImageView select1, select2, select3, select4, select5, select6;
     public ReservDialog(Context context) {
         super(context);
     }
+    int party_num;
 
     @Override
     protected  void onCreate(Bundle savedInstanceState){
@@ -36,6 +39,13 @@ public class ReservDialog extends Dialog implements View.OnTouchListener {
         phone = (EditText) findViewById(R.id.input_phoneno);
         Ok = (RelativeLayout) findViewById(R.id.Ok);
         Cancel = (RelativeLayout) findViewById(R.id.Cancel);
+
+        select1 = (ImageView) findViewById(R.id.selection_1);
+        select2 = (ImageView) findViewById(R.id.selection_2);
+        select3 = (ImageView) findViewById(R.id.selection_3);
+        select4 = (ImageView) findViewById(R.id.selection_4);
+        select5 = (ImageView) findViewById(R.id.selection_5);
+        select6 = (ImageView) findViewById(R.id.selection_6);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         name.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -55,6 +65,12 @@ public class ReservDialog extends Dialog implements View.OnTouchListener {
                 }
             }
         });
+        select1.setOnClickListener(mOnClick);
+        select2.setOnClickListener(mOnClick);
+        select3.setOnClickListener(mOnClick);
+        select4.setOnClickListener(mOnClick);
+        select5.setOnClickListener(mOnClick);
+        select6.setOnClickListener(mOnClick);
 
         /*
         InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -93,4 +109,72 @@ public class ReservDialog extends Dialog implements View.OnTouchListener {
         InputMethodManager inputMethodManager =(InputMethodManager)getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+    private View.OnClickListener mOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.selection_1: {
+                    party_num=1;
+                    select1.setSelected(true);
+                    select2.setSelected(false);
+                    select3.setSelected(false);
+                    select4.setSelected(false);
+                    select5.setSelected(false);
+                    select6.setSelected(false);
+
+                    break;
+                }
+                case R.id.selection_2: {
+                    party_num=2;
+                    select1.setSelected(false);
+                    select2.setSelected(true);
+                    select3.setSelected(false);
+                    select4.setSelected(false);
+                    select5.setSelected(false);
+                    select6.setSelected(false);
+                    break;
+                }
+                case R.id.selection_3: {
+                    party_num=3;
+                    select1.setSelected(false);
+                    select2.setSelected(false);
+                    select3.setSelected(true);
+                    select4.setSelected(false);
+                    select5.setSelected(false);
+                    select6.setSelected(false);
+                    break;
+                }
+                case R.id.selection_4: {
+                    party_num=4;
+                    select1.setSelected(false);
+                    select2.setSelected(false);
+                    select3.setSelected(false);
+                    select4.setSelected(true);
+                    select5.setSelected(false);
+                    select6.setSelected(false);
+                    break;
+                }
+                case R.id.selection_5: {
+                    party_num=5;
+                    select1.setSelected(false);
+                    select2.setSelected(false);
+                    select3.setSelected(false);
+                    select4.setSelected(false);
+                    select5.setSelected(true);
+                    select6.setSelected(false);
+                    break;
+                }
+                case R.id.selection_6: {
+                    party_num=6;
+                    select1.setSelected(false);
+                    select2.setSelected(false);
+                    select3.setSelected(false);
+                    select4.setSelected(false);
+                    select5.setSelected(false);
+                    select6.setSelected(true);
+                    break;
+                }
+            }
+        }
+    };
 }
