@@ -33,6 +33,7 @@ public class OwnerActivity extends AppCompatActivity {
 
     JSONArray jarray;
     JSONObject jobj;
+    Context mcontext;
     ArrayList<CusListItem> items;
     CusListAdapter adapter;
     ListView cus_list;
@@ -46,7 +47,7 @@ public class OwnerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.owner_maintable);
-
+        mcontext = this;
         adduser_btn = (TextView) findViewById(R.id.adduser_btn);
         offcancel_btn=(TextView) findViewById(R.id.offcancel_btn);
       //  table_manage =(TextView) findViewById(R.id.table_manage);
@@ -105,6 +106,8 @@ public class OwnerActivity extends AppCompatActivity {
       /*  table_manage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent mintent = new Intent(mcontext,TableActivity.class);
+                startActivity(mintent);
                 //start tablemanage activity
             }
         });
@@ -272,5 +275,10 @@ public class OwnerActivity extends AppCompatActivity {
         super.onPause();
 
         getApplicationContext().unregisterReceiver(mReceiver);
+    }
+    @Override
+    public void onStop(){
+        super.onStop();
+        finish();
     }
 }
