@@ -71,8 +71,9 @@ public class MapActivity_all_reslist extends Activity implements MapView.POIItem
 
             mapView.setCurrentLocationTrackingMode(MapView.CurrentLocationTrackingMode.TrackingModeOnWithoutHeading);
             mapView.setHDMapTileEnabled(true);
-            mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(Items.get(0).res_x_coordinate, Items.get(0).res_y_coordinate), true);
-            mapView.setZoomLevel(2, true);
+            mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(35.5734738, 129.1896375), true);
+            //mapView.setMapCenterPoint(MapPoint.mapPointWithGeoCoord(Items.get(0).res_x_coordinate, Items.get(0).res_y_coordinate), true);
+            mapView.setZoomLevel(1, true);
             mapView.setShowCurrentLocationMarker(true);
             mapView.setPOIItemEventListener(this);
 
@@ -142,13 +143,13 @@ public class MapActivity_all_reslist extends Activity implements MapView.POIItem
 
         try {
 
-            for (int i = 0; i < Items.size(); i++) {
+            for (int i = 0; i < 1; i++) {
                 MapPOIItem marker = new MapPOIItem();
                 marker.setShowCalloutBalloonOnTouch(true);
                 marker.setShowDisclosureButtonOnCalloutBalloon(false);
-                marker.setItemName(Items.get(i).res_name);
+                marker.setItemName(getString(R.string.Halmae));
                 marker.setTag(0);
-                marker.setMapPoint(MapPoint.mapPointWithGeoCoord(Items.get(i).res_x_coordinate, Items.get(i).res_y_coordinate));
+                marker.setMapPoint(MapPoint.mapPointWithGeoCoord(35.5766918,129.1907242));
                 marker.setMarkerType(MapPOIItem.MarkerType.RedPin);
                 marker.setSelectedMarkerType(MapPOIItem.MarkerType.BluePin);
 

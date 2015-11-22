@@ -58,4 +58,6 @@
     <string name="Japanese">일 식</string>
     <string name="Chinese">중 식</string>
     <string name="Western">양 식</string>
+    
+    <string name="Halmae">할매집</string>
 </resources>
