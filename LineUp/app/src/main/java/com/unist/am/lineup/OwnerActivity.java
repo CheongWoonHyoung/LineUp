@@ -50,7 +50,7 @@ public class OwnerActivity extends AppCompatActivity {
         mcontext = this;
         adduser_btn = (TextView) findViewById(R.id.adduser_btn);
         offcancel_btn=(TextView) findViewById(R.id.offcancel_btn);
-      //  table_manage =(TextView) findViewById(R.id.table_manage);
+        table_manage =(TextView) findViewById(R.id.table_manage);
 
         items = new ArrayList<>();
         adapter = new CusListAdapter(getApplicationContext(),R.layout.owner_listitem,items);
@@ -103,7 +103,7 @@ public class OwnerActivity extends AppCompatActivity {
 
             }
         });
-      /*  table_manage.setOnClickListener(new View.OnClickListener() {
+      table_manage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent mintent = new Intent(mcontext,TableActivity.class);
@@ -111,7 +111,6 @@ public class OwnerActivity extends AppCompatActivity {
                 //start tablemanage activity
             }
         });
-*/
     }
 
     private class HttpPostRequest extends AsyncTask<String, Void, String> {
