@@ -121,6 +121,8 @@ public class LoginActivity extends AppCompatActivity {
                     profileImageURL = talkProfile.getProfileImageURL();
                     thumbnailURL = talkProfile.getThumbnailURL();
                     countryISO = talkProfile.getCountryISO();
+                    DBManager_userinfo manager = new DBManager_userinfo(LoginActivity.this, "user_info.db", null, 1);
+                    manager.insert("insert into USER_INFO values ('" + nickName + "')");
                     new enroll_user().execute(getRegistrationId(getApplicationContext()), nickName);
 
                 }

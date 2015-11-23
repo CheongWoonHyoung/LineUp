@@ -47,6 +47,7 @@ public class Mypage_tab3 extends BaseFragment_myPage {
 
     DBManager_reserv manager;
     DBManager_update manager_update;
+    DBManager_userinfo manager_userinfo;
 
     String nickName;
     String profileImageURL ;
@@ -77,9 +78,10 @@ public class Mypage_tab3 extends BaseFragment_myPage {
         inflater_g=inflater;
         container_g=parent;
         savedInstanceState_g=savedInstanceState;
-        nickName = getArguments().getString("nickName");
 
         manager = new DBManager_reserv(mContext, "reserv_info.db", null, 1);
+        manager_userinfo = new DBManager_userinfo(mContext,"user_info.db",null,1);
+        nickName = manager_userinfo.returnName();
         if(manager.returnName().equals("nothing")) isQueue = false;
         else isQueue = true;
         if(isQueue){
@@ -225,14 +227,18 @@ public class Mypage_tab3 extends BaseFragment_myPage {
             else isQueue = true;
             if(isQueue){
                 if(manager_update.returnPid().equals("nothing")){
-                }else if(manager_update.returnPid().equals("1000")){
+                }/*else if(manager_update.returnPid().equals("1000")){
                     people_left.setText(String.valueOf(Integer.parseInt(people_left.getText().toString())-1));
                     time_left.setText(String.valueOf((Integer.parseInt(people_left.getText().toString())-1)*3));
                 }else{
                     people_left.setText(String.valueOf(Integer.parseInt(manager_update.returnPid()) - 1));
                     time_left.setText(String.valueOf((Integer.parseInt(manager_update.returnPid()) - 1)*3));
+                }*/
+                else{
+                    people_left.setText(manager_update.returnPid());
+                    time_left.setText(String.valueOf(Integer.parseInt(manager_update.returnPid())*3));
                 }
-                manager_update.delete("delete from UPDATE_INFO");
+                //manager_update.delete("delete from UPDATE_INFO");
             }
         }
     };
@@ -250,7 +256,7 @@ public class Mypage_tab3 extends BaseFragment_myPage {
         else isQueue = true;
         if(isQueue){
             if(manager_update.returnPid().equals("nothing")){
-            }else if(manager_update.returnPid().equals("1000")){
+            }/*else if(manager_update.returnPid().equals("1000")){
                 people_left.setText(String.valueOf(Integer.parseInt(people_left.getText().toString())-1));
                 Log.e("CHECK",people_left.getText().toString());
                 time_left.setText(String.valueOf((Integer.parseInt(people_left.getText().toString())-1)*3));
@@ -258,8 +264,12 @@ public class Mypage_tab3 extends BaseFragment_myPage {
             }else{
                 people_left.setText(String.valueOf(Integer.parseInt(manager_update.returnPid()) - 1));
                 time_left.setText(String.valueOf((Integer.parseInt(manager_update.returnPid())-1)*3));
+            }*/
+            else{
+                people_left.setText(manager_update.returnPid());
+                time_left.setText(String.valueOf(Integer.parseInt(manager_update.returnPid())*3));
             }
-            manager_update.delete("delete from UPDATE_INFO");
+            //manager_update.delete("delete from UPDATE_INFO");
         }
 
 

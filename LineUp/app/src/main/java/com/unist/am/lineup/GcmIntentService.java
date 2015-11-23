@@ -18,7 +18,7 @@ public class GcmIntentService extends IntentService
 {
     public static final int NOTIFICATION_ID = 1;
 
-
+    private int front_num=1000;
     public GcmIntentService()
     {
         super("GcmIntentService");
@@ -99,11 +99,19 @@ public class GcmIntentService extends IntentService
     private void updateMyActivity_customer_update(Context context,String update){
         Intent intent = new Intent("up");
         intent.putExtra("update", update);
-        Log.e("CHECK", "update " + update);
+        Log.e("CHECK", "front_num " + front_num );
 
         DBManager_update manager = new DBManager_update(getApplicationContext(), "update_info2.db", null, 1);
-        manager.insert("insert into UPDATE_INFO values ('"+update+"')");
-        sendNotification("Notification");
+        front_num = Integer.parseInt(update)-1;
+        if(Integer.parseInt(update)<1000) {
+            manager.insert("insert into UPDATE_INFO values ('" + front_num + "')");
+        }
+        else{
+            front_num = Integer.parseInt(manager.returnPid())-1;
+            if(front_num<=4) sendNotification("Notification");
+            manager.update("update UPDATE_INFO set priority='" + front_num + "'");
+        }
+
 
 
         context.sendBroadcast(intent);
