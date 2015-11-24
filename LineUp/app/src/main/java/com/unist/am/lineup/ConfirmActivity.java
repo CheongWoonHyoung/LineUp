@@ -176,7 +176,7 @@ public class ConfirmActivity extends Activity {
                     DBManager_reserv manager = new DBManager_reserv(getApplicationContext(), "reserv_info.db", null, 1);
                     DBManager_regid manager_regid = new DBManager_regid(getApplicationContext(),"regid_info.db",null,1);
                     if(manager.returnName().equals("nothing")) new HttpPostRequest().execute("in",nickName,String.valueOf(party_num),"App",dummy_name,manager_regid.returnRegid());
-                    else Toast.makeText(getApplicationContext(),"You already queue!",Toast.LENGTH_LONG).show();
+                    else Toast.makeText(getApplicationContext(),R.string.repetition,Toast.LENGTH_LONG).show();
                     break;
                 }
             }
@@ -229,7 +229,7 @@ public class ConfirmActivity extends Activity {
         protected void onPostExecute(String result){
             Date dt = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd, hh:mm:ss a");
-            Toast.makeText(getApplicationContext(), "Queuing complete!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.complete, Toast.LENGTH_SHORT).show();
             DBManager_reserv manager = new DBManager_reserv(getApplicationContext(), "reserv_info.db", null, 1);
             manager.insert("insert into RESERV_INFO values (" + Integer.getInteger(result) + ",'" + resname + "','"+party_num+"','" +dummy_name+ "','"+sdf.format(dt).toString()+"')");
             Log.e("CONFIRM",":"+manager.returnPid()+" "+manager.returnName()+" "+manager.returnParty());
